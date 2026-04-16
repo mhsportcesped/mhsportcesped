@@ -10,6 +10,7 @@ const navLinks = [
   { to: "/calculadora", label: "Calculadora m²" },
   { to: "/instalacion", label: "Instalación" },
   { to: "/sobre-nosotros", label: "Nosotros" },
+  { to: "/galeria", label: "Galería" },
   { to: "/contacto", label: "Contacto" },
 ];
 

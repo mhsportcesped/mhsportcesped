@@ -1,42 +1,53 @@
 import { Instagram, Facebook, Camera } from "lucide-react";
-import galeriaJardin from "@/assets/galeria-jardin.jpg";
-import galeriaTerr from "@/assets/galeria-terraza.jpg";
-import galeriaPisc from "@/assets/galeria-piscina.jpg";
-import galeriaDep from "@/assets/galeria-deportiva.jpg";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
-const photos = [
-  { url: galeriaJardin, title: "Jardín Familiar MH" },
-  { url: galeriaTerr, title: "Terraza Ático" },
-  { url: galeriaPisc, title: "Piscina Premium" },
-  { url: galeriaDep, title: "Instalación Deportiva" },
-  { url: "https://images.unsplash.com/photo-1558905648-93e18f20a6a2?auto=format&fit=crop&q=80&w=800", title: "Entrada Vivienda" },
-  { url: "https://images.unsplash.com/photo-1596436889106-be35e843f974?auto=format&fit=crop&q=80&w=800", title: "Parque Infantil" },
-  { url: "https://images.unsplash.com/photo-1510156411330-74673c683b56?auto=format&fit=crop&q=80&w=800", title: "Patio con Encanto" },
-  { url: "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=800", title: "Zona Relax" },
-];
+const galleryImages = import.meta.glob("@/assets/gallery/**/*.{png,jpg,jpeg,webp,JPG,PNG,JPEG,WEBP}", { eager: true });
+const photos = Object.entries(galleryImages)
+  .map(([path, img]: [string, any]) => ({
+    url: img.default,
+    filename: path.split('/').pop() || "",
+    title: path.split('/').pop()?.split('.')[0].replace(/-/g, ' ').replace(/_/g, ' ').toUpperCase() || "PROYECTO MH SPORT"
+  }))
+  // Filter out the 11th photo (index 10) AND the specific scaled(1) image
+  .filter((photo, index) => {
+    const isEleventh = index === 10;
+    const isSpecificScaled = photo.filename.includes("IMG_20200529_085709-scaled (1)");
+    return !isEleventh && !isSpecificScaled;
+  });
 
 const Gallery = () => {
+  const handleDownload = (url: string, title: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${title.toLowerCase().replace(/\s+/g, '-')}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Iniciando descarga...");
+  };
+
   return (
-    <main className="py-12 md:py-20 animate-in fade-in duration-700">
+    <main className="py-12 md:py-20 animate-in fade-in duration-700 bg-muted/20 min-h-screen">
       <div className="container">
         {/* Top Social Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-16 bg-muted/50 p-6 md:p-10 rounded-3xl border border-border">
-          <div className="space-y-1 text-center md:text-left">
-            <h1 className="text-4xl font-black italic text-primary">NUESTROS TRABAJOS</h1>
-            <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs">Transformando espacios en toda España</p>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-16 bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-border/50">
+          <div className="space-y-2 text-center md:text-left">
+            <h1 className="text-4xl md:text-6xl font-black italic text-primary leading-none tracking-tighter">NUESTROS <br />TRABAJOS</h1>
+            <p className="text-muted-foreground font-bold uppercase tracking-widest text-xs opacity-70">Exemplos reales de instalaciones MH Sport</p>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-bold italic hidden sm:inline">Síguenos en nuestras redes:</span>
-            <a href="#" className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 text-white font-bold text-sm shadow-lg hover:scale-105 transition-transform">
-              <Instagram className="h-5 w-5" /> Instagram
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="https://www.instagram.com/mhsport.cesped.artificial/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white font-black italic text-sm shadow-xl hover:scale-105 transition-all">
+              <Instagram className="h-5 w-5" /> INSTAGRAM
             </a>
-            <a href="#" className="flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-bold text-sm shadow-lg hover:scale-105 transition-transform">
-              <Facebook className="h-5 w-5" /> Facebook
+            <a href="https://www.facebook.com/share/1DyHGTDUJ2/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#1877F2] text-white font-black italic text-sm shadow-xl hover:scale-105 transition-all">
+              <Facebook className="h-5 w-5" /> FACEBOOK
             </a>
           </div>
         </div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid - Square Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {photos.map((photo, i) => (
             <div key={i} className="group relative aspect-square rounded-[2rem] overflow-hidden border-4 border-white shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
@@ -45,23 +56,43 @@ const Gallery = () => {
                 alt={photo.title} 
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                <span className="text-white font-black italic text-xl tracking-tight">{photo.title}</span>
-                <span className="text-primary font-bold text-sm flex items-center gap-2 mt-2">
-                  <Camera className="h-4 w-4" /> VER PROYECTO
-                </span>
+              
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">
+                <div className="space-y-4">
+                    <p className="text-white font-black italic text-lg leading-tight uppercase tracking-tight">{photo.title}</p>
+                    <div className="flex gap-2">
+                        <Button 
+                            variant="secondary" 
+                            size="sm" 
+                            onClick={() => handleDownload(photo.url, photo.title)}
+                            className="flex-1 rounded-xl font-bold gap-2 text-xs h-10 shadow-lg"
+                        >
+                            <Camera className="h-4 w-4" /> DESCARGAR
+                        </Button>
+                        <a 
+                            href={photo.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="bg-white/20 hover:bg-white/40 text-white p-2 rounded-xl backdrop-blur-md transition-colors flex items-center justify-center h-10 w-10"
+                        >
+                            <Camera className="h-4 w-4" />
+                        </a>
+                    </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-20 p-12 bg-primary text-primary-foreground rounded-[3rem] text-center space-y-6">
-          <h2 className="text-3xl md:text-5xl font-black italic">¿Quieres ver más?</h2>
-          <p className="text-xl opacity-90 font-medium">Actualizamos nuestros trabajos semanalmente en nuestras redes sociales oficiales.</p>
+        {/* CTA */}
+        <div className="mt-32 p-12 md:p-20 bg-primary text-primary-foreground rounded-[3.5rem] text-center space-y-8 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+          <h2 className="text-4xl md:text-7xl font-black italic uppercase leading-none tracking-tighter">¿Listo para tu <br />propio jardín?</h2>
+          <p className="text-xl md:text-2xl opacity-90 font-medium max-w-2xl mx-auto">Solicita tu presupuesto personalizado gratis y te asesoramos sin compromiso.</p>
           <div className="pt-4">
-            <a href="/contacto" className="inline-flex items-center justify-center h-14 px-10 rounded-2xl bg-white text-primary font-black italic text-lg shadow-xl hover:bg-white/90 transition-colors">
-              SOLICITAR PRESUPUESTO
-            </a>
+            <Button size="lg" asChild className="h-16 px-12 rounded-2xl bg-white text-primary font-black italic text-xl shadow-2xl hover:bg-white/90 transition-all hover:scale-105 uppercase">
+              <Link to="/contacto">Cuentanos tu proyecto</Link>
+            </Button>
           </div>
         </div>
       </div>

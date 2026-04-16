@@ -49,14 +49,14 @@ const ProductDetail = () => {
             <div className="aspect-square rounded-[3rem] overflow-hidden border-4 border-white shadow-2xl bg-white relative group">
               <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute top-6 left-6">
-                <span className="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">CALIDAD PREMIUM</span>
+                <span className="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg gap-2">OFICIAL</span>
               </div>
             </div>
-            {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
-                {product.images.map((img, i) => (
-                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-105 transition-transform">
-                    <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
+            {product.gallery && product.gallery.length > 1 && (
+              <div className="grid grid-cols-4 sm:grid-cols-5 gap-3">
+                {product.gallery.map((img, i) => (
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-105 transition-transform hover:border-primary/50 relative">
+                    <img src={img} alt={`${product.name} galería ${i + 1}`} className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
@@ -79,20 +79,25 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <p className="text-lg text-muted-foreground leading-relaxed font-medium">
-              {product.description}
+            <p className="text-lg text-muted-foreground leading-relaxed font-medium line-clamp-3">
+              {product.description.split('\n').filter(Boolean).find(p => p.length > 50 && p !== 'Descripción') || product.description.split('\n').filter(Boolean)[0]}
             </p>
+            {product.category === 'al-corte' && (
+                <p className="text-sm font-bold text-foreground">
+                    El precio es por metro cuadrado. Su precio es de {product.price.toFixed(2)} €/m².
+                </p>
+            )}
 
             {/* Configurator */}
             <div className="p-8 bg-card border-2 border-primary/10 rounded-[2.5rem] shadow-xl space-y-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               
               {product.variants && product.variants.length > 0 && (
-                <div className="space-y-3">
+                <div className="space-y-3 relative z-10">
                   <label className="text-xs font-black uppercase tracking-widest text-muted-foreground italic">Seleccionar Variante</label>
                   <Select value={variant} onValueChange={setVariant}>
-                    <SelectTrigger className="h-12 rounded-xl bg-background border-border font-bold">
-                      <SelectValue placeholder="Variante" />
+                    <SelectTrigger className="h-12 rounded-xl bg-background border-border font-bold shadow-sm">
+                      <SelectValue placeholder="Elige una opción" />
                     </SelectTrigger>
                     <SelectContent>
                       {product.variants.map((v) => (
@@ -104,40 +109,72 @@ const ProductDetail = () => {
               )}
 
               {product.category === "al-corte" && (
-                <div className="space-y-4">
-                  <label className="text-xs font-black uppercase tracking-widest text-muted-foreground italic">Calculadora de Superficie</label>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold uppercase opacity-60 ml-1">Ancho (m)</span>
-                      <Input type="number" min="0" step="0.1" value={width} onChange={(e) => setWidth(e.target.value)} placeholder="0.0" className="h-12 rounded-xl bg-background border-border font-bold" />
-                    </div>
-                    <div className="space-y-2">
-                      <span className="text-[10px] font-bold uppercase opacity-60 ml-1">Largo (m)</span>
-                      <Input type="number" min="0" step="0.1" value={length} onChange={(e) => setLength(e.target.value)} placeholder="0.0" className="h-12 rounded-xl bg-background border-border font-bold" />
-                    </div>
+                <div className="space-y-5 relative z-10 bg-white p-6 rounded-2xl border border-border shadow-sm">
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground italic">Formato de corte (metros)</label>
+                    <Select 
+                        value={width && length ? `${width}x${length}` : ""} 
+                        onValueChange={(val) => {
+                            if (!val) { setWidth(""); setLength(""); return; }
+                            const [w, l] = val.split('x');
+                            setWidth(w);
+                            setLength(l);
+                        }}
+                    >
+                      <SelectTrigger className="h-12 rounded-xl bg-background border-border font-bold shadow-sm">
+                        <SelectValue placeholder="Elige una opción" />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-[300px]">
+                        {/* Generamos las opciones de 1x... y 2x... */}
+                        {Array.from({length: 30}, (_, i) => i + 1).map(num => (
+                          <SelectItem key={`1x${num}`} value={`1x${num}`} className="font-bold">1x{num}</SelectItem>
+                        ))}
+                        {Array.from({length: 26}, (_, i) => i + 5).map(num => (
+                          <SelectItem key={`2x${num}`} value={`2x${num}`} className="font-bold">2x{num}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                  {sqm > 0 && (
-                    <div className="p-5 bg-primary text-white rounded-2xl space-y-1 animate-in zoom-in-95 duration-300 shadow-lg shadow-primary/20">
-                      <div className="flex justify-between items-center text-xs font-bold uppercase opacity-80">
-                        <span>Total m²:</span>
-                        <span>{sqm.toFixed(2)} m²</span>
-                      </div>
-                      <div className="flex justify-between items-center text-xl font-black italic">
-                        <span>Subtotal:</span>
-                        <span>{estimated.toFixed(2)} €</span>
-                      </div>
-                    </div>
+
+                  {width && length && (
+                     <div className="flex justify-end">
+                       <button onClick={() => { setWidth(""); setLength(""); }} className="text-sm font-bold text-muted-foreground hover:text-primary transition-colors hover:underline">
+                         Limpiar
+                       </button>
+                     </div>
                   )}
+
+                  <div className="pt-4 space-y-4">
+                    {sqm > 0 ? (
+                        <div className="animate-in fade-in zoom-in-95 duration-300">
+                        <div className="flex justify-between items-end mb-2">
+                            <span className="text-sm font-bold text-muted-foreground uppercase">Total m²: <span className="text-foreground">{sqm.toFixed(2)} m²</span></span>
+                            <span className="text-3xl font-black italic text-primary">{Math.max(1, estimated).toFixed(2)} €</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground text-right">{product.price.toFixed(2)} € / m²</p>
+                        </div>
+                    ) : (
+                        <p className="text-3xl font-black italic text-muted-foreground/50 text-right">Desde {product.price.toFixed(2)} €</p>
+                    )}
+                  </div>
                 </div>
               )}
 
-              <div className="flex gap-4 pt-4">
-                <div className="flex items-center bg-muted/50 rounded-xl overflow-hidden p-1 border border-border">
-                  <button className="h-12 w-12 flex items-center justify-center hover:bg-white hover:shadow-sm rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-4 w-4" /></button>
+              <div className="flex gap-4 pt-4 relative z-10">
+                <div className="flex items-center bg-white rounded-xl overflow-hidden p-1 border-2 border-border shadow-sm">
+                  <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-4 w-4" /></button>
                   <span className="w-10 text-center font-black italic text-xl">{qty}</span>
-                  <button className="h-12 w-12 flex items-center justify-center hover:bg-white hover:shadow-sm rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-4 w-4" /></button>
+                  <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-4 w-4" /></button>
                 </div>
-                <Button size="lg" className="flex-1 rounded-xl h-14 font-black italic text-lg gap-3 shadow-xl shadow-primary/30 uppercase" onClick={() => addItem(product, qty)}>
+                <Button 
+                  size="lg" 
+                  disabled={product.category === 'al-corte' && (!width || !length)}
+                  className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 uppercase tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
+                  onClick={() => {
+                    const finalProduct = { ...product, name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name };
+                    addItem(finalProduct, qty);
+                  }}
+                >
                   <ShoppingCart className="h-6 w-6" /> Añadir al carrito
                 </Button>
               </div>
@@ -156,59 +193,57 @@ const ProductDetail = () => {
             </TabsList>
             
             <TabsContent value="specs" className="py-12 animate-in fade-in duration-500">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {product.specs ? (
-                  <>
-                    <div className="p-8 rounded-[2rem] border-2 border-primary/5 bg-card flex flex-col items-center text-center gap-4 group hover:border-primary/20 transition-colors">
-                      <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Ruler className="h-7 w-7" /></div>
-                      <div>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1 italic">Altura Fibra</p>
-                        <p className="text-2xl font-black italic text-primary">{product.specs.height}</p>
-                      </div>
+              <div className="max-w-5xl mx-auto border-t-2 border-primary/20 pt-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src={product.image} alt={`Ficha técnica ${product.name}`} className="w-full max-w-sm mx-auto rounded-3xl shadow-xl border border-border" />
                     </div>
-                    <div className="p-8 rounded-[2rem] border-2 border-primary/5 bg-card flex flex-col items-center text-center gap-4 group hover:border-primary/20 transition-colors">
-                      <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Droplets className="h-7 w-7" /></div>
-                      <div>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1 italic">Drenaje</p>
-                        <p className="text-2xl font-black italic text-primary">{product.specs.density}</p>
-                      </div>
+                    <div>
+                        {product.specs && Object.keys(product.specs).length > 0 ? (
+                            <table className="w-full text-left border-collapse">
+                                <tbody>
+                                    {Object.entries(product.specs).map(([key, value]) => {
+                                        const keyMap: Record<string, string> = {
+                                            height: 'Altura',
+                                            density: 'Densidad',
+                                            baseMaterial: 'Material Base',
+                                            uvResistance: 'Resistencia UV',
+                                            pileHeight: 'Altura del hilo',
+                                            backing: 'Soporte',
+                                            yarn: 'Hilo'
+                                        };
+                                        const displayKey = keyMap[key] || key;
+                                        return (
+                                            <tr key={key} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                                                <th className="py-4 text-muted-foreground font-medium w-1/3 capitalize">{displayKey}</th>
+                                                <td className="py-4 font-bold text-foreground italic">{value as React.ReactNode}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        ) : (
+                        <p className="text-muted-foreground italic text-center py-12">No hay ficha técnica detallada para este producto.</p>
+                        )}
                     </div>
-                    <div className="p-8 rounded-[2rem] border-2 border-primary/5 bg-card flex flex-col items-center text-center gap-4 group hover:border-primary/20 transition-colors">
-                      <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><ShieldCheck className="h-7 w-7" /></div>
-                      <div>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1 italic">Seguridad</p>
-                        <p className="text-2xl font-black italic text-primary">{product.specs.baseMaterial}</p>
-                      </div>
-                    </div>
-                    <div className="p-8 rounded-[2rem] border-2 border-primary/5 bg-card flex flex-col items-center text-center gap-4 group hover:border-primary/20 transition-colors">
-                      <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"><Sun className="h-7 w-7" /></div>
-                      <div>
-                        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1 italic">Rayos UV</p>
-                        <p className="text-2xl font-black italic text-primary">{product.specs.uvResistance}</p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-muted-foreground col-span-full italic text-center py-12">No hay ficha técnica disponible para este producto.</p>
-                )}
+                </div>
               </div>
             </TabsContent>
 
             <TabsContent value="description" className="py-12 animate-in fade-in duration-500">
-              <div className="max-w-4xl space-y-8">
+              <div className="max-w-4xl space-y-8 bg-white p-12 rounded-[3rem] border border-border/50 shadow-sm">
                 <p className="text-2xl font-black italic text-primary underline decoration-primary/20 underline-offset-8 mb-8 uppercase">A fondo</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <p className="text-xl text-muted-foreground leading-relaxed font-medium">
-                        {product.description} Este modelo ha sido diseñado bajo los estándares más exigentes de la industria, combinando fibras de última generación con una base reforzada de alta permeabilidad.
-                    </p>
-                    <div className="space-y-4">
-                        {product.features.map((f, i) => (
-                        <div key={i} className="flex items-center gap-4 p-4 bg-card border border-border rounded-2xl shadow-sm">
-                            <div className="h-3 w-3 rounded-full bg-primary" />
-                            <span className="font-bold italic uppercase text-sm">{f}</span>
-                        </div>
-                        ))}
-                    </div>
+                <div className="text-lg text-muted-foreground leading-relaxed font-medium space-y-6">
+                  {product.description.split(/\n\s*\n/).filter(Boolean).map((block, i) => {
+                     const paragraph = block.replace(/\n/g, ' ').trim();
+                     if (paragraph.toLowerCase() === 'descripción') return null;
+                     const isHeading = paragraph.length < 90 && (!paragraph.includes('.') || paragraph.endsWith(':'));
+                     return (
+                         <p key={i} className={isHeading ? "font-black italic text-foreground text-xl pt-4" : ""}>
+                             {paragraph.replace(/&#8211;/g, '-').replace(/&#8212;/g, '-').replace(/&#215;/g, 'x').replace(/&euro;/g, '€')}
+                         </p>
+                     );
+                  })}
                 </div>
               </div>
             </TabsContent>

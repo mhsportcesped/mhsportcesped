@@ -16,10 +16,32 @@ const steps = [
 const Installation = () => {
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    toast.success("Solicitud enviada. Nos pondremos en contacto contigo pronto.");
+    const formData = new FormData(e.currentTarget);
+    
+    // Add official website identification
+    formData.append("_subject", "PRESUPUESTO INSTALACIÓN - WEB OFICIAL MH SPORT CÉSPED");
+    formData.append("fuente", "Página de Instalación - Oficial");
+
+    try {
+      const response = await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSent(true);
+        toast.success("Solicitud enviada. Nos pondremos en contacto contigo pronto.");
+      } else {
+        toast.error("Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.");
+      }
+    } catch (error) {
+      toast.error("Error de conexión. Revisa tu internet.");
+    }
   };
 
   return (
@@ -67,33 +89,33 @@ const Installation = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-black italic uppercase ml-1">Nombre completo</label>
-                  <Input required placeholder="Tu nombre..." className="h-12 rounded-xl bg-background" />
+                  <Input name="nombre" required placeholder="Tu nombre..." className="h-12 rounded-xl bg-background" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-black italic uppercase ml-1">Teléfono</label>
-                  <Input required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
+                  <Input name="telefono" required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-black italic uppercase ml-1">Email</label>
-                  <Input required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
+                  <Input name="email" required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-black italic uppercase ml-1">Ciudad / Población</label>
-                  <Input required placeholder="¿Dónde vives?" className="h-12 rounded-xl bg-background" />
+                  <Input name="ciudad" required placeholder="¿Dónde vives?" className="h-12 rounded-xl bg-background" />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-black italic uppercase ml-1">Metros cuadrados aprox.</label>
-                <Input required type="number" min="1" placeholder="Ej: 50" className="h-12 rounded-xl bg-background" />
+                <Input name="metros" required type="number" min="1" placeholder="Ej: 50" className="h-12 rounded-xl bg-background" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-black italic uppercase ml-1">Mensaje o detalles</label>
-                <Textarea placeholder="Cuéntanos más sobre el terreno o tus necesidades..." rows={4} className="rounded-xl bg-background resize-none" />
+                <Textarea name="detalles" placeholder="Cuéntanos más sobre el terreno o tus necesidades..." rows={4} className="rounded-xl bg-background resize-none" />
               </div>
 
               <Button type="submit" size="lg" className="w-full text-lg font-black italic h-14 rounded-xl shadow-xl shadow-primary/20">

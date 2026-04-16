@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUp, Heart, Clock, Star, Leaf, Flame, ShieldCheck, Dropl
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/hero-cesped.jpg";
 import durabilidadImg from "@/assets/test-durabilidad.png";
+import imgEmpresa from "@/assets/empresa-exterior.jpg";
 import { useEffect, useState } from "react";
 
 const trustBadges = [
@@ -58,6 +59,37 @@ const Index = () => {
               <p className="text-xs text-muted-foreground font-medium leading-relaxed px-4">{b.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-24 bg-background px-4 sm:px-0">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
+            <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
+              <div className="space-y-4">
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-black italic text-primary uppercase leading-tight">MH Sport: <br />Tu confianza, <br />nuestra sede.</h2>
+                <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed">
+                  Contamos con más de 20 años de experiencia y unas instalaciones equipadas con la última tecnología para gestionar tu proyecto de principio a fin.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Button size="lg" asChild className="rounded-xl font-black italic px-8 h-14 shadow-lg shadow-primary/20">
+                  <Link to="/sobre-nosotros">CONOCE NUESTRA EMPRESA</Link>
+                </Button>
+                <Button variant="outline" size="lg" asChild className="rounded-xl font-bold px-8 h-14">
+                  <Link to="/contacto">VISÍTANOS EN HELLÍN</Link>
+                </Button>
+              </div>
+            </div>
+            <div className="relative group order-1 lg:order-2">
+              <div className="absolute -inset-4 bg-primary/10 rounded-[3rem] rotate-2 group-hover:rotate-0 transition-transform duration-700" />
+              <img 
+                src={imgEmpresa} 
+                alt="Sede Central MH Sport" 
+                className="relative rounded-[2.5rem] shadow-2xl border-4 border-white transition-all duration-700 group-hover:scale-[1.02]" 
+              />
+            </div>
+          </div>
         </div>
       </section>
 

@@ -15,11 +15,25 @@ import Calculator from "./pages/Calculator";
 import Installation from "./pages/Installation";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Gallery from "./pages/Gallery";
 import Checkout from "./pages/Checkout";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiesPolicy from "./pages/CookiesPolicy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 const queryClient = new QueryClient();
 
@@ -30,6 +44,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Header />
             <div className="flex-1">
@@ -43,6 +58,7 @@ const App = () => (
                 <Route path="/instalacion" element={<Installation />} />
                 <Route path="/sobre-nosotros" element={<About />} />
                 <Route path="/contacto" element={<Contact />} />
+                <Route path="/galeria" element={<Gallery />} />
                 <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
                 <Route path="/politica-cookies" element={<CookiesPolicy />} />
                 <Route path="/terminos-condiciones" element={<Terms />} />

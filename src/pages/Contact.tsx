@@ -11,10 +11,32 @@ import { Link } from "react-router-dom";
 const Contact = () => {
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    toast.success("¡Mensaje enviado correctamente!");
+    const formData = new FormData(e.currentTarget);
+    
+    // Add official website identification
+    formData.append("_subject", "NUEVO MENSAJE - WEB OFICIAL MH SPORT CÉSPED");
+    formData.append("fuente", "Formulario de Contacto - Página Oficial");
+
+    try {
+      const response = await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSent(true);
+        toast.success("¡Mensaje enviado correctamente!");
+      } else {
+        toast.error("Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.");
+      }
+    } catch (error) {
+      toast.error("Error de conexión. Revisa tu internet.");
+    }
   };
 
   return (
@@ -124,34 +146,34 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="fullname">Nombre y Apellidos</Label>
-                  <Input id="fullname" required placeholder="Tu nombre real..." className="h-12 rounded-xl bg-background" />
+                  <Input id="fullname" name="nombre" required placeholder="Tu nombre real..." className="h-12 rounded-xl bg-background" />
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="email">Correo electrónico</Label>
-                    <Input id="email" required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
+                    <Input id="email" name="email" required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Número de Teléfono</Label>
-                    <Input id="phone" required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
+                    <Input id="phone" name="telefono" required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="provincia">Provincia</Label>
-                    <Input id="provincia" placeholder="Madrid, Albacete..." className="h-12 rounded-xl bg-background" />
+                    <Input id="provincia" name="provincia" placeholder="Madrid, Albacete..." className="h-12 rounded-xl bg-background" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="poblacion">Población</Label>
-                    <Input id="poblacion" placeholder="Tu ciudad..." className="h-12 rounded-xl bg-background" />
+                    <Input id="poblacion" name="poblacion" placeholder="Tu ciudad..." className="h-12 rounded-xl bg-background" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="message">Mensaje o comentario</Label>
-                  <Textarea id="message" required placeholder="Cuéntanos tu proyecto..." rows={4} className="rounded-xl bg-background" />
+                  <Textarea id="message" name="mensaje" required placeholder="Cuéntanos tu proyecto..." rows={4} className="rounded-xl bg-background" />
                 </div>
 
                 <div className="flex items-start space-x-3 pt-2">
@@ -185,6 +207,7 @@ const Contact = () => {
             </Button>
         </div>
       </div>
+
 
       <div className="mt-20 h-[550px] w-full grayscale-[0.5] hover:grayscale-0 transition-all duration-700 brightness-[0.8] hover:brightness-100 border-y-8 border-primary/10 shadow-2xl">
         <iframe

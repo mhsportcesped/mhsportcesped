@@ -1,6 +1,11 @@
-import { Shield, Award, Users, Heart, Factory, Building2, LayoutGrid, Eye, SearchCheck, ArrowLeft } from "lucide-react";
+import { Shield, Award, Users, Heart, Factory, Building2, LayoutGrid, Eye, SearchCheck, ArrowLeft, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import imgEmpresa from "@/assets/empresa-exterior.jpg";
+import imgAlmacen from "@/assets/almacen.jpg";
+import imgTrabajo from "@/assets/area-trabajo.jpg";
+import imgOficinas from "@/assets/oficinas.jpg";
+import imgExposicion from "@/assets/exposicion.jpg";
 
 const values = [
   { icon: Shield, title: "Integridad", desc: "Actuamos con honestidad y transparencia en todas nuestras interacciones." },
@@ -12,9 +17,15 @@ const values = [
 const About = () => (
   <main className="py-12 md:py-20">
     <div className="container max-w-5xl">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter text-primary">NUESTRA EMPRESA</h1>
-        <p className="mt-4 text-xl text-muted-foreground uppercase tracking-widest font-bold">MH SPORT CÉSPED ARTIFICIAL Y JARDINES S.L.</p>
+      <div className="text-center mb-16 space-y-4">
+        <h1 className="text-4xl sm:text-7xl font-black italic tracking-tighter text-primary">NUESTRA EMPRESA</h1>
+        <p className="text-lg sm:text-xl text-muted-foreground uppercase tracking-widest font-bold px-4">MH SPORT CÉSPED ARTIFICIAL Y JARDINES S.L.</p>
+        <div className="mt-8 sm:mt-12 relative group overflow-hidden rounded-[2rem] sm:rounded-[3rem] aspect-[4/3] sm:aspect-[21/9] shadow-2xl border-4 sm:border-8 border-white">
+          <img src={imgEmpresa} alt="Nuestra Empresa - MH Sport" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-bottom p-6 sm:p-12">
+            <p className="text-white text-xl sm:text-3xl font-black italic mt-auto">Sede Central en Hellín, Albacete</p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-20">
@@ -43,41 +54,69 @@ const About = () => (
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-        <div className="bg-card border border-border p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-          <Factory className="h-10 w-10 text-primary mb-4" />
-          <h3 className="text-xl font-bold mb-3 italic">NUESTRO ALMACÉN</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Espacio fundamental donde gestionamos productos y mercancías. Aseguramos un inventario adecuado para satisfacer la demanda de inmediato, clave para el funcionamiento fluido de la empresa.
-          </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 px-4 sm:px-0">
+        <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
+          <div className="aspect-video overflow-hidden">
+            <img src={imgAlmacen} alt="Nuestro Almacén" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          </div>
+          <div className="p-6 sm:p-8">
+            <Factory className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRO ALMACÉN</h3>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Espacio fundamental donde gestionamos productos y mercancías. Aseguramos un inventario adecuado para satisfacer la demanda de inmediato, clave para el funcionamiento fluido de la empresa.
+            </p>
+          </div>
         </div>
-        <div className="bg-card border border-border p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-          <LayoutGrid className="h-10 w-10 text-primary mb-4" />
-          <h3 className="text-xl font-bold mb-3 italic">NUESTRA ÁREA DE TRABAJO</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Espacio organizado donde nuestros empleados realizan sus tareas de manera eficiente. La organización de nuestro taller nos permite una puesta en marcha impecable.
-          </p>
+
+        <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
+          <div className="aspect-video overflow-hidden">
+            <img src={imgTrabajo} alt="Nuestra Área de Trabajo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          </div>
+          <div className="p-6 sm:p-8">
+            <LayoutGrid className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRA ÁREA DE TRABAJO</h3>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Espacio organizado donde nuestros empleados realizan sus tareas de manera eficiente. La organización de nuestro taller nos permite una puesta en marcha impecable.
+            </p>
+          </div>
         </div>
-        <div className="bg-card border border-border p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-          <Building2 className="h-10 w-10 text-primary mb-4" />
-          <h3 className="text-xl font-bold mb-3 italic">NUESTRAS OFICINAS</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Departamentos de administración y técnico, encargados de dar servicio al cliente y gestionar de la manera más óptima todos los trabajos realizados.
-          </p>
+
+        <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
+          <div className="aspect-video overflow-hidden">
+            <img src={imgOficinas} alt="Nuestras Oficinas" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          </div>
+          <div className="p-6 sm:p-8">
+            <Building2 className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRAS OFICINAS</h3>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Departamentos de administración y técnico, encargados de dar servicio al cliente y gestionar de la manera más óptima todos los trabajos realizados.
+            </p>
+          </div>
         </div>
-        <div className="bg-card border border-border p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-          <Eye className="h-10 w-10 text-primary mb-4" />
-          <h3 className="text-xl font-bold mb-3 italic">NUESTRA EXPOSICIÓN</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Presentación de nuestra variedad de productos con propósitos informativos. Incluye elementos visuales y muestras para enseñar la calidad de manera clara.
-          </p>
+
+        <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
+          <div className="aspect-video overflow-hidden">
+            <img src={imgExposicion} alt="Nuestra Exposición" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          </div>
+          <div className="p-6 sm:p-8">
+            <Eye className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRA EXPOSICIÓN</h3>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Presentación de nuestra variedad de productos con propósitos informativos. Incluye elementos visuales y muestras para enseñar la calidad de manera clara.
+            </p>
+          </div>
         </div>
-        <div className="bg-card border border-border p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow md:col-span-2">
-          <SearchCheck className="h-10 w-10 text-primary mb-4" />
-          <h3 className="text-xl font-bold mb-3 italic">CALIDAD Y SEGUIMIENTO</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Realizamos un seguimiento de todo el material desde la recepción hasta la instalación, con controles desde nuestro laboratorio hasta el lugar de puesta en marcha.
-          </p>
+
+        <div className="bg-primary text-white p-8 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-xl md:col-span-2 flex flex-col md:flex-row gap-6 sm:gap-8 items-center">
+          <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl sm:rounded-3xl bg-white/20 flex items-center justify-center shrink-0">
+            <SearchCheck className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
+          </div>
+          <div className="space-y-4 text-center md:text-left">
+            <h3 className="text-2xl sm:text-3xl font-black italic">CALIDAD Y SEGUIMIENTO</h3>
+            <p className="text-base sm:text-lg opacity-90 leading-relaxed">
+              Realizamos un seguimiento de todo el material desde la recepción hasta la instalación, con controles desde nuestro laboratorio hasta el lugar de puesta en marcha.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -117,10 +156,5 @@ const About = () => (
   </main>
 );
 
-const CheckCircle = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
 
 export default About;
