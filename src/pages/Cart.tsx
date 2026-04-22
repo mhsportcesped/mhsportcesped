@@ -14,12 +14,12 @@ const Cart = () => {
             <ShoppingBag className="h-12 w-12" />
           </div>
           <div className="space-y-3">
-            <h1 className="text-4xl font-black italic uppercase text-primary">Tu carrito está vacío</h1>
+            <h1 className="text-4xl font-black italic text-primary">Tu carrito está vacío</h1>
             <p className="text-muted-foreground max-w-sm mx-auto font-medium">Parece que aún no has añadido nada a tu selección de césped artificial.</p>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Button asChild size="lg" className="rounded-xl px-10 h-14 font-black italic shadow-xl shadow-primary/20">
-              <Link to="/tienda">IR A LA TIENDA</Link>
+              <Link to="/tienda">Ir a la tienda</Link>
             </Button>
             <Button asChild variant="ghost" className="rounded-xl px-8 h-14 font-bold text-muted-foreground">
               <Link to="/"><ArrowLeft className="h-4 w-4 mr-2" /> Volver al Inicio</Link>
@@ -35,7 +35,7 @@ const Cart = () => {
       <div className="container max-w-6xl">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
           <div className="space-y-1">
-            <h1 className="text-5xl font-black italic uppercase tracking-tight text-primary">Tu Selección</h1>
+            <h1 className="text-5xl font-black italic tracking-tight text-primary">Tu Selección</h1>
             <p className="text-muted-foreground font-bold italic">Tienes {totalItems} {totalItems === 1 ? 'producto' : 'productos'} listos para renovar tu espacio.</p>
           </div>
           <div className="flex gap-3">
@@ -60,13 +60,13 @@ const Cart = () => {
                 <div className="flex-1 flex flex-col justify-between">
                   <div className="space-y-1">
                     <div className="flex justify-between items-start gap-4">
-                      <Link to={`/producto/${item.product.slug}`} className="text-2xl font-black italic tracking-tight hover:text-primary transition-colors line-clamp-1 uppercase">{item.product.name}</Link>
+                      <Link to={`/producto/${item.product.slug}`} className="text-2xl font-black italic tracking-tight hover:text-primary transition-colors line-clamp-1">{item.product.name}</Link>
                       <button className="h-10 w-10 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-destructive rounded-xl transition-all shadow-sm" onClick={() => removeItem(item.product.id)}>
                         <Trash2 className="h-5 w-5" />
                       </button>
                     </div>
                     <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-black uppercase tracking-widest bg-primary/10 text-primary px-2 py-0.5 rounded-md">{item.product.category.replace('-', ' ')}</span>
+                        <span className="text-[10px] font-black tracking-widest bg-primary/10 text-primary px-2 py-0.5 rounded-md">{item.product.category.replace('-', ' ')}</span>
                     </div>
                   </div>
 
@@ -77,7 +77,7 @@ const Cart = () => {
                       <button className="h-10 w-10 flex items-center justify-center hover:bg-white hover:shadow-sm rounded-lg transition-all" onClick={() => updateQuantity(item.product.id, item.quantity + 1)}><Plus className="h-4 w-4" /></button>
                     </div>
                     <div className="text-right">
-                      <p className="text-[10px] font-black uppercase text-muted-foreground mb-1">Precio total</p>
+                      <p className="text-[10px] font-black text-muted-foreground mb-1">Precio total</p>
                       <p className="text-3xl font-black italic text-primary">{(item.product.price * item.quantity).toFixed(2)} €</p>
                     </div>
                   </div>
@@ -91,32 +91,32 @@ const Cart = () => {
             <div className="bg-card border-2 border-primary/20 p-8 md:p-10 rounded-[3rem] sticky top-24 shadow-2xl space-y-8 overflow-hidden relative">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               
-              <h2 className="text-2xl font-black italic uppercase tracking-tighter">Resumen compra</h2>
+              <h2 className="text-2xl font-black italic tracking-tighter">Resumen compra</h2>
               
               <div className="space-y-4">
-                <div className="flex justify-between text-sm font-bold uppercase italic opacity-60">
+                <div className="flex justify-between text-sm font-bold italic opacity-60">
                   <span>Productos</span>
                   <span>{totalItems}</span>
                 </div>
-                <div className="flex justify-between text-sm font-bold uppercase italic opacity-60">
+                <div className="flex justify-between text-sm font-bold italic opacity-60">
                   <span>Envío</span>
                   <span className="text-primary">Gratis</span>
                 </div>
                 <div className="h-px bg-border my-6" />
                 <div className="flex justify-between items-baseline">
-                  <span className="text-lg font-black italic uppercase">Total</span>
+                  <span className="text-lg font-black italic">Total</span>
                   <span className="text-4xl font-black italic text-primary">{totalPrice.toFixed(2)} €</span>
                 </div>
               </div>
 
               <div className="space-y-4 pt-4">
-                <Button size="lg" className="w-full rounded-2xl h-16 font-black italic text-xl shadow-xl shadow-primary/20 group uppercase overflow-hidden" asChild>
-                    <Link to="/checkout" className="flex items-center justify-center gap-3">
-                    COMPRAR AHORA <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
-                    </Link>
+                <Button className="w-full h-16 rounded-2xl font-black italic text-xl group shadow-xl shadow-primary/20" asChild>
+                  <Link to="/checkout" className="flex items-center justify-center gap-3">
+                    Comprar ahora <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                  </Link>
                 </Button>
                 
-                <p className="text-[10px] text-center text-muted-foreground uppercase tracking-widest font-black opacity-60">
+                <p className="text-[10px] text-center text-muted-foreground tracking-widest font-black opacity-60">
                     Entrega segura certificada <br /> 3-5 días laborables
                 </p>
               </div>

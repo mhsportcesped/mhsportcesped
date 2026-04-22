@@ -32,8 +32,8 @@ const CookieConsent = () => {
             <Cookie className="h-7 w-7" />
           </div>
           <div className="space-y-0.5">
-            <h4 className="font-black italic text-xl uppercase tracking-tighter">Tu Privacidad</h4>
-            <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Configuración de Cookies</p>
+            <h4 className="font-black italic text-xl tracking-tighter">Tu Privacidad</h4>
+            <p className="text-[10px] font-bold text-primary tracking-widest">Configuración de Cookies</p>
           </div>
         </div>
 
@@ -42,11 +42,11 @@ const CookieConsent = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 relative z-10 pt-2">
-          <Button onClick={accept} className="flex-[2] rounded-2xl h-14 font-black italic text-lg shadow-xl shadow-primary/20 uppercase tracking-tight">
-            ACEPTAR TODO
+          <Button onClick={accept} className="flex-[2] rounded-2xl h-14 font-black italic text-lg shadow-xl shadow-primary/20 tracking-tight">
+            Aceptar todo
           </Button>
           <Button variant="outline" asChild className="flex-1 rounded-2xl h-14 font-bold border-2">
-            <Link to="/politica-cookies">AJUSTES</Link>
+            <Link to="/politica-cookies">Ajustes</Link>
           </Button>
         </div>
       </div>

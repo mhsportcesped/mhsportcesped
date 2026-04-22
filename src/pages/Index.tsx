@@ -5,6 +5,8 @@ import heroImg from "@/assets/hero-cesped.jpg";
 import durabilidadImg from "@/assets/test-durabilidad.png";
 import imgEmpresa from "@/assets/empresa-exterior.jpg";
 import { useEffect, useState } from "react";
+import ProductCard from "@/components/ProductCard";
+import { products } from "@/data/products";
 
 const trustBadges = [
   { icon: Heart, title: "Ideal para familias", desc: "Único fabricante con modelos certificados para niños y mascotas." },
@@ -37,12 +39,20 @@ const Index = () => {
         <div className="absolute inset-0 bg-black/60" />
         <div className="container relative z-10 py-20">
           <div className="max-w-2xl">
-            <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] italic uppercase">
+            <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] italic">
               Césped Artificial <br /><span className="text-primary italic">Profesional</span>
             </h1>
             <p className="mt-6 text-xl text-white/90 font-medium">
               Descubre nuestra gama de césped artificial certificado para jardines, terrazas y espacios exteriores de alta intensidad.
             </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button size="lg" asChild className="rounded-xl font-black italic px-10 h-14 shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
+                <Link to="/tienda">Ver Catálogo</Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild className="rounded-xl font-bold px-10 h-14 bg-white/10 text-white border-white/20 hover:bg-white/20">
+                <Link to="/contacto">Pedir Presupuesto</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -55,10 +65,58 @@ const Index = () => {
               <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center shadow-sm border border-border">
                 <b.icon className="h-7 w-7 text-primary" />
               </div>
-              <h3 className="font-bold text-sm md:text-base italic uppercase">{b.title}</h3>
+              <h3 className="font-bold text-sm md:text-base italic">{b.title}</h3>
               <p className="text-xs text-muted-foreground font-medium leading-relaxed px-4">{b.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Featured Products / Shop Preview */}
+      <section className="py-24 bg-muted/20">
+        <div className="container">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div className="space-y-4">
+              <h2 className="text-4xl md:text-6xl font-black italic text-primary leading-tight">Nuestra <br />Colección</h2>
+              <p className="text-xl text-muted-foreground font-medium max-w-xl">
+                Selección de nuestros modelos más populares. Calidad profesional ahora disponible para tu hogar.
+              </p>
+            </div>
+            <Button size="lg" asChild className="rounded-xl font-black italic px-10 h-14 shadow-xl shadow-primary/20">
+              <Link to="/tienda">Explorar toda la tienda</Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products.filter(p => p.featured).slice(0, 4).map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+
+          {/* Category Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+            <Link to="/tienda?cat=al-corte" className="group relative h-48 rounded-[2rem] overflow-hidden border-2 border-primary/10 hover:border-primary/30 transition-all">
+              <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-center">
+                <h3 className="text-2xl font-black italic text-primary">Al Corte</h3>
+                <p className="text-sm font-bold text-muted-foreground">Metros a medida</p>
+              </div>
+            </Link>
+            <Link to="/tienda?cat=en-rollo" className="group relative h-48 rounded-[2rem] overflow-hidden border-2 border-primary/10 hover:border-primary/30 transition-all">
+              <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-center">
+                <h3 className="text-2xl font-black italic text-primary">En Rollo</h3>
+                <p className="text-sm font-bold text-muted-foreground">Mejor precio m²</p>
+              </div>
+            </Link>
+            <Link to="/tienda?cat=complementos" className="group relative h-48 rounded-[2rem] overflow-hidden border-2 border-primary/10 hover:border-primary/30 transition-all">
+              <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-center">
+                <h3 className="text-2xl font-black italic text-primary">Complementos</h3>
+                <p className="text-sm font-bold text-muted-foreground">Instalación completa</p>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -67,17 +125,17 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-center">
             <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
               <div className="space-y-4">
-                <h2 className="text-3xl sm:text-4xl md:text-6xl font-black italic text-primary uppercase leading-tight">MH Sport: <br />Tu confianza, <br />nuestra sede.</h2>
+                <h2 className="text-3xl sm:text-4xl md:text-6xl font-black italic text-primary leading-tight">MH Sport: <br />Tu confianza, <br />nuestra sede.</h2>
                 <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed">
                   Contamos con más de 20 años de experiencia y unas instalaciones equipadas con la última tecnología para gestionar tu proyecto de principio a fin.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" asChild className="rounded-xl font-black italic px-8 h-14 shadow-lg shadow-primary/20">
-                  <Link to="/sobre-nosotros">CONOCE NUESTRA EMPRESA</Link>
+                  <Link to="/sobre-nosotros">Conoce nuestra empresa</Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild className="rounded-xl font-bold px-8 h-14">
-                  <Link to="/contacto">VISÍTANOS EN HELLÍN</Link>
+                  <Link to="/contacto">Visítanos en Hellín</Link>
                 </Button>
               </div>
             </div>
@@ -103,7 +161,7 @@ const Index = () => {
             </div>
             <div className="space-y-10">
               <div className="space-y-6">
-                <h2 className="text-4xl md:text-5xl font-black leading-[1.1] italic text-primary uppercase underline decoration-primary/30 underline-offset-[12px]">
+                <h2 className="text-4xl md:text-5xl font-black leading-[1.1] italic text-primary underline decoration-primary/30 underline-offset-[12px]">
                   Testado para que dure más de 10 años
                 </h2>
                 <p className="text-xl text-muted-foreground leading-relaxed">
@@ -113,14 +171,14 @@ const Index = () => {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-lg font-black italic uppercase text-foreground">
+                  <div className="flex items-center gap-3 text-lg font-black italic text-foreground">
                     <div className="h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600"><Flame className="h-6 w-6" /></div>
                     No inflamable
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">Clasificación “B fl-S1” en la Norma EN 13501-1. Máxima vanguardia en seguridad contra el fuego.</p>
                 </div>
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-lg font-black italic uppercase text-foreground">
+                  <div className="flex items-center gap-3 text-lg font-black italic text-foreground">
                     <div className="h-10 w-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600"><ShieldCheck className="h-6 w-6" /></div>
                     Alta calidad
                   </div>
@@ -139,7 +197,7 @@ const Index = () => {
           <div className="h-20 w-20 rounded-[2rem] bg-white/20 flex items-center justify-center mx-auto mb-8 animate-bounce transition-all duration-1000">
             <Droplets className="h-10 w-10" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-black mb-8 italic uppercase">¿Llueve mucho?</h2>
+          <h2 className="text-4xl md:text-6xl font-black mb-8 italic">¿Llueve mucho?</h2>
           <p className="text-2xl md:text-4xl font-bold leading-tight">
             Nuestro césped drena hasta <span className="bg-white text-primary px-4 py-1 rounded-xl mx-2 shadow-lg">60 litros</span> por metro cuadrado cada minuto.
           </p>

@@ -22,19 +22,19 @@ const Shop = () => {
   const sections = [
     { 
       id: 'al-corte', 
-      title: "CÉSPED ARTIFICIAL AL CORTE", 
+      title: "Césped Artificial Al Corte", 
       badge: "👉 Se vende por metros (precio por m²)",
       note: "📌 Es el mismo césped que en rollo, pero cortado a medida del cliente."
     },
     { 
       id: 'en-rollo', 
-      title: "CÉSPED ARTIFICIAL EN ROLLO", 
+      title: "Césped Artificial En Rollo", 
       badge: "👉 Rollos completos (más baratos por cantidad)",
       note: "📌 Los rollos son ideales para jardines grandes, instalaciones deportivas u obras profesionales."
     },
     { 
       id: 'complementos', 
-      title: "COMPLEMENTOS", 
+      title: "Complementos", 
       badge: "👉 Todo lo necesario para montar y fijar el césped",
       note: "🧴 Adhesivos, ✂️ Herramientas y 🌿 Base para el terreno."
     }
@@ -45,16 +45,16 @@ const Shop = () => {
       <div className="container">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
           <div className="space-y-2">
-            <h1 className="text-5xl font-black tracking-tight italic text-primary uppercase">TIENDA MH SPORT</h1>
+            <h1 className="text-5xl font-black tracking-tight italic text-primary">Tienda MH Sport</h1>
             <p className="text-xl font-bold">Todo lo que necesitas para tu proyecto verde.</p>
           </div>
           
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Button asChild variant="outline" className="rounded-xl h-14 px-8 border-primary text-primary font-black italic hover:bg-primary/5 shadow-sm">
-              <Link to="/contacto">PIDE MUESTRAS GRATUITAS</Link>
+              <Link to="/contacto">Pide muestras gratuitas</Link>
             </Button>
             <Button asChild className="rounded-xl h-14 px-8 bg-primary font-black italic shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
-              <Link to="/contacto">PRESUPUESTO INSTALACIÓN</Link>
+              <Link to="/contacto">Presupuesto instalación</Link>
             </Button>
           </div>
         </div>
