@@ -98,7 +98,7 @@ const Checkout = () => {
     finalData.append("fuente", "Checkout con Pago - Página Oficial");
 
     try {
-      await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+      await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: finalData,
         headers: { 'Accept': 'application/json' }

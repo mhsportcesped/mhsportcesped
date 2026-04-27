@@ -20,7 +20,7 @@ const Contact = () => {
     formData.append("fuente", "Formulario de Contacto - Página Oficial");
 
     try {
-      const response = await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: formData,
         headers: {

@@ -25,7 +25,7 @@ const Installation = () => {
     formData.append("fuente", "Página de Instalación - Oficial");
 
     try {
-      const response = await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: formData,
         headers: {
