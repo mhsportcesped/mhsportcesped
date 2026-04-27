@@ -29,6 +29,12 @@ import imgKiev from '../assets/cesped-kiev.png';
 import imgOporto from '../assets/cesped-oporto.png';
 import imgDefault from '../assets/cesped-producto-1.jpg';
 import imgAccesorios from '../assets/accesorios-instalacion.jpg';
+import imgCartucho from '../assets/adhesivo-cartucho.png';
+import imgCintaAdhesiva from '../assets/cinta-union-adhesiva.png';
+import imgCintaNormal from '../assets/cinta-union-estandar.png';
+import imgCola from '../assets/cola-bicomponente.png';
+import imgCortador from '../assets/cortador-cesped.png';
+
 
 const imgURLs = {
   ankara: imgAnkara,
@@ -43,11 +49,11 @@ const imgURLs = {
   suecia: imgDefault,
   oslo: imgDefault,
   
-  cartucho: imgAccesorios,
-  cintaAdhesiva: imgAccesorios,
-  cintaNormal: imgAccesorios,
-  cola: imgAccesorios,
-  cortador: imgAccesorios,
+  cartucho: imgCartucho,
+  cintaAdhesiva: imgCintaAdhesiva,
+  cintaNormal: imgCintaNormal,
+  cola: imgCola,
+  cortador: imgCortador,
   espatula: imgAccesorios,
   grapas: imgAccesorios,
   guantes: imgAccesorios,
