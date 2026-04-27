@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +25,19 @@ import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+const RedirectToHome = () => {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Redirect to home on initial load/refresh if not already there
+    if (window.location.pathname !== "/") {
+      navigate("/", { replace: true });
+    }
+  }, []);
+
+  return null;
+};
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -44,6 +57,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <RedirectToHome />
           <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Header />
