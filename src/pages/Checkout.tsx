@@ -98,17 +98,24 @@ const Checkout = () => {
     finalData.append("fuente", "Checkout con Pago - Página Oficial");
 
     try {
-      await fetch("https://formspree.io/info@mhsportcesped.es", {
+      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: finalData,
         headers: { 'Accept': 'application/json' }
       });
-      
-      setSubmitted(true);
-      clearCart();
-      toast.success("¡Pedido finalizado con éxito!");
+
+      if (response.ok) {
+        setSubmitted(true);
+        clearCart();
+        toast.success("¡Pedido finalizado con éxito!");
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Formspree error:", errorData);
+        toast.error(`Error al registrar el pedido: ${errorData.error || "No se pudo conectar con el servidor"}`);
+      }
     } catch (error) {
-      toast.error("Error al registrar el pedido, pero el pago fue recibido. Contacta con nosotros.");
+      console.error("Error sending form:", error);
+      toast.error("Error de conexión. Contacta con nosotros por teléfono.");
     }
   };
 

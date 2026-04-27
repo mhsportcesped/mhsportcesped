@@ -32,10 +32,13 @@ const Contact = () => {
         setSent(true);
         toast.success("¡Mensaje enviado correctamente!");
       } else {
-        toast.error("Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Formspree error:", errorData);
+        toast.error(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (error) {
-      toast.error("Error de conexión. Revisa tu internet.");
+      console.error("Error sending form:", error);
+      toast.error("Error de conexión. Comprueba la consola.");
     }
   };
 

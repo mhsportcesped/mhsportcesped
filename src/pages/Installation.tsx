@@ -37,10 +37,13 @@ const Installation = () => {
         setSent(true);
         toast.success("Solicitud enviada. Nos pondremos en contacto contigo pronto.");
       } else {
-        toast.error("Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Formspree error:", errorData);
+        toast.error(`Error: ${errorData.error || "No se pudo enviar la solicitud"}`);
       }
     } catch (error) {
-      toast.error("Error de conexión. Revisa tu internet.");
+      console.error("Error sending form:", error);
+      toast.error("Error de conexión. Comprueba la consola.");
     }
   };
 
