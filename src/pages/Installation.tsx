@@ -109,6 +109,11 @@ const Installation = () => {
               </div>
 
               <div className="space-y-2">
+                <label className="text-xs font-black italic ml-1">Calle y Número</label>
+                <Input name="calle" required placeholder="Dirección exacta de la instalación..." className="h-12 rounded-xl bg-background" />
+              </div>
+
+              <div className="space-y-2">
                 <label className="text-xs font-black italic ml-1">Metros cuadrados aprox.</label>
                 <Input name="metros" required type="number" min="1" placeholder="Ej: 50" className="h-12 rounded-xl bg-background" />
               </div>

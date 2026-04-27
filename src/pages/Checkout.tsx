@@ -191,8 +191,12 @@ const Checkout = () => {
                     <Input id="phone" name="telefono" type="tel" required placeholder="600 000 000" defaultValue={formData?.get("telefono")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                   <div className="space-y-3">
-                    <Label htmlFor="address" className="text-xs font-black italic ml-1 opacity-60">Dirección de envío</Label>
-                    <Input id="address" name="direccion" required placeholder="Calle, Número, Ciudad..." defaultValue={formData?.get("direccion")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Label htmlFor="calle" className="text-xs font-black italic ml-1 opacity-60">Calle y Número</Label>
+                    <Input id="calle" name="calle" required placeholder="C/ Ejemplo, 123" defaultValue={formData?.get("calle")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                  </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="address" className="text-xs font-black italic ml-1 opacity-60">Población / Ciudad</Label>
+                    <Input id="address" name="direccion" required placeholder="Tu ciudad..." defaultValue={formData?.get("direccion")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                 </div>
 

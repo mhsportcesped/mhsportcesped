@@ -160,6 +160,11 @@ const Contact = () => {
                   </div>
                 </div>
 
+                <div className="space-y-2">
+                  <Label htmlFor="calle">Calle y Número</Label>
+                  <Input id="calle" name="calle" required placeholder="C/ Ejemplo, 123..." className="h-12 rounded-xl bg-background" />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="provincia">Provincia</Label>
