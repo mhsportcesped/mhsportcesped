@@ -21,8 +21,8 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <div className="container py-20 text-center space-y-4">
-        <h1 className="text-3xl font-black italic uppercase">Producto no encontrado</h1>
-        <Button asChild className="rounded-xl px-10 h-14 font-black italic"><Link to="/tienda">VOLVER A LA TIENDA</Link></Button>
+        <h1 className="text-3xl font-black italic">Producto no encontrado</h1>
+        <Button asChild className="rounded-xl px-10 h-14 font-black italic"><Link to="/tienda">Volver a la tienda</Link></Button>
       </div>
     );
   }
@@ -49,7 +49,7 @@ const ProductDetail = () => {
             <div className="aspect-square rounded-[3rem] overflow-hidden border-4 border-white shadow-2xl bg-white relative group">
               <img src={product.image} alt={product.name} className={`w-full h-full ${product.category === 'complementos' ? 'object-contain p-12' : 'object-cover'} group-hover:scale-110 transition-transform duration-1000`} />
               <div className="absolute top-6 left-6">
-                <span className="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg gap-2">OFICIAL</span>
+                <span className="bg-primary text-white text-[10px] font-black tracking-widest px-3 py-1.5 rounded-full shadow-lg gap-2">Oficial</span>
               </div>
             </div>
             {product.gallery && product.gallery.length > 1 && (
@@ -66,13 +66,13 @@ const ProductDetail = () => {
           {/* Info */}
           <div className="flex flex-col space-y-8">
             <div className="space-y-4">
-              <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
+              <nav className="flex items-center gap-2 text-[10px] font-black tracking-widest text-muted-foreground opacity-60">
                 <Link to="/tienda" className="hover:text-primary transition-colors">Tienda</Link>
                 <span>/</span>
                 <span className="text-primary">{product.category.replace('-', ' ')}</span>
               </nav>
 
-              <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase leading-none">{product.name}</h1>
+              <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter leading-none">{product.name}</h1>
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl font-black italic text-primary">{product.price.toFixed(2)} €</span>
                 <span className="text-lg text-muted-foreground font-black italic">/ {product.category === 'al-corte' ? 'm²' : 'unidad'}</span>
@@ -94,7 +94,7 @@ const ProductDetail = () => {
               
               {product.variants && product.variants.length > 0 && (
                 <div className="space-y-3 relative z-10">
-                  <label className="text-xs font-black uppercase tracking-widest text-muted-foreground italic">Seleccionar Variante</label>
+                  <label className="text-xs font-black tracking-widest text-muted-foreground italic">Seleccionar Variante</label>
                   <Select value={variant} onValueChange={setVariant}>
                     <SelectTrigger className="h-12 rounded-xl bg-background border-border font-bold shadow-sm">
                       <SelectValue placeholder="Elige una opción" />
@@ -111,7 +111,7 @@ const ProductDetail = () => {
               {product.category === "al-corte" && (
                 <div className="space-y-5 relative z-10 bg-white p-6 rounded-2xl border border-border shadow-sm">
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-muted-foreground italic">Formato de corte (metros)</label>
+                    <label className="text-xs font-black tracking-widest text-muted-foreground italic">Formato de corte (metros)</label>
                     <Select 
                         value={width && length ? `${width}x${length}` : ""} 
                         onValueChange={(val) => {
@@ -148,7 +148,7 @@ const ProductDetail = () => {
                     {sqm > 0 ? (
                         <div className="animate-in fade-in zoom-in-95 duration-300">
                         <div className="flex justify-between items-end mb-2">
-                            <span className="text-sm font-bold text-muted-foreground uppercase">Total m²: <span className="text-foreground">{sqm.toFixed(2)} m²</span></span>
+                            <span className="text-sm font-bold text-muted-foreground">Total m²: <span className="text-foreground">{sqm.toFixed(2)} m²</span></span>
                             <span className="text-3xl font-black italic text-primary">{Math.max(1, estimated).toFixed(2)} €</span>
                         </div>
                         <p className="text-xs text-muted-foreground text-right">{product.price.toFixed(2)} € / m²</p>
@@ -169,7 +169,7 @@ const ProductDetail = () => {
                 <Button 
                   size="lg" 
                   disabled={product.category === 'al-corte' && (!width || !length)}
-                  className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 uppercase tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
+                  className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
                   onClick={() => {
                     const finalProduct = { ...product, name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name };
                     addItem(finalProduct, qty);
@@ -186,10 +186,10 @@ const ProductDetail = () => {
         <div className="mt-24">
           <Tabs defaultValue="specs" className="w-full">
             <TabsList className="w-full justify-start border-b-2 border-primary/10 rounded-none bg-transparent h-auto p-0 gap-12">
-              <TabsTrigger value="specs" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black uppercase tracking-widest text-xs italic">Ficha Técnica</TabsTrigger>
-              <TabsTrigger value="description" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black uppercase tracking-widest text-xs italic">Descripción</TabsTrigger>
-              <TabsTrigger value="installation" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black uppercase tracking-widest text-xs italic">Instalación</TabsTrigger>
-              <TabsTrigger value="shipping" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black uppercase tracking-widest text-xs italic">Envíos</TabsTrigger>
+              <TabsTrigger value="specs" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Ficha Técnica</TabsTrigger>
+              <TabsTrigger value="description" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Descripción</TabsTrigger>
+              <TabsTrigger value="installation" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Instalación</TabsTrigger>
+              <TabsTrigger value="shipping" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Envíos</TabsTrigger>
             </TabsList>
             
             <TabsContent value="specs" className="py-12 animate-in fade-in duration-500">
@@ -232,7 +232,7 @@ const ProductDetail = () => {
 
             <TabsContent value="description" className="py-12 animate-in fade-in duration-500">
               <div className="max-w-4xl space-y-8 bg-white p-12 rounded-[3rem] border border-border/50 shadow-sm">
-                <p className="text-2xl font-black italic text-primary underline decoration-primary/20 underline-offset-8 mb-8 uppercase">A fondo</p>
+                <p className="text-2xl font-black italic text-primary underline decoration-primary/20 underline-offset-8 mb-8">A fondo</p>
                 <div className="text-lg text-muted-foreground leading-relaxed font-medium space-y-6">
                   {product.description.split(/\n\s*\n/).filter(Boolean).map((block, i) => {
                      const paragraph = block.replace(/\n/g, ' ').trim();
@@ -250,14 +250,14 @@ const ProductDetail = () => {
 
             <TabsContent value="installation" className="py-12 animate-in fade-in duration-500">
                 <div className="bg-primary/5 p-8 md:p-12 rounded-[3rem] border-2 border-primary/10 max-w-4xl">
-                    <h3 className="text-2xl font-black italic uppercase mb-6 text-primary">Consejos de instalación</h3>
+                    <h3 className="text-2xl font-black italic mb-6 text-primary">Consejos de instalación</h3>
                     <p className="text-xl text-muted-foreground font-medium leading-relaxed">{product.installation}</p>
                 </div>
             </TabsContent>
 
             <TabsContent value="shipping" className="py-12 animate-in fade-in duration-500">
                 <div className="bg-muted/50 p-8 md:p-12 rounded-[3rem] border border-border max-w-4xl">
-                    <h3 className="text-2xl font-black italic uppercase mb-6">Información de envío</h3>
+                    <h3 className="text-2xl font-black italic mb-6">Información de envío</h3>
                     <p className="text-xl text-muted-foreground font-medium leading-relaxed">{product.shipping}</p>
                 </div>
             </TabsContent>
@@ -267,7 +267,7 @@ const ProductDetail = () => {
         {/* Recommended */}
         {recommended.length > 0 && (
           <div className="mt-32 pt-20 border-t-2 border-primary/10">
-            <h2 className="text-4xl font-black italic uppercase mb-16 text-center">Te puede interesar</h2>
+            <h2 className="text-4xl font-black italic mb-16 text-center">Te puede interesar</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
               {recommended.map((p) => <ProductCard key={p.id} product={p} />)}
             </div>

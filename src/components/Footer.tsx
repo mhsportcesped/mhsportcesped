@@ -43,7 +43,7 @@ const Footer = () => (
       <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/50">
         <div className="space-y-1 text-center md:text-left">
           <p>© {new Date().getFullYear()} MH Sport Césped. Todos los derechos reservados.</p>
-          <p className="text-[10px] uppercase tracking-widest font-bold text-background/30">Página creada por BAIRON MEDINA ASENCIO</p>
+          <p className="text-[10px] tracking-widest font-bold text-background/30">Página creada por Bairon Medina Asencio</p>
         </div>
         <div className="flex gap-4">
           <a href="https://www.facebook.com/share/1DyHGTDUJ2/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-xl bg-background/5 flex items-center justify-center hover:bg-white hover:text-primary transition-all shadow-sm" aria-label="Facebook">

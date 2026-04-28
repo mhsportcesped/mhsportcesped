@@ -18,17 +18,17 @@ const Calculator = () => {
   return (
     <main className="py-20 animate-in fade-in duration-700">
       <div className="container max-w-xl">
-        <h1 className="text-4xl font-black italic text-center mb-2 uppercase text-primary">Calculadora m²</h1>
+        <h1 className="text-4xl font-black italic text-center mb-2 text-primary">Calculadora m²</h1>
         <p className="text-center text-muted-foreground mb-10 font-bold">Planifica tu instalación de forma precisa.</p>
 
         <div className="bg-card border-2 border-primary/10 rounded-[2rem] p-8 shadow-xl">
           <div className="grid grid-cols-2 gap-6 mb-8">
             <div className="space-y-2">
-              <label className="text-sm font-black italic uppercase">Ancho (metros)</label>
+              <label className="text-sm font-black italic">Ancho (metros)</label>
               <Input type="number" min="0" step="0.1" value={width} onChange={(e) => setWidth(e.target.value)} placeholder="0.0" className="h-14 rounded-xl text-lg font-bold" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-black italic uppercase">Largo (metros)</label>
+              <label className="text-sm font-black italic">Largo (metros)</label>
               <Input type="number" min="0" step="0.1" value={length} onChange={(e) => setLength(e.target.value)} placeholder="0.0" className="h-14 rounded-xl text-lg font-bold" />
             </div>
           </div>
@@ -39,15 +39,15 @@ const Calculator = () => {
                 <p className="text-xl"><strong>Superficie neta:</strong> <span className="text-primary font-black italic">{sqm.toFixed(2)} m²</span></p>
                 <p className="text-xl"><strong>Con margen (5%):</strong> <span className="text-primary font-black italic">{Math.ceil(sqm * 1.05)} m²</span></p>
                 <div className="h-px bg-border my-4" />
-                <p className="text-sm font-bold opacity-60 uppercase italic">Estimación de inversión:</p>
+                <p className="text-sm font-bold opacity-60 italic">Estimación de inversión:</p>
                 <p className="text-3xl font-black italic text-primary">
                   {(sqm * cheapest.price).toFixed(2)} € - {(sqm * priciest.price).toFixed(2)} €
                 </p>
-                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">*Precios orientativos según modelo.</p>
+                <p className="text-[10px] text-muted-foreground font-bold tracking-tighter">*Precios orientativos según modelo.</p>
               </div>
               
               <Button className="w-full h-14 rounded-xl text-lg font-black italic shadow-lg shadow-primary/20" asChild>
-                <Link to="/tienda?cat=al-corte">VER PRODUCTOS AL CORTE</Link>
+                <Link to="/tienda?cat=al-corte">Ver productos al corte</Link>
               </Button>
             </div>
           ) : (

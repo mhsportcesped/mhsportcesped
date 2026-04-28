@@ -18,8 +18,8 @@ const About = () => (
   <main className="py-12 md:py-20">
     <div className="container max-w-5xl">
       <div className="text-center mb-16 space-y-4">
-        <h1 className="text-4xl sm:text-7xl font-black italic tracking-tighter text-primary">NUESTRA EMPRESA</h1>
-        <p className="text-lg sm:text-xl text-muted-foreground uppercase tracking-widest font-bold px-4">MH SPORT CÉSPED ARTIFICIAL Y JARDINES S.L.</p>
+        <h1 className="text-4xl sm:text-7xl font-black italic tracking-tighter text-primary">Nuestra Empresa</h1>
+        <p className="text-lg sm:text-xl text-muted-foreground tracking-widest font-bold px-4">MH Sport Césped Artificial y Jardines S.L.</p>
         <div className="mt-8 sm:mt-12 relative group overflow-hidden rounded-[2rem] sm:rounded-[3rem] aspect-[4/3] sm:aspect-[21/9] shadow-2xl border-4 sm:border-8 border-white">
           <img src={imgEmpresa} alt="Nuestra Empresa - MH Sport" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-bottom p-6 sm:p-12">
@@ -61,7 +61,7 @@ const About = () => (
           </div>
           <div className="p-6 sm:p-8">
             <Factory className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
-            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRO ALMACÉN</h3>
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">Nuestro Almacén</h3>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               Espacio fundamental donde gestionamos productos y mercancías. Aseguramos un inventario adecuado para satisfacer la demanda de inmediato, clave para el funcionamiento fluido de la empresa.
             </p>
@@ -74,7 +74,7 @@ const About = () => (
           </div>
           <div className="p-6 sm:p-8">
             <LayoutGrid className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
-            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRA ÁREA DE TRABAJO</h3>
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">Nuestra Área de Trabajo</h3>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               Espacio organizado donde nuestros empleados realizan sus tareas de manera eficiente. La organización de nuestro taller nos permite una puesta en marcha impecable.
             </p>
@@ -87,7 +87,7 @@ const About = () => (
           </div>
           <div className="p-6 sm:p-8">
             <Building2 className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
-            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRAS OFICINAS</h3>
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">Nuestras Oficinas</h3>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               Departamentos de administración y técnico, encargados de dar servicio al cliente y gestionar de la manera más óptima todos los trabajos realizados.
             </p>
@@ -100,7 +100,7 @@ const About = () => (
           </div>
           <div className="p-6 sm:p-8">
             <Eye className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
-            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">NUESTRA EXPOSICIÓN</h3>
+            <h3 className="text-xl sm:text-2xl font-black mb-3 italic">Nuestra Exposición</h3>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
               Presentación de nuestra variedad de productos con propósitos informativos. Incluye elementos visuales y muestras para enseñar la calidad de manera clara.
             </p>
@@ -112,7 +112,7 @@ const About = () => (
             <SearchCheck className="h-10 w-10 sm:h-12 sm:w-12 text-white" />
           </div>
           <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-2xl sm:text-3xl font-black italic">CALIDAD Y SEGUIMIENTO</h3>
+            <h3 className="text-2xl sm:text-3xl font-black italic">Calidad y Seguimiento</h3>
             <p className="text-base sm:text-lg opacity-90 leading-relaxed">
               Realizamos un seguimiento de todo el material desde la recepción hasta la instalación, con controles desde nuestro laboratorio hasta el lugar de puesta en marcha.
             </p>

@@ -18,14 +18,14 @@ const ProductCard = ({ product }: { product: Product }) => {
         />
         {product.category === "al-corte" && (
             <div className="absolute top-4 left-4">
-                <span className="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">Al Corte</span>
+                <span className="bg-primary text-white text-[10px] font-black tracking-widest px-3 py-1.5 rounded-full shadow-lg">Al Corte</span>
             </div>
         )}
       </Link>
       <div className="p-6 flex flex-col flex-1 justify-between gap-4">
         <div>
             <Link to={`/producto/${product.slug}`}>
-            <h3 className="font-black italic uppercase text-lg text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2">{product.name}</h3>
+            <h3 className="font-black italic text-lg text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2">{product.name}</h3>
             </Link>
             <p className="text-sm font-medium text-muted-foreground mt-2 line-clamp-2 leading-relaxed">{product.description}</p>
         </div>
@@ -33,7 +33,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <span className="text-2xl font-black italic text-primary">
             {product.category === 'al-corte' ? 'Desde ' : ''}{product.price.toFixed(2)} €
           </span>
-          <Button asChild className="w-full rounded-xl font-black italic uppercase shadow-md shadow-primary/10 hover:scale-[1.02] transition-transform">
+          <Button asChild className="w-full rounded-xl font-black italic shadow-md shadow-primary/10 hover:scale-[1.02] transition-transform">
              <Link to={`/producto/${product.slug}`}>Seleccionar opciones</Link>
           </Button>
         </div>

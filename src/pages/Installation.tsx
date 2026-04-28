@@ -25,7 +25,7 @@ const Installation = () => {
     formData.append("fuente", "Página de Instalación - Oficial");
 
     try {
-      const response = await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: formData,
         headers: {
@@ -37,10 +37,13 @@ const Installation = () => {
         setSent(true);
         toast.success("Solicitud enviada. Nos pondremos en contacto contigo pronto.");
       } else {
-        toast.error("Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Formspree error:", errorData);
+        toast.error(`Error: ${errorData.error || "No se pudo enviar la solicitud"}`);
       }
     } catch (error) {
-      toast.error("Error de conexión. Revisa tu internet.");
+      console.error("Error sending form:", error);
+      toast.error("Error de conexión. Comprueba la consola.");
     }
   };
 
@@ -48,7 +51,7 @@ const Installation = () => {
     <main className="py-12 md:py-20 animate-in fade-in duration-700 bg-muted/10">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-black italic tracking-tight text-primary uppercase">Instalación Profesional</h1>
+          <h1 className="text-4xl md:text-5xl font-black italic tracking-tight text-primary">Instalación Profesional</h1>
           <p className="text-xl font-bold">Un acabado perfecto garantizado por expertos.</p>
           <p className="text-muted-foreground leading-relaxed">
             Nuestro equipo de instaladores certificados cuenta con la experiencia técnica necesaria para asegurar un drenaje óptimo y juntas invisibles en cualquier superficie.
@@ -62,7 +65,7 @@ const Installation = () => {
               <div className="h-16 w-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-6">
                 <s.icon className="h-8 w-8" />
               </div>
-              <h3 className="text-xl font-bold italic uppercase mb-3">{s.title}</h3>
+              <h3 className="text-xl font-bold italic mb-3">{s.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed font-medium">{s.desc}</p>
             </div>
           ))}
@@ -88,38 +91,43 @@ const Installation = () => {
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-black italic uppercase ml-1">Nombre completo</label>
+                  <label className="text-xs font-black italic ml-1">Nombre completo</label>
                   <Input name="nombre" required placeholder="Tu nombre..." className="h-12 rounded-xl bg-background" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black italic uppercase ml-1">Teléfono</label>
+                  <label className="text-xs font-black italic ml-1">Teléfono</label>
                   <Input name="telefono" required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-black italic uppercase ml-1">Email</label>
+                  <label className="text-xs font-black italic ml-1">Email</label>
                   <Input name="email" required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-black italic uppercase ml-1">Ciudad / Población</label>
+                  <label className="text-xs font-black italic ml-1">Ciudad / Población</label>
                   <Input name="ciudad" required placeholder="¿Dónde vives?" className="h-12 rounded-xl bg-background" />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black italic uppercase ml-1">Metros cuadrados aprox.</label>
+                <label className="text-xs font-black italic ml-1">Calle y Número</label>
+                <Input name="calle" required placeholder="Dirección exacta de la instalación..." className="h-12 rounded-xl bg-background" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black italic ml-1">Metros cuadrados aprox.</label>
                 <Input name="metros" required type="number" min="1" placeholder="Ej: 50" className="h-12 rounded-xl bg-background" />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-black italic uppercase ml-1">Mensaje o detalles</label>
+                <label className="text-xs font-black italic ml-1">Mensaje o detalles</label>
                 <Textarea name="detalles" placeholder="Cuéntanos más sobre el terreno o tus necesidades..." rows={4} className="rounded-xl bg-background resize-none" />
               </div>
 
               <Button type="submit" size="lg" className="w-full text-lg font-black italic h-14 rounded-xl shadow-xl shadow-primary/20">
-                SOLICITAR PRESUPUESTO GRATIS
+                Solicitar presupuesto gratis
               </Button>
             </form>
           )}

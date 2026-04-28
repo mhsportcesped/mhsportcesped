@@ -35,7 +35,7 @@ const CheckoutForm = ({ onPrev, onComplete, amount, items }: any) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6 animate-in slide-in-from-right duration-500">
       <div className="p-6 bg-muted/50 rounded-2xl border border-border space-y-4">
-        <Label className="text-xs font-black uppercase italic opacity-60">Datos de la Tarjeta</Label>
+        <Label className="text-xs font-black italic opacity-60">Datos de la tarjeta</Label>
         <div className="p-4 bg-background border border-border rounded-xl">
           <CardElement options={{
             style: {
@@ -55,11 +55,11 @@ const CheckoutForm = ({ onPrev, onComplete, amount, items }: any) => {
           type="submit" 
           disabled={!stripe || loading} 
           size="lg" 
-          className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30 uppercase"
+          className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30"
         >
-          {loading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> PROCESANDO...</> : `PAGAR ${amount.toFixed(2)} €`}
+          {loading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Procesando...</> : `Pagar ${amount.toFixed(2)} €`}
         </Button>
-        <Button variant="ghost" onClick={onPrev} disabled={loading} className="w-full font-bold text-muted-foreground uppercase italic underline-offset-4 hover:underline">
+        <Button variant="ghost" onClick={onPrev} disabled={loading} className="w-full font-bold text-muted-foreground italic underline-offset-4 hover:underline">
           Volver a datos de envío
         </Button>
       </div>
@@ -98,17 +98,24 @@ const Checkout = () => {
     finalData.append("fuente", "Checkout con Pago - Página Oficial");
 
     try {
-      await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: finalData,
         headers: { 'Accept': 'application/json' }
       });
-      
-      setSubmitted(true);
-      clearCart();
-      toast.success("¡Pedido finalizado con éxito!");
+
+      if (response.ok) {
+        setSubmitted(true);
+        clearCart();
+        toast.success("¡Pedido finalizado con éxito!");
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Formspree error:", errorData);
+        toast.error(`Error al registrar el pedido: ${errorData.error || "No se pudo conectar con el servidor"}`);
+      }
     } catch (error) {
-      toast.error("Error al registrar el pedido, pero el pago fue recibido. Contacta con nosotros.");
+      console.error("Error sending form:", error);
+      toast.error("Error de conexión. Contacta con nosotros por teléfono.");
     }
   };
 
@@ -120,14 +127,14 @@ const Checkout = () => {
             <CheckCircle2 className="h-12 w-12" />
             </div>
             <div className="space-y-3">
-                <h1 className="text-4xl font-black italic uppercase text-primary tracking-tight">¡Pedido Confirmado!</h1>
+                <h1 className="text-4xl font-black italic text-primary tracking-tight">¡Pedido confirmado!</h1>
                 <p className="text-muted-foreground font-medium">
                 Hemos recibido tu pedido y el pago se ha procesado correctamente. En breve recibirás un correo con la confirmación de envío.
                 </p>
             </div>
             <div className="pt-6">
                 <Button asChild size="lg" className="rounded-xl h-14 px-10 font-black italic shadow-xl shadow-primary/20">
-                    <Link to="/">VOLVER AL INICIO</Link>
+                    <Link to="/">Volver al inicio</Link>
                 </Button>
             </div>
         </div>
@@ -139,9 +146,9 @@ const Checkout = () => {
     return (
       <main className="py-20 animate-in fade-in duration-700">
         <div className="container text-center space-y-6">
-            <h1 className="text-3xl font-black italic uppercase">Tu carrito está vacío</h1>
+            <h1 className="text-3xl font-black italic">Tu carrito está vacío</h1>
             <Button asChild className="rounded-xl h-14 px-10 font-black italic shadow-lg shadow-primary/20">
-                <Link to="/tienda">IR A LA TIENDA</Link>
+                <Link to="/tienda">Ir a la tienda</Link>
             </Button>
         </div>
       </main>
@@ -153,12 +160,12 @@ const Checkout = () => {
       <div className="container max-w-6xl">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
             <div className="space-y-2">
-                <div className="flex items-center gap-4 text-xs font-black italic uppercase opacity-40 mb-2">
+                <div className="flex items-center gap-4 text-xs font-black italic opacity-60 mb-2">
                   <span className={step === 1 ? "text-primary opacity-100" : ""}>1. Datos Envío</span>
                   <span>/</span>
                   <span className={step === 2 ? "text-primary opacity-100" : ""}>2. Pago Seguro</span>
                 </div>
-                <h1 className="text-5xl font-black italic uppercase tracking-tight text-primary leading-none">
+                <h1 className="text-5xl font-black italic tracking-tight text-primary leading-none">
                   {step === 1 ? "Tu información" : "Pago Seguro"}
                 </h1>
             </div>
@@ -176,33 +183,37 @@ const Checkout = () => {
               <form onSubmit={handleDetailsSubmit} className="space-y-8 relative z-10 animate-in fade-in duration-500">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
-                    <Label htmlFor="name" className="text-xs font-black italic uppercase ml-1 opacity-60">Nombre completo</Label>
+                    <Label htmlFor="name" className="text-xs font-black italic ml-1 opacity-60">Nombre completo</Label>
                     <Input id="name" name="nombre" required placeholder="Juan Pérez" defaultValue={formData?.get("nombre")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                   <div className="space-y-3">
-                    <Label htmlFor="email" className="text-xs font-black italic uppercase ml-1 opacity-60">Email</Label>
+                    <Label htmlFor="email" className="text-xs font-black italic ml-1 opacity-60">Email</Label>
                     <Input id="email" name="email" type="email" required placeholder="juan@ejemplo.com" defaultValue={formData?.get("email")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
-                    <Label htmlFor="phone" className="text-xs font-black italic uppercase ml-1 opacity-60">Teléfono</Label>
+                    <Label htmlFor="phone" className="text-xs font-black italic ml-1 opacity-60">Teléfono</Label>
                     <Input id="phone" name="telefono" type="tel" required placeholder="600 000 000" defaultValue={formData?.get("telefono")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                   <div className="space-y-3">
-                    <Label htmlFor="address" className="text-xs font-black italic uppercase ml-1 opacity-60">Dirección de envío</Label>
-                    <Input id="address" name="direccion" required placeholder="Calle, Número, Ciudad..." defaultValue={formData?.get("direccion")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Label htmlFor="calle" className="text-xs font-black italic ml-1 opacity-60">Calle y Número</Label>
+                    <Input id="calle" name="calle" required placeholder="C/ Ejemplo, 123" defaultValue={formData?.get("calle")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                  </div>
+                  <div className="space-y-3">
+                    <Label htmlFor="address" className="text-xs font-black italic ml-1 opacity-60">Población / Ciudad</Label>
+                    <Input id="address" name="direccion" required placeholder="Tu ciudad..." defaultValue={formData?.get("direccion")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="notes" className="text-xs font-black italic uppercase ml-1 opacity-60">Notas del pedido (Opcional)</Label>
+                  <Label htmlFor="notes" className="text-xs font-black italic ml-1 opacity-60">Notas del pedido (Opcional)</Label>
                   <Textarea id="notes" name="notas" placeholder="Instrucciones para la entrega..." defaultValue={formData?.get("notas")} className="rounded-2xl bg-muted/30 border-none font-bold text-lg min-h-[140px] resize-none" />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30 uppercase">
-                  CONTINUAR AL PAGO
+                <Button type="submit" size="lg" className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30">
+                  Continuar al pago
                 </Button>
               </form>
             ) : (
@@ -213,14 +224,14 @@ const Checkout = () => {
                     className={`flex flex-col items-center gap-3 p-6 rounded-3xl border-2 transition-all ${paymentMethod === "card" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}
                   >
                     <CreditCard className={`h-8 w-8 ${paymentMethod === "card" ? "text-primary" : "text-muted-foreground"}`} />
-                    <span className="font-black italic uppercase text-xs">Tarjeta Bancaria</span>
+                    <span className="font-black italic text-xs">Tarjeta Bancaria</span>
                   </button>
                   <button 
                     onClick={() => setPaymentMethod("transfer")}
                     className={`flex flex-col items-center gap-3 p-6 rounded-3xl border-2 transition-all ${paymentMethod === "transfer" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`}
                   >
                     <Landmark className={`h-8 w-8 ${paymentMethod === "transfer" ? "text-primary" : "text-muted-foreground"}`} />
-                    <span className="font-black italic uppercase text-xs">Transferencia</span>
+                    <span className="font-black italic text-xs">Transferencia</span>
                   </button>
                 </div>
 
@@ -231,19 +242,19 @@ const Checkout = () => {
                 ) : (
                   <div className="space-y-6 animate-in slide-in-from-left duration-500">
                     <div className="p-8 bg-primary/5 rounded-[2.5rem] border border-primary/10 space-y-4">
-                      <h4 className="font-black italic uppercase text-primary">Instrucciones de Transferencia</h4>
+                      <h4 className="font-black italic text-primary">Instrucciones de transferencia</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed font-medium">
                         Al confirmar, registraremos tu pedido y te enviaremos por email nuestro IBAN. El envío se procesará una vez recibamos el justificante de pago.
                       </p>
-                      <ul className="text-xs space-y-2 opacity-60 font-bold uppercase italic">
+                      <ul className="text-xs space-y-2 opacity-60 font-bold italic">
                         <li>Beneficiario: MH SPORT CÉSPED S.L.</li>
                         <li>Concepto: Pedido #{Math.floor(Math.random() * 9000) + 1000}</li>
                       </ul>
                     </div>
-                    <Button onClick={finalizeOrder} size="lg" className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30 uppercase">
-                      CONFIRMAR PEDIDO POR TRANSFERENCIA
+                    <Button onClick={finalizeOrder} size="lg" className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30">
+                      Confirmar pedido por transferencia
                     </Button>
-                    <Button variant="ghost" onClick={() => setStep(1)} className="w-full font-bold text-muted-foreground uppercase italic underline-offset-4 hover:underline">
+                    <Button variant="ghost" onClick={() => setStep(1)} className="w-full font-bold text-muted-foreground italic underline-offset-4 hover:underline">
                       Volver a datos de envío
                     </Button>
                   </div>
@@ -259,7 +270,7 @@ const Checkout = () => {
                 
                 <div className="flex items-center gap-3">
                     <PackageCheck className="h-6 w-6 text-primary" />
-                    <h2 className="text-2xl font-black italic uppercase tracking-tighter">Tu Pedido</h2>
+                    <h2 className="text-2xl font-black italic tracking-tighter">Tu Pedido</h2>
                 </div>
 
                 <div className="space-y-4 max-h-[300px] overflow-y-auto pr-4 scrollbar-thin scrollbar-primary">
@@ -268,8 +279,8 @@ const Checkout = () => {
                             <div className="flex gap-4 items-center">
                                 <span className="h-10 w-10 flex items-center justify-center bg-primary text-white font-black italic text-sm rounded-xl shadow-lg">{item.quantity}x</span>
                                 <div className="space-y-0.5">
-                                    <p className="font-black italic text-xs uppercase line-clamp-1">{item.product.name}</p>
-                                    <p className="text-[10px] font-bold opacity-50 uppercase">{item.product.category.replace('-', ' ')}</p>
+                                    <p className="font-black italic text-xs line-clamp-1">{item.product.name}</p>
+                                    <p className="text-[10px] font-bold opacity-50">{item.product.category.replace('-', ' ')}</p>
                                 </div>
                             </div>
                             <span className="font-black italic text-primary">{(item.product.price * item.quantity).toFixed(2)} €</span>
@@ -279,12 +290,12 @@ const Checkout = () => {
 
                 <div className="pt-6 space-y-4">
                     <div className="flex justify-between items-baseline">
-                        <span className="text-xl font-black italic uppercase">Total a pagar</span>
+                        <span className="text-xl font-black italic">Total a pagar</span>
                         <span className="text-5xl font-black italic text-primary">{totalPrice.toFixed(2)} €</span>
                     </div>
-                    <div className="flex justify-between text-xs font-black uppercase italic opacity-40">
+                    <div className="flex justify-between text-xs font-black italic opacity-40">
                         <span>Envío</span>
-                        <span className="text-primary opacity-100">GRATIS</span>
+                        <span className="text-primary opacity-100">Gratis</span>
                     </div>
                 </div>
             </div>
@@ -292,7 +303,7 @@ const Checkout = () => {
             <div className="p-8 bg-white/50 backdrop-blur-sm border border-border rounded-[2.5rem] flex items-start gap-4 shadow-sm">
                 <ShieldCheck className="h-6 w-6 text-primary shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-xs font-black uppercase italic tracking-wider">Pago 100% Seguro</p>
+                  <p className="text-xs font-black italic tracking-wider">Pago 100% seguro</p>
                   <p className="text-[10px] text-muted-foreground leading-relaxed font-bold italic">
                     Tus pagos se procesan de forma cifrada a través de Stripe, cumpliendo con los estándares PCI-DSS.
                   </p>

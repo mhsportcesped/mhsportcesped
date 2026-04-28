@@ -20,7 +20,7 @@ const Contact = () => {
     formData.append("fuente", "Formulario de Contacto - Página Oficial");
 
     try {
-      const response = await fetch("https://formspree.io/f/info@mhsportcesped.es", {
+      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
         method: "POST",
         body: formData,
         headers: {
@@ -32,10 +32,13 @@ const Contact = () => {
         setSent(true);
         toast.success("¡Mensaje enviado correctamente!");
       } else {
-        toast.error("Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Formspree error:", errorData);
+        toast.error(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (error) {
-      toast.error("Error de conexión. Revisa tu internet.");
+      console.error("Error sending form:", error);
+      toast.error("Error de conexión. Comprueba la consola.");
     }
   };
 
@@ -43,8 +46,8 @@ const Contact = () => {
     <main className="py-12 md:py-20 animate-in fade-in duration-700">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-black italic tracking-tight text-primary uppercase">¡Contacta con nosotros!</h1>
-          <p className="text-xl font-bold italic uppercase">Ubicación: Polígono "San Rafael" C/Malta N⁰12-13, Hellín</p>
+          <h1 className="text-4xl md:text-5xl font-black italic tracking-tight text-primary">¡Contacta con nosotros!</h1>
+          <p className="text-xl font-bold italic">Ubicación: Polígono "San Rafael" C/Malta N⁰12-13, Hellín</p>
           <p className="text-muted-foreground leading-relaxed">
             En MH Sport queremos ayudarte a encontrar la mejor solución en césped artificial. Visítanos en nuestro punto de venta o solicita asesoramiento personalizado.
           </p>
@@ -160,6 +163,11 @@ const Contact = () => {
                   </div>
                 </div>
 
+                <div className="space-y-2">
+                  <Label htmlFor="calle">Calle y Número</Label>
+                  <Input id="calle" name="calle" required placeholder="C/ Ejemplo, 123..." className="h-12 rounded-xl bg-background" />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="provincia">Provincia</Label>
@@ -194,7 +202,7 @@ const Contact = () => {
                 </div>
 
                 <Button type="submit" size="lg" className="w-full text-lg font-black h-14 rounded-xl shadow-xl shadow-primary/20 italic">
-                  ENVIAR MENSAJE
+                  Enviar mensaje
                 </Button>
               </form>
             )}
@@ -211,7 +219,7 @@ const Contact = () => {
 
       <div className="mt-20 h-[550px] w-full grayscale-[0.5] hover:grayscale-0 transition-all duration-700 brightness-[0.8] hover:brightness-100 border-y-8 border-primary/10 shadow-2xl">
         <iframe
-          src="https://maps.google.com/maps?q=Poligono%20San%20Rafael%20Calle%20Malta%2012%20Hellin%20Albacete&t=&z=18&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=MH%20Sport%20Hellin&t=&z=18&ie=UTF8&iwloc=&output=embed"
           width="100%"
           height="100%"
           style={{ border: 0 }}
