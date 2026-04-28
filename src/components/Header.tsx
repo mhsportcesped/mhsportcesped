@@ -43,28 +43,45 @@ const Header = () => {
             </a>
           </div>
 
-          <Link to="/carrito" className="relative p-2 hover:bg-accent rounded-lg transition-colors">
-            <ShoppingCart className="h-5 w-5" />
+          <Link to="/carrito" className="relative p-3 hover:bg-accent rounded-xl transition-colors" aria-label="Carrito de compra">
+            <ShoppingCart className="h-6 w-6" />
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItems}
               </span>
             )}
           </Link>
-          <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <button
+            className="lg:hidden p-3 rounded-xl hover:bg-accent transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+          >
+            {mobileOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
           </button>
         </div>
       </div>
 
+      {/* Mobile menu - accesible y amplio para personas mayores */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-background">
-          <nav className="container py-4 flex flex-col gap-2">
+        <div className="lg:hidden border-t border-border bg-background shadow-xl">
+          <nav className="container py-4 flex flex-col gap-1">
             {navLinks.map((l) => (
-              <Link key={l.to} to={l.to} className="py-2 px-3 text-sm font-medium hover:bg-accent rounded-lg transition-colors" onClick={() => setMobileOpen(false)}>
+              <Link
+                key={l.to}
+                to={l.to}
+                className="py-4 px-4 text-lg font-semibold text-foreground hover:bg-primary/10 hover:text-primary rounded-xl transition-colors border-b border-border/30 last:border-0 flex items-center"
+                onClick={() => setMobileOpen(false)}
+              >
                 {l.label}
               </Link>
             ))}
+            {/* Teléfono de acceso rápido en móvil */}
+            <a
+              href="tel:967179172"
+              className="mt-3 py-4 px-4 text-lg font-bold text-primary bg-primary/10 rounded-xl flex items-center gap-3"
+            >
+              📞 967 179 172
+            </a>
           </nav>
         </div>
       )}
