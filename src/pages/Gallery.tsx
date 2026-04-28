@@ -4,18 +4,22 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const galleryImages = import.meta.glob("@/assets/gallery/**/*.{png,jpg,jpeg,webp,JPG,PNG,JPEG,WEBP}", { eager: true });
-const photos = Object.entries(galleryImages)
+const photosRaw = Object.entries(galleryImages)
   .map(([path, img]: [string, any]) => ({
     url: img.default,
-    filename: path.split('/').pop() || "",
-    title: path.split('/').pop()?.split('.')[0].replace(/-/g, ' ').replace(/_/g, ' ').toUpperCase() || "PROYECTO MH SPORT"
-  }))
-  // Filter out the 11th photo (index 10) AND the specific scaled(1) image
+    filename: path.split('/').pop() || ""
+  }));
+
+const photos = photosRaw
+  // Filter out any known problematic or specific files if needed
+  // Since we deleted the duplicate physically, we just filter any extra stuff if needed.
   .filter((photo, index) => {
-    const isEleventh = index === 10;
-    const isSpecificScaled = photo.filename.includes("IMG_20200529_085709-scaled (1)");
-    return !isEleventh && !isSpecificScaled;
-  });
+    return true; // We keep all physical files now
+  })
+  .map((photo, index) => ({
+    ...photo,
+    title: `IMAGEN ${index + 1}`
+  }));
 
 const Gallery = () => {
   const handleDownload = (url: string, title: string) => {

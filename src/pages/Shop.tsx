@@ -54,7 +54,7 @@ const Shop = () => {
               <Link to="/contacto">PIDE MUESTRAS GRATUITAS</Link>
             </Button>
             <Button asChild className="rounded-xl h-14 px-8 bg-primary font-black italic shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
-              <Link to="/contacto">PRESUPUESTO INSTALACIÓN</Link>
+              <Link to="/instalacion">PRESUPUESTO INSTALACIÓN</Link>
             </Button>
           </div>
         </div>

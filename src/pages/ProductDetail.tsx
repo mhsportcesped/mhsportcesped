@@ -47,7 +47,7 @@ const ProductDetail = () => {
           {/* Gallery */}
           <div className="space-y-6 sticky top-24">
             <div className="aspect-square rounded-[3rem] overflow-hidden border-4 border-white shadow-2xl bg-white relative group">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+              <img src={product.image} alt={product.name} className={`w-full h-full ${product.category === 'complementos' ? 'object-contain p-12' : 'object-cover'} group-hover:scale-110 transition-transform duration-1000`} />
               <div className="absolute top-6 left-6">
                 <span className="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg gap-2">OFICIAL</span>
               </div>
@@ -56,7 +56,7 @@ const ProductDetail = () => {
               <div className="grid grid-cols-4 sm:grid-cols-5 gap-3">
                 {product.gallery.map((img, i) => (
                   <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-105 transition-transform hover:border-primary/50 relative">
-                    <img src={img} alt={`${product.name} galería ${i + 1}`} className="w-full h-full object-cover" />
+                    <img src={img} alt={`${product.name} galería ${i + 1}`} className={`w-full h-full ${product.category === 'complementos' ? 'object-contain p-2' : 'object-cover'}`} />
                   </div>
                 ))}
               </div>
