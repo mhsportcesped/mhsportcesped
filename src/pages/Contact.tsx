@@ -8,37 +8,38 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
+import { sendEmail } from "@/lib/email";
+
 const Contact = () => {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    setLoading(true);
     
-    // Add official website identification
-    formData.append("_subject", "NUEVO MENSAJE - WEB OFICIAL MH SPORT CÉSPED");
-    formData.append("fuente", "Formulario de Contacto - Página Oficial");
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    const templateParams = {
+      from_name: formData.get("nombre"),
+      from_email: formData.get("email"),
+      phone: formData.get("telefono"),
+      address: `${formData.get("calle")}, ${formData.get("poblacion")}, ${formData.get("provincia")}`,
+      message: formData.get("mensaje"),
+      subject: "NUEVO MENSAJE - WEB OFICIAL MH SPORT CÉSPED",
+      source: "Formulario de Contacto - Página Oficial"
+    };
 
     try {
-      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
-        method: "POST",
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        setSent(true);
-        toast.success("¡Mensaje enviado correctamente!");
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error("Formspree error:", errorData);
-        toast.error(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
-      }
+      await sendEmail(templateParams);
+      setSent(true);
+      toast.success("¡Mensaje enviado correctamente!");
+      form.reset();
     } catch (error) {
-      console.error("Error sending form:", error);
-      toast.error("Error de conexión. Comprueba la consola.");
+      toast.error("Error al enviar el mensaje. Inténtalo de nuevo más tarde.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -201,8 +202,8 @@ const Contact = () => {
                   <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="Recaptcha" className="h-6 w-6 opacity-30" />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full text-lg font-black h-14 rounded-xl shadow-xl shadow-primary/20 italic">
-                  Enviar mensaje
+                <Button type="submit" disabled={loading} size="lg" className="w-full text-lg font-black h-14 rounded-xl shadow-xl shadow-primary/20 italic">
+                  {loading ? "Enviando..." : "Enviar mensaje"}
                 </Button>
               </form>
             )}

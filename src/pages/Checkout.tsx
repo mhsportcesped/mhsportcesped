@@ -23,13 +23,42 @@ const CheckoutForm = ({ onPrev, onComplete, amount, items }: any) => {
     if (!stripe || !elements) return;
 
     setLoading(true);
-    // In a real app, you'd create a PaymentIntent on your server here
-    // For this demo, we simulate a successful payment after 2 seconds
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setLoading(false);
-    toast.success("Pago procesado correctamente");
-    onComplete();
+
+    try {
+      // 1. Create PaymentIntent on the server
+      const response = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
+
+      const { clientSecret, error: backendError } = await response.json();
+
+      if (backendError) {
+        toast.error(backendError);
+        setLoading(false);
+        return;
+      }
+
+      // 2. Confirm payment with Stripe
+      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement)!,
+        },
+      });
+
+      if (stripeError) {
+        toast.error(stripeError.message || "Error al procesar el pago");
+      } else if (paymentIntent.status === "succeeded") {
+        toast.success("¡Pago procesado correctamente!");
+        onComplete();
+      }
+    } catch (err) {
+      console.error("Payment Error:", err);
+      toast.error("Error de conexión con la pasarela de pago");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,10 +96,13 @@ const CheckoutForm = ({ onPrev, onComplete, amount, items }: any) => {
   );
 };
 
+import { sendEmail } from "@/lib/email";
+
 const Checkout = () => {
   const { items, totalItems, totalPrice, clearCart } = useCart();
   const [step, setStep] = useState(1); // 1: Details, 2: Payment
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"card" | "transfer">("card");
   const [formData, setFormData] = useState<any>(null);
 
@@ -83,39 +115,32 @@ const Checkout = () => {
   };
 
   const finalizeOrder = async () => {
-    // Send to Formspree
+    setLoading(true);
+    // Send to EmailJS
     const cartSummary = items.map(item => `- ${item.product.name} (x${item.quantity}): ${(item.product.price * item.quantity).toFixed(2)} €`).join("\n");
-    const finalData = new FormData();
     
-    // Copy original form data
-    for (const [key, value] of formData.entries()) {
-      finalData.append(key, value);
-    }
-
-    finalData.append("Pedido", `\n${cartSummary}\n\nTOTAL: ${totalPrice.toFixed(2)} €`);
-    finalData.append("Metodo_Pago", paymentMethod === "card" ? "Tarjeta (Stripe)" : "Transferencia Bancaria");
-    finalData.append("_subject", "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED");
-    finalData.append("fuente", "Checkout con Pago - Página Oficial");
+    const templateParams = {
+      from_name: formData.get("nombre"),
+      from_email: formData.get("email"),
+      phone: formData.get("telefono"),
+      address: `${formData.get("calle")}, ${formData.get("direccion")}`,
+      notes: formData.get("notas") || "Sin notas",
+      order_summary: cartSummary,
+      total_price: `${totalPrice.toFixed(2)} €`,
+      payment_method: paymentMethod === "card" ? "Tarjeta (Stripe)" : "Transferencia Bancaria",
+      subject: "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
+      source: "Checkout con Pago - Página Oficial"
+    };
 
     try {
-      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
-        method: "POST",
-        body: finalData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        clearCart();
-        toast.success("¡Pedido finalizado con éxito!");
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error("Formspree error:", errorData);
-        toast.error(`Error al registrar el pedido: ${errorData.error || "No se pudo conectar con el servidor"}`);
-      }
+      await sendEmail(templateParams);
+      setSubmitted(true);
+      clearCart();
+      toast.success("¡Pedido finalizado con éxito!");
     } catch (error) {
-      console.error("Error sending form:", error);
-      toast.error("Error de conexión. Contacta con nosotros por teléfono.");
+      toast.error("Error al registrar el pedido. Contacta con nosotros por teléfono.");
+    } finally {
+      setLoading(false);
     }
   };
 

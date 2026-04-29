@@ -13,37 +13,39 @@ const steps = [
   { icon: Clock, title: "Garantía", desc: "Aseguramos más de 10 años de vida útil para tu jardín." },
 ];
 
+import { sendEmail } from "@/lib/email";
+
 const Installation = () => {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    setLoading(true);
     
-    // Add official website identification
-    formData.append("_subject", "PRESUPUESTO INSTALACIÓN - WEB OFICIAL MH SPORT CÉSPED");
-    formData.append("fuente", "Página de Instalación - Oficial");
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    const templateParams = {
+      from_name: formData.get("nombre"),
+      from_email: formData.get("email"),
+      phone: formData.get("telefono"),
+      address: `${formData.get("calle")}, ${formData.get("ciudad")}`,
+      sqm: formData.get("metros"),
+      message: formData.get("detalles"),
+      subject: "PRESUPUESTO INSTALACIÓN - WEB OFICIAL MH SPORT CÉSPED",
+      source: "Página de Instalación - Oficial"
+    };
 
     try {
-      const response = await fetch("https://formspree.io/info@mhsportcesped.es", {
-        method: "POST",
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        setSent(true);
-        toast.success("Solicitud enviada. Nos pondremos en contacto contigo pronto.");
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        console.error("Formspree error:", errorData);
-        toast.error(`Error: ${errorData.error || "No se pudo enviar la solicitud"}`);
-      }
+      await sendEmail(templateParams);
+      setSent(true);
+      toast.success("Solicitud enviada. Nos pondremos en contacto contigo pronto.");
+      form.reset();
     } catch (error) {
-      console.error("Error sending form:", error);
-      toast.error("Error de conexión. Comprueba la consola.");
+      toast.error("Error al enviar la solicitud. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,8 +128,8 @@ const Installation = () => {
                 <Textarea name="detalles" placeholder="Cuéntanos más sobre el terreno o tus necesidades..." rows={4} className="rounded-xl bg-background resize-none" />
               </div>
 
-              <Button type="submit" size="lg" className="w-full text-lg font-black italic h-14 rounded-xl shadow-xl shadow-primary/20">
-                Solicitar presupuesto gratis
+              <Button type="submit" disabled={loading} size="lg" className="w-full text-lg font-black italic h-14 rounded-xl shadow-xl shadow-primary/20">
+                {loading ? "Enviando..." : "Solicitar presupuesto gratis"}
               </Button>
             </form>
           )}
