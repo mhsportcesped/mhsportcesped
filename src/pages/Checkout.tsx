@@ -318,9 +318,18 @@ const Checkout = () => {
                         <span className="text-xl font-black italic">Total a pagar</span>
                         <span className="text-5xl font-black italic text-primary">{totalPrice.toFixed(2)} €</span>
                     </div>
-                    <div className="flex justify-between text-xs font-black italic opacity-40">
-                        <span>Envío</span>
-                        <span className="text-primary opacity-100">Gratis</span>
+                    <div className="flex flex-col items-end gap-1">
+                        <div className="flex justify-between w-full text-xs font-black italic opacity-40">
+                            <span>Envío</span>
+                            <span className={totalPrice >= 300 ? "text-primary opacity-100" : "text-muted-foreground opacity-100"}>
+                                {totalPrice >= 300 ? "Gratis" : "A consultar"}
+                            </span>
+                        </div>
+                        {totalPrice < 300 && (
+                            <p className="text-[10px] font-black italic text-primary animate-pulse">
+                                ¡Portes gratis a partir de 300€!
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

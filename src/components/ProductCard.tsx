@@ -27,12 +27,29 @@ const ProductCard = ({ product }: { product: Product }) => {
             </h3>
           </Link>
         </div>
-        <div className="flex flex-col gap-3 mt-2">
-          <span className="text-3xl font-black italic text-primary">
-            {product.category === 'al-corte' ? 'Desde ' : ''}{formatPrice(product.price)} €
-          </span>
+        <div className="flex flex-col gap-1 mt-1">
+          {product.category === 'en-rollo' && product.rollDimensions && (
+            <span className="text-xs font-black italic opacity-60">
+              Medida {product.rollDimensions}
+            </span>
+          )}
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-black italic text-primary">
+              {product.category === 'al-corte' ? 'Desde ' : ''}{formatPrice(product.price)} €
+            </span>
+          </div>
+          {product.category === 'en-rollo' && product.m2Price && (
+            <span className="text-[10px] font-bold italic text-muted-foreground">
+              ({formatPrice(product.m2Price)} € / m²)
+            </span>
+          )}
+          {product.category === 'al-corte' && (
+            <span className="text-[10px] font-bold italic text-muted-foreground">
+              el m²
+            </span>
+          )}
           {/* Botón grande y fácil de pulsar */}
-          <Button asChild size="lg" className="w-full rounded-xl font-black italic shadow-md shadow-primary/10 hover:scale-[1.02] transition-transform text-base h-14">
+          <Button asChild size="lg" className="w-full rounded-xl font-black italic shadow-md shadow-primary/10 hover:scale-[1.02] transition-transform text-base h-14 mt-2">
             <Link to={`/producto/${product.slug}`}>Ver producto</Link>
           </Button>
         </div>

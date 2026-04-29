@@ -3,11 +3,10 @@ export interface Product {
   name: string;
   slug: string;
   price: number;
+  m2Price?: number;
+  rollDimensions?: string;
   category: 'al-corte' | 'en-rollo' | 'complementos';
   image: string;
-  gallery?: string[];
-  gallery?: string[];
-  gallery?: string[];
   images: string[];
   description: string;
   features: string[];
@@ -228,7 +227,6 @@ export const products: Product[] = [
     images: [imgURLs.oslo],
     height: 7,
     description: "Oslo 7mm representa la simplicidad y el ahorro. Este césped artificial de altura básica es la elección perfecta para quienes necesitan cubrir superficies de forma económica y estética.\n\nCon una textura suave y un color natural, proporciona un recubrimiento limpio y agradable. Es especialmente útil para eventos, ferias comerciales o como solución temporal en proyectos de decoración.\n\nFácil de instalar, limpiar y recoger, ofrece una relación calidad-precio insuperable para usos donde la practicidad es la máxima prioridad.",
-        features: ["Ahorro", "Simple", "Efectivo"],
     installation: "Configurable m².",
     shipping: "Entrega en 24/48h.",
     specs: { height: "7 mm", density: "Baja", baseMaterial: "PP", uvResistance: "Sí" }
@@ -237,9 +235,11 @@ export const products: Product[] = [
   // CÉSPED ARTIFICIAL EN ROLLO
   {
     id: "ankara-45-rollo",
-    name: "MODELO ANKARA 45mm (En rollos)",
+    name: "MODELO ANKARA 45mm",
     slug: "ankara-45mm-rollo",
-    price: 622.50,
+    price: 1245.00,
+    m2Price: 20.75,
+    rollDimensions: "2x30m",
     category: "en-rollo",
     image: imgURLs.ankara,
     images: [imgURLs.ankara],
@@ -252,9 +252,11 @@ export const products: Product[] = [
   },
   {
     id: "praga-40-rollo",
-    name: "MODELO PRAGA 40mm (En rollos)",
+    name: "MODELO PRAGA 40mm",
     slug: "praga-40mm-rollo",
-    price: 513.00,
+    price: 1026.00,
+    m2Price: 17.10,
+    rollDimensions: "2x30m",
     category: "en-rollo",
     image: imgURLs.praga,
     images: [imgURLs.praga],
@@ -267,9 +269,11 @@ export const products: Product[] = [
   },
   {
     id: "helsinki-30-rollo",
-    name: "MODELO HELSINKI 30mm (En rollos)",
+    name: "MODELO HELSINKI 30mm",
     slug: "helsinki-30mm-rollo",
-    price: 255.00,
+    price: 510.00,
+    m2Price: 12.75,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.helsinki,
     images: [imgURLs.helsinki],
@@ -282,9 +286,11 @@ export const products: Product[] = [
   },
   {
     id: "kiev-20-rollo",
-    name: "MODELO KIEV 20mm (En rollos)",
+    name: "MODELO KIEV 20mm",
     slug: "kiev-20mm-rollo",
-    price: 212.00,
+    price: 424.00,
+    m2Price: 10.60,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.kiev,
     images: [imgURLs.kiev],
@@ -297,9 +303,11 @@ export const products: Product[] = [
   },
   {
     id: "oporto-33-rollo",
-    name: "MODELO OPORTO 33mm (En rollos)",
+    name: "MODELO OPORTO 33mm",
     slug: "oporto-33mm-rollo",
-    price: 204.00,
+    price: 408.00,
+    m2Price: 10.20,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.oporto,
     images: [imgURLs.oporto],
@@ -312,9 +320,11 @@ export const products: Product[] = [
   },
   {
     id: "berlin-24-rollo",
-    name: "MODELO BERLÍN 24mm (En rollos)",
+    name: "MODELO BERLÍN 24mm",
     slug: "berlin-24mm-rollo",
-    price: 189.60,
+    price: 379.20,
+    m2Price: 9.48,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.berlin,
     images: [imgURLs.berlin],
@@ -327,9 +337,11 @@ export const products: Product[] = [
   },
   {
     id: "budapest-18-rollo",
-    name: "MODELO BUDAPEST 18mm (En rollos)",
+    name: "MODELO BUDAPEST 18mm",
     slug: "budapest-18mm-rollo",
-    price: 155.60,
+    price: 311.20,
+    m2Price: 7.78,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.budapest,
     images: [imgURLs.budapest],
@@ -342,9 +354,11 @@ export const products: Product[] = [
   },
   {
     id: "danubio-15-rollo",
-    name: "MODELO DANUBIO 15mm (En rollos)",
+    name: "MODELO DANUBIO 15mm",
     slug: "danubio-15mm-rollo",
     price: 288.00,
+    m2Price: 7.20,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.danubio,
     images: [imgURLs.danubio],
@@ -357,9 +371,11 @@ export const products: Product[] = [
   },
   {
     id: "viena-colores-rollo",
-    name: "MODELO VIENA COLORES 8 mm (En rollos)",
+    name: "MODELO VIENA COLORES 8 mm",
     slug: "viena-colores-rollo",
     price: 193.50,
+    m2Price: 6.45,
+    rollDimensions: "2x15m",
     category: "en-rollo",
     image: imgURLs.viena,
     images: [imgURLs.viena],
@@ -372,9 +388,11 @@ export const products: Product[] = [
   },
   {
     id: "suecia-7-rollo",
-    name: "MODELO SUECIA 7 mm (En rollos)",
+    name: "MODELO SUECIA 7 mm",
     slug: "suecia-7mm-rollo",
     price: 232.00,
+    m2Price: 5.80,
+    rollDimensions: "2x20m",
     category: "en-rollo",
     image: imgURLs.suecia,
     images: [imgURLs.suecia],
@@ -387,14 +405,16 @@ export const products: Product[] = [
   },
   {
     id: "oslo-7-rollo",
-    name: "MODELO OSLO 7mm (En rollos)",
+    name: "MODELO OSLO 7mm",
     slug: "oslo-7mm-rollo",
     price: 143.70,
+    m2Price: 4.79,
+    rollDimensions: "2x15m",
     category: "en-rollo",
     image: imgURLs.oslo,
     images: [imgURLs.oslo],
     height: 7,
-    description: "Rollo Oslo 7mm. El formato más rentable para cubrir superficies masivas de forma sencilla y económica. Perfecto para protección temporal y eventos feriales.",
+    description: "Rollo Oslo 7mm. El formato más rentable para cubrir superficies masivas de forma sencilla and económica. Perfecto para protección temporal y eventos feriales.",
     features: ["Mínimo coste", "Efectivo", "Funcional"],
     installation: "Rápida.",
     shipping: "Logística pesada.",
@@ -442,15 +462,28 @@ export const products: Product[] = [
     shipping: "Inmediata."
   },
   {
-    id: "cola-bicomponente-pro",
-    name: "COLA BICOMPONENTE PARA CÉSPED ARTIFICIAL – ADHESIVO PROFESIONAL",
-    slug: "cola-bicomponente",
-    price: 31.20,
+    id: "cola-bicomponente-6kg",
+    name: "COLA BICOMPONENTE PROFESIONAL – 6 KG",
+    slug: "cola-bicomponente-6kg",
+    price: 0, // Pendiente confirmar
     category: "complementos",
     image: imgURLs.cola,
     images: [imgURLs.cola],
-    description: "Adhesivo profesional bicomponente de poliuretano, diseñado para instalaciones de césped artificial de alta exigencia. Al mezclar sus dos componentes, se crea una pasta adhesiva de altísima resistencia mecánica y térmica. Proporciona una unión definitiva de los paños sobre la cinta de unión, evitando despegues a largo plazo incluso bajo condiciones climáticas adversas o uso intensivo.",
-        features: ["Bicomponente", "Profesional", "Total adherencia"],
+    description: "Adhesivo profesional bicomponente de poliuretano (envase de 6 kg), diseñado para instalaciones de césped artificial de alta exigencia. Al mezclar sus dos componentes, se crea una pasta adhesiva de altísima resistencia mecánica y térmica.",
+    features: ["6 KG", "Profesional", "Total adherencia"],
+    installation: "Mezcla sugerida.",
+    shipping: "Inmediata."
+  },
+  {
+    id: "cola-bicomponente-11kg",
+    name: "COLA BICOMPONENTE PROFESIONAL – 11 KG",
+    slug: "cola-bicomponente-11kg",
+    price: 0, // Pendiente confirmar
+    category: "complementos",
+    image: imgURLs.cola,
+    images: [imgURLs.cola],
+    description: "Adhesivo profesional bicomponente de poliuretano (envase de 11 kg), diseñado para instalaciones de césped artificial de alta exigencia. Ideal para grandes superficies que requieren una unión definitiva y duradera.",
+    features: ["11 KG", "Profesional", "Total adherencia"],
     installation: "Mezcla sugerida.",
     shipping: "Inmediata."
   },

@@ -74,9 +74,23 @@ const ProductDetail = () => {
               </nav>
 
               <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter leading-none">{product.name}</h1>
-              <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-black italic text-primary">{formatPrice(product.price)} €</span>
-                <span className="text-lg text-muted-foreground font-black italic">/ {product.category === 'al-corte' ? 'm²' : 'unidad'}</span>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-black italic text-primary">{formatPrice(product.price)} €</span>
+                  <span className="text-lg text-muted-foreground font-black italic">
+                    / {product.category === 'al-corte' ? 'm²' : (product.category === 'en-rollo' ? 'rollo completo' : 'unidad')}
+                  </span>
+                </div>
+                {product.category === 'en-rollo' && product.m2Price && (
+                  <p className="text-sm font-bold italic text-muted-foreground">
+                    Precio m²: {formatPrice(product.m2Price)} € (Ahorro de 1€/m² vs corte)
+                  </p>
+                )}
+                {product.category === 'en-rollo' && product.rollDimensions && (
+                  <p className="text-sm font-black italic text-primary">
+                    Medida del rollo: {product.rollDimensions}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -161,23 +175,29 @@ const ProductDetail = () => {
                 </div>
               )}
 
-              <div className="flex gap-4 pt-4 relative z-10">
-                <div className="flex items-center bg-white rounded-xl overflow-hidden p-1 border-2 border-border shadow-sm">
-                  <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-4 w-4" /></button>
-                  <span className="w-10 text-center font-black italic text-xl">{qty}</span>
-                  <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-4 w-4" /></button>
+              <div className="flex flex-col gap-4 pt-4 relative z-10">
+                <div className="flex gap-4">
+                  <div className="flex items-center bg-white rounded-xl overflow-hidden p-1 border-2 border-border shadow-sm">
+                    <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-4 w-4" /></button>
+                    <span className="w-10 text-center font-black italic text-xl">{qty}</span>
+                    <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-4 w-4" /></button>
+                  </div>
+                  <Button 
+                    size="lg" 
+                    disabled={product.category === 'al-corte' && (!width || !length)}
+                    className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
+                    onClick={() => {
+                      const finalProduct = { ...product, name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name };
+                      addItem(finalProduct, qty);
+                    }}
+                  >
+                    <ShoppingCart className="h-6 w-6" /> Añadir al carrito
+                  </Button>
                 </div>
-                <Button 
-                  size="lg" 
-                  disabled={product.category === 'al-corte' && (!width || !length)}
-                  className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
-                  onClick={() => {
-                    const finalProduct = { ...product, name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name };
-                    addItem(finalProduct, qty);
-                  }}
-                >
-                  <ShoppingCart className="h-6 w-6" /> Añadir al carrito
-                </Button>
+                <div className="bg-primary/5 p-4 rounded-2xl border border-primary/20 flex items-center gap-3">
+                  <Sun className="h-5 w-5 text-primary animate-pulse" />
+                  <p className="text-xs font-black italic text-primary">¡Portes GRATIS en pedidos superiores a 300€!</p>
+                </div>
               </div>
             </div>
           </div>
