@@ -194,13 +194,6 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="p-4 bg-background border border-border rounded-xl flex items-center justify-between text-xs font-bold text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <div className="h-4 w-4 rounded-full border-2 border-primary" />
-                    ¿Eres humano? No soy un robot
-                  </div>
-                  <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="Recaptcha" className="h-6 w-6 opacity-30" />
-                </div>
 
                 <Button type="submit" disabled={loading} size="lg" className="w-full text-lg font-black h-14 rounded-xl shadow-xl shadow-primary/20 italic">
                   {loading ? "Enviando..." : "Enviar mensaje"}
