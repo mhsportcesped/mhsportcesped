@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { formatPrice } from "@/lib/utils";
 
 const Calculator = () => {
   const [width, setWidth] = useState("");
@@ -36,12 +37,12 @@ const Calculator = () => {
           {sqm > 0 ? (
             <div className="space-y-6 animate-in zoom-in-95 duration-500">
               <div className="p-6 bg-primary/5 border border-primary/10 rounded-2xl space-y-3">
-                <p className="text-xl"><strong>Superficie neta:</strong> <span className="text-primary font-black italic">{sqm.toFixed(2)} m²</span></p>
+                <p className="text-xl"><strong>Superficie neta:</strong> <span className="text-primary font-black italic">{sqm.toFixed(2).replace('.', ',')} m²</span></p>
                 <p className="text-xl"><strong>Con margen (5%):</strong> <span className="text-primary font-black italic">{Math.ceil(sqm * 1.05)} m²</span></p>
                 <div className="h-px bg-border my-4" />
                 <p className="text-sm font-bold opacity-60 italic">Estimación de inversión:</p>
                 <p className="text-3xl font-black italic text-primary">
-                  {(sqm * cheapest.price).toFixed(2)} € - {(sqm * priciest.price).toFixed(2)} €
+                  {formatPrice(sqm * cheapest.price)} € - {formatPrice(sqm * priciest.price)} €
                 </p>
                 <p className="text-[10px] text-muted-foreground font-bold tracking-tighter">*Precios orientativos según modelo.</p>
               </div>

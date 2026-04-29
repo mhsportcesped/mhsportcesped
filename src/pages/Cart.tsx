@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Trash2, Minus, Plus, ShoppingBag, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import { formatPrice } from "@/lib/utils";
 
 const Cart = () => {
   const { items, removeItem, updateQuantity, totalPrice, totalItems } = useCart();
@@ -78,7 +79,7 @@ const Cart = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-[10px] font-black text-muted-foreground mb-1">Precio total</p>
-                      <p className="text-3xl font-black italic text-primary">{(item.product.price * item.quantity).toFixed(2)} €</p>
+                      <p className="text-3xl font-black italic text-primary">{formatPrice(item.product.price * item.quantity)} €</p>
                     </div>
                   </div>
                 </div>
@@ -105,7 +106,7 @@ const Cart = () => {
                 <div className="h-px bg-border my-6" />
                 <div className="flex justify-between items-baseline">
                   <span className="text-lg font-black italic">Total</span>
-                  <span className="text-4xl font-black italic text-primary">{totalPrice.toFixed(2)} €</span>
+                  <span className="text-4xl font-black italic text-primary">{formatPrice(totalPrice)} €</span>
                 </div>
               </div>
 

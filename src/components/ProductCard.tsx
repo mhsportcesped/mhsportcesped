@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/data/products";
+import { formatPrice } from "@/lib/utils";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -28,7 +29,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
         <div className="flex flex-col gap-3 mt-2">
           <span className="text-3xl font-black italic text-primary">
-            {product.category === 'al-corte' ? 'Desde ' : ''}{product.price.toFixed(2)} €
+            {product.category === 'al-corte' ? 'Desde ' : ''}{formatPrice(product.price)} €
           </span>
           {/* Botón grande y fácil de pulsar */}
           <Button asChild size="lg" className="w-full rounded-xl font-black italic shadow-md shadow-primary/10 hover:scale-[1.02] transition-transform text-base h-14">

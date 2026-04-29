@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useCart } from "@/context/CartContext";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
+import { formatPrice } from "@/lib/utils";
 
 const ProductDetail = () => {
   const { slug } = useParams();
@@ -74,7 +75,7 @@ const ProductDetail = () => {
 
               <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter leading-none">{product.name}</h1>
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-black italic text-primary">{product.price.toFixed(2)} €</span>
+                <span className="text-4xl font-black italic text-primary">{formatPrice(product.price)} €</span>
                 <span className="text-lg text-muted-foreground font-black italic">/ {product.category === 'al-corte' ? 'm²' : 'unidad'}</span>
               </div>
             </div>
@@ -84,7 +85,7 @@ const ProductDetail = () => {
             </p>
             {product.category === 'al-corte' && (
                 <p className="text-sm font-bold text-foreground">
-                    El precio es por metro cuadrado. Su precio es de {product.price.toFixed(2)} €/m².
+                    El precio es por metro cuadrado. Su precio es de {formatPrice(product.price)} €/m².
                 </p>
             )}
 
@@ -148,13 +149,13 @@ const ProductDetail = () => {
                     {sqm > 0 ? (
                         <div className="animate-in fade-in zoom-in-95 duration-300">
                         <div className="flex justify-between items-end mb-2">
-                            <span className="text-sm font-bold text-muted-foreground">Total m²: <span className="text-foreground">{sqm.toFixed(2)} m²</span></span>
-                            <span className="text-3xl font-black italic text-primary">{Math.max(1, estimated).toFixed(2)} €</span>
+                            <span className="text-sm font-bold text-muted-foreground">Total m²: <span className="text-foreground">{sqm.toFixed(2).replace('.', ',')} m²</span></span>
+                            <span className="text-3xl font-black italic text-primary">{formatPrice(Math.max(1, estimated))} €</span>
                         </div>
-                        <p className="text-xs text-muted-foreground text-right">{product.price.toFixed(2)} € / m²</p>
+                        <p className="text-xs text-muted-foreground text-right">{formatPrice(product.price)} € / m²</p>
                         </div>
                     ) : (
-                        <p className="text-3xl font-black italic text-muted-foreground/50 text-right">Desde {product.price.toFixed(2)} €</p>
+                        <p className="text-3xl font-black italic text-muted-foreground/50 text-right">Desde {formatPrice(product.price)} €</p>
                     )}
                   </div>
                 </div>
