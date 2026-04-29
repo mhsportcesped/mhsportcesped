@@ -95,7 +95,7 @@ const Shop = () => {
                   <p className="text-sm text-muted-foreground font-medium max-w-md md:text-right">{section.note}</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
                   {sectionProducts.map((p) => (
                     <ProductCard key={p.id} product={p} />
                   ))}
