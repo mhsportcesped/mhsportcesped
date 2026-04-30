@@ -13,9 +13,9 @@ const replacements = {
     '"oporto-33-corte"': { main: 'oportoMain', gallery: '[oportoMain, oporto1, oporto2, oporto3, oportoTech]' },
     '"berlin-24-corte"': { main: 'berlinMain', gallery: '[berlinMain, berlin1, berlin2, berlin3, berlinTech]' },
     '"budapest-18-corte"': { main: 'budapestMain', gallery: '[budapestMain, budapest1, budapest2, budapest3, budapestTech]' },
-    '"danubio-15-corte"': { main: 'danubioMain', gallery: '[danubioMain, danubio1, danubio2, danubio3, danubioTech]' },
+    '"danubio-15-corte"': { main: 'danubioMain', gallery: '[danubioMain, danubio1, danubio2, danubio3]' },
     '"viena-colores-corte"': { main: 'vienaMain', gallery: '[vienaMain, viena1, viena2, vienaTech]' },
-    '"oslo-7-corte"': { main: 'osloMain', gallery: '[osloMain, oslo1, oslo2, oslo3, osloTech]' },
+    '"oslo-7-corte"': { main: 'osloMain', gallery: '[osloMain, osloTech]' },
     
     '"ankara-45-rollo"': { main: 'prodAnkaraRollo', gallery: '[prodAnkaraRollo, ankaraMain, ankara1, ankara2, ankara3, ankara4, ankara5, ankaraTech]' },
     '"praga-40-rollo"': { main: 'prodPragaRollo', gallery: '[prodPragaRollo, pragaMain, praga1, praga2, praga3, pragaTech]' },
@@ -24,10 +24,10 @@ const replacements = {
     '"oporto-33-rollo"': { main: 'prodOportoRollo', gallery: '[prodOportoRollo, oportoMain, oporto1, oporto2, oporto3, oportoTech]' },
     '"berlin-24-rollo"': { main: 'prodBerlinRollo', gallery: '[prodBerlinRollo, berlinMain, berlin1, berlin2, berlin3, berlinTech]' },
     '"budapest-18-rollo"': { main: 'prodBudapestRollo', gallery: '[prodBudapestRollo, budapestMain, budapest1, budapest2, budapest3, budapestTech]' },
-    '"danubio-15-rollo"': { main: 'prodDanubioRollo', gallery: '[prodDanubioRollo, danubioMain, danubio1, danubio2, danubio3, danubioTech]' },
+    '"danubio-15-rollo"': { main: 'prodDanubioRollo', gallery: '[prodDanubioRollo, danubioMain, danubio1, danubio2, danubio3]' },
     '"viena-colores-rollo"': { main: 'prodVienaRollo', gallery: '[prodVienaRollo, vienaMain, viena1, viena2, vienaTech]' },
     '"suecia-7-rollo"': { main: 'prodSueciaRollo', gallery: '[prodSueciaRollo, prodSueciaCorte]' },
-    '"oslo-7-rollo"': { main: 'prodOsloRollo', gallery: '[prodOsloRollo, osloMain, oslo1, oslo2, oslo3, osloTech]' },
+    '"oslo-7-rollo"': { main: 'prodOsloRollo', gallery: '[prodOsloRollo, osloMain, osloTech]' },
 };
 
 let newLines = [];

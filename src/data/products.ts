@@ -88,11 +88,10 @@ import budapestTech from '../assets/products/BUDAPEST 18mm/DATOS TÉCNICOS.png';
 import budapestMain from '../assets/products/BUDAPEST 18mm/BUDAPEST 18MM.png';
 
 // Galería Danubio
-import danubio1 from '../assets/products/DANUBIO 15 mm/15mm (1).jpg';
-import danubio2 from '../assets/products/DANUBIO 15 mm/15mm (2).jpg';
-import danubio3 from '../assets/products/DANUBIO 15 mm/15mm (3).jpg';
-import danubioTech from '../assets/products/DANUBIO 15 mm/DATOS TÉCNICOS.png';
-import danubioMain from '../assets/products/DANUBIO 15 mm/DANUBIO 15MM.png';
+import danubio1 from '../assets/products/DANUBIO 15 mm/15 MM.jpg';
+import danubio2 from '../assets/products/DANUBIO 15 mm/15 MM (2).jpg';
+import danubio3 from '../assets/products/DANUBIO 15 mm/15 MM (3).jpg';
+import danubioMain from '../assets/products/DANUBIO 15 mm/DANUBIO 15 MM.png';
 
 // Galería Helsinki
 import helsinki1 from '../assets/products/HELSINKI 30mm/30mm (1).jpg';
@@ -118,10 +117,7 @@ import oportoTech from '../assets/products/OPORTO 33mm/DATOS TÉCNICOS.png';
 import oportoMain from '../assets/products/OPORTO 33mm/OPORTO 33MM.png';
 
 // Galería Oslo
-import oslo1 from '../assets/products/OSLO 7mm/7mm (1).jpg';
-import oslo2 from '../assets/products/OSLO 7mm/7mm (2).jpg';
-import oslo3 from '../assets/products/OSLO 7mm/7mm (3).jpg';
-import osloTech from '../assets/products/OSLO 7mm/DATOS TÉCNICOS.png';
+import osloTech from '../assets/products/OSLO 7mm/DATOS TÉNICOS.png';
 import osloMain from '../assets/products/OSLO 7mm/OSLO 7MM.png';
 
 // Galería Praga
@@ -132,10 +128,10 @@ import pragaTech from '../assets/products/PRAGA 40 mm/DATOS TÉCNICOS.png';
 import pragaMain from '../assets/products/PRAGA 40 mm/PRAGA 40MM.png';
 
 // Galería Viena
-import viena1 from '../assets/products/VIENA COLORES 8mm/8mm (1).jpg';
-import viena2 from '../assets/products/VIENA COLORES 8mm/8mm (2).jpg';
+import viena1 from '../assets/products/VIENA COLORES 8mm/AZUL.png';
+import viena2 from '../assets/products/VIENA COLORES 8mm/ROJO.png';
 import vienaTech from '../assets/products/VIENA COLORES 8mm/DATOS TÉCNICOS.png';
-import vienaMain from '../assets/products/VIENA COLORES 8mm/VIENA COLORES 8MM.png';
+import vienaMain from '../assets/products/VIENA COLORES 8mm/viena colores.jpg';
 
 const imgURLs = {
   ankara: imgAnkara,
@@ -275,7 +271,7 @@ export const products: Product[] = [
     price: 8.20,
     category: "al-corte",
     image: danubioMain,
-    images: [danubioMain, danubio1, danubio2, danubio3, danubioTech],
+    images: [danubioMain, danubio1, danubio2, danubio3],
     height: 15,
     description: "El modelo Danubio 15mm es la alternativa más versátil y económica para proyectos de decoración.",
     features: ["Económico", "Versátil", "Multiuso"],
@@ -320,7 +316,7 @@ export const products: Product[] = [
     price: 5.79,
     category: "al-corte",
     image: osloMain,
-    images: [osloMain, oslo1, oslo2, oslo3, osloTech],
+    images: [osloMain, osloTech],
     height: 7,
     description: "Oslo 7mm representa la simplicidad y el ahorro. Altura básica perfecta para eventos.",
     features: ["Mínimo coste", "Efectivo", "Funcional"],
@@ -458,7 +454,7 @@ export const products: Product[] = [
     rollDimensions: "2x40m / 1x40m",
     category: "en-rollo",
     image: prodDanubioRollo,
-    images: [prodDanubioRollo, danubioMain, danubio1, danubio2, danubio3, danubioTech],
+    images: [prodDanubioRollo, danubioMain, danubio1, danubio2, danubio3],
     height: 15,
     description: "Rollo completo Danubio 15mm. Máxima versatilidad para recubrimientos extensos.",
     features: ["Patios", "Balcones", "Ahorro total"],
@@ -509,7 +505,7 @@ export const products: Product[] = [
     rollDimensions: "2x30m / 1x30m",
     category: "en-rollo",
     image: prodOsloRollo,
-    images: [prodOsloRollo, osloMain, oslo1, oslo2, oslo3, osloTech],
+    images: [prodOsloRollo, osloMain, osloTech],
     height: 7,
     description: "Rollo Oslo 7mm. El formato más rentable para eventos masivos.",
     features: ["Mínimo coste", "Efectivo", "Funcional"],
