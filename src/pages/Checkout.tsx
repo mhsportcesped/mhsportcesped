@@ -88,6 +88,7 @@ const Checkout = () => {
   const [formData, setFormData] = useState<any>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isFetchingSecret, setIsFetchingSecret] = useState(false);
+  const [isSimulated, setIsSimulated] = useState(false);
 
   // Calculations for detailed summary
   const ivaRate = 0.21;
@@ -118,16 +119,27 @@ const Checkout = () => {
         }),
       });
 
+      if (response.status === 404 || !response.ok) {
+        throw new Error("API not found");
+      }
+
       const data = await response.json();
       
       if (data.clientSecret) {
         setClientSecret(data.clientSecret);
       } else {
-        toast.error(data.error || "No se pudo iniciar la pasarela de pago");
+        throw new Error(data.error || "No se pudo iniciar la pasarela de pago");
       }
     } catch (error) {
-      console.error("Error fetching client secret:", error);
-      toast.error("Error de conexión con el servidor de pagos");
+      console.warn("Backend no disponible, activando simulador local para pruebas.");
+      // If we are in local development and API fails, we enable simulation
+      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        setIsSimulated(true);
+        // We set a fake secret just to pass the check
+        setClientSecret("simulated_secret");
+      } else {
+        toast.error("Error de conexión con el servidor de pagos");
+      }
     } finally {
       setIsFetchingSecret(false);
     }
@@ -293,9 +305,58 @@ const Checkout = () => {
                 </div>
 
                 {clientSecret ? (
-                  <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-                    <CheckoutForm amount={totalPrice} onPrev={() => setStep(1)} onComplete={finalizeOrder} />
-                  </Elements>
+                  isSimulated ? (
+                    <div className="space-y-6 animate-in slide-in-from-right duration-500">
+                      <div className="p-6 bg-amber-50 border-2 border-amber-200 rounded-3xl space-y-4">
+                        <div className="flex items-center gap-2 text-amber-700">
+                          <AlertCircle className="h-5 w-5" />
+                          <span className="font-black italic text-sm uppercase tracking-wider">Modo Simulador Local</span>
+                        </div>
+                        <p className="text-xs font-bold text-amber-600/80 italic leading-relaxed">
+                          El servidor no está detectado en tu PC. Puedes probar el flujo del checkout usando este simulador. 
+                          <span className="block mt-1 font-black underline">Esto no realizará ningún cargo real.</span>
+                        </p>
+                        
+                        <div className="p-5 bg-white rounded-2xl border border-amber-100 shadow-sm space-y-4">
+                           <div className="space-y-2">
+                             <Label className="text-[10px] font-black italic opacity-40">Número de Tarjeta (Simulado)</Label>
+                             <div className="h-12 bg-muted/50 rounded-xl border border-dashed border-muted-foreground/20 flex items-center px-4 text-muted-foreground font-mono text-sm">
+                               4242 4242 4242 4242
+                             </div>
+                           </div>
+                           <div className="grid grid-cols-2 gap-4">
+                             <div className="space-y-2">
+                               <Label className="text-[10px] font-black italic opacity-40">Caducidad</Label>
+                               <div className="h-12 bg-muted/50 rounded-xl border border-dashed border-muted-foreground/20 flex items-center px-4 text-muted-foreground font-mono text-sm">
+                                 12 / 28
+                               </div>
+                             </div>
+                             <div className="space-y-2">
+                               <Label className="text-[10px] font-black italic opacity-40">CVC</Label>
+                               <div className="h-12 bg-muted/50 rounded-xl border border-dashed border-muted-foreground/20 flex items-center px-4 text-muted-foreground font-mono text-sm">
+                                 123
+                               </div>
+                             </div>
+                           </div>
+                        </div>
+                      </div>
+
+                      <Button 
+                        onClick={finalizeOrder}
+                        size="lg" 
+                        className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30"
+                      >
+                        Confirmar Pedido (Simulación)
+                      </Button>
+                      <Button variant="ghost" type="button" onClick={() => setStep(1)} className="w-full font-bold text-muted-foreground italic underline-offset-4 hover:underline">
+                        Volver a datos de envío
+                      </Button>
+                    </div>
+                  ) : (
+                    <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
+                      <CheckoutForm amount={totalPrice} onPrev={() => setStep(1)} onComplete={finalizeOrder} />
+                    </Elements>
+                  )
                 ) : (
                   <div className="flex flex-col items-center justify-center py-12 space-y-4">
                     <Loader2 className="h-12 w-12 animate-spin text-primary opacity-20" />
