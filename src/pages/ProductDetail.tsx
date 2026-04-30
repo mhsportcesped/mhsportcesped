@@ -76,9 +76,11 @@ const ProductDetail = () => {
               <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter leading-none">{product.name}</h1>
               <div className="flex flex-col gap-2">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-black italic text-primary">{formatPrice(product.price)} €</span>
+                  <span className="text-4xl font-black italic text-primary">
+                    {product.category === 'al-corte' && estimated > 0 ? formatPrice(estimated) : formatPrice(product.price)} €
+                  </span>
                   <span className="text-lg text-muted-foreground font-black italic">
-                    / {product.category === 'al-corte' ? 'm²' : (product.category === 'en-rollo' ? 'rollo completo' : 'unidad')}
+                    / {product.category === 'al-corte' ? (estimated > 0 ? `${sqm.toFixed(2).replace('.', ',')} m²` : 'm²') : (product.category === 'en-rollo' ? 'rollo completo' : 'unidad')}
                   </span>
                 </div>
                 {product.category === 'en-rollo' && product.m2Price && (
@@ -164,7 +166,7 @@ const ProductDetail = () => {
                         <div className="animate-in fade-in zoom-in-95 duration-300">
                         <div className="flex justify-between items-end mb-2">
                             <span className="text-sm font-bold text-muted-foreground">Total m²: <span className="text-foreground">{sqm.toFixed(2).replace('.', ',')} m²</span></span>
-                            <span className="text-3xl font-black italic text-primary">{formatPrice(Math.max(1, estimated))} €</span>
+                            <span className="text-3xl font-black italic text-primary">{formatPrice(estimated)} €</span>
                         </div>
                         <p className="text-xs text-muted-foreground text-right">{formatPrice(product.price)} € / m²</p>
                         </div>
@@ -187,7 +189,12 @@ const ProductDetail = () => {
                     disabled={product.category === 'al-corte' && (!width || !length)}
                     className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
                     onClick={() => {
-                      const finalProduct = { ...product, name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name };
+                      const finalProduct = { 
+                        ...product, 
+                        name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name,
+                        price: product.category === 'al-corte' ? product.price * sqm : product.price,
+                        id: product.category === 'al-corte' ? `${product.id}-${width}x${length}` : product.id
+                      };
                       addItem(finalProduct, qty);
                     }}
                   >

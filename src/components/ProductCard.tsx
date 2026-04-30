@@ -22,7 +22,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <div className="p-4 flex flex-col flex-1 justify-between gap-3">
         <div>
           <Link to={`/producto/${product.slug}`}>
-            <h3 className="font-bold italic text-base text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2 uppercase">
+            <h3 className="font-bold italic text-base text-foreground group-hover:text-primary transition-colors leading-tight uppercase">
               {product.name}
             </h3>
           </Link>
