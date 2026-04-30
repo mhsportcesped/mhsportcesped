@@ -64,6 +64,79 @@ import prodSueciaRollo from '../assets/products/Suecia rollo.jpg';
 import prodOsloCorte from '../assets/products/oslo.png';
 import prodOsloRollo from '../assets/products/oslo rollo.jpg';
 
+// Galería Ankara
+import ankara1 from '../assets/products/ANKARA 45mm/45mm (1).jpg';
+import ankara2 from '../assets/products/ANKARA 45mm/45mm (2).jpg';
+import ankara3 from '../assets/products/ANKARA 45mm/45mm (3).jpg';
+import ankara4 from '../assets/products/ANKARA 45mm/45mm (4).jpg';
+import ankara5 from '../assets/products/ANKARA 45mm/45mm (5).jpg';
+import ankaraTech from '../assets/products/ANKARA 45mm/DATOS TÉCNICOS.png';
+import ankaraMain from '../assets/products/ANKARA 45mm/ANKARA 45MM.png';
+
+// Galería Berlin
+import berlin1 from '../assets/products/BERLIN 24mm/24mm (1).jpg';
+import berlin2 from '../assets/products/BERLIN 24mm/24mm (2).jpg';
+import berlin3 from '../assets/products/BERLIN 24mm/24mm (3).jpg';
+import berlinTech from '../assets/products/BERLIN 24mm/DATOS TÉCNICOS.png';
+import berlinMain from '../assets/products/BERLIN 24mm/BERLIN 24MM.png';
+
+// Galería Budapest
+import budapest1 from '../assets/products/BUDAPEST 18mm/18mm (1).jpg';
+import budapest2 from '../assets/products/BUDAPEST 18mm/18mm (2).jpg';
+import budapest3 from '../assets/products/BUDAPEST 18mm/18mm (3).jpg';
+import budapestTech from '../assets/products/BUDAPEST 18mm/DATOS TÉCNICOS.png';
+import budapestMain from '../assets/products/BUDAPEST 18mm/BUDAPEST 18MM.png';
+
+// Galería Danubio
+import danubio1 from '../assets/products/DANUBIO 15 mm/15mm (1).jpg';
+import danubio2 from '../assets/products/DANUBIO 15 mm/15mm (2).jpg';
+import danubio3 from '../assets/products/DANUBIO 15 mm/15mm (3).jpg';
+import danubioTech from '../assets/products/DANUBIO 15 mm/DATOS TÉCNICOS.png';
+import danubioMain from '../assets/products/DANUBIO 15 mm/DANUBIO 15MM.png';
+
+// Galería Helsinki
+import helsinki1 from '../assets/products/HELSINKI 30mm/30mm (1).jpg';
+import helsinki2 from '../assets/products/HELSINKI 30mm/30mm (2).jpg';
+import helsinki3 from '../assets/products/HELSINKI 30mm/30mm (3).jpg';
+import helsinki4 from '../assets/products/HELSINKI 30mm/30mm (4).jpg';
+import helsinkiTech from '../assets/products/HELSINKI 30mm/DATOS TÉCNICOS.png';
+import helsinkiMain from '../assets/products/HELSINKI 30mm/HELSINKI 30MM.png';
+
+// Galería Kiev
+import kiev1 from '../assets/products/KIEV 20mm/20mm (1).jpg';
+import kiev2 from '../assets/products/KIEV 20mm/20mm (2).jpg';
+import kiev3 from '../assets/products/KIEV 20mm/20mm (3).jpg';
+import kiev4 from '../assets/products/KIEV 20mm/20mm (4).jpg';
+import kievTech from '../assets/products/KIEV 20mm/DATOS TÉCNICOS.png';
+import kievMain from '../assets/products/KIEV 20mm/KIEV 20MM.png';
+
+// Galería Oporto
+import oporto1 from '../assets/products/OPORTO 33mm/33mm (1).jpg';
+import oporto2 from '../assets/products/OPORTO 33mm/33mm (2).jpg';
+import oporto3 from '../assets/products/OPORTO 33mm/33mm (3).jpg';
+import oportoTech from '../assets/products/OPORTO 33mm/DATOS TÉCNICOS.png';
+import oportoMain from '../assets/products/OPORTO 33mm/OPORTO 33MM.png';
+
+// Galería Oslo
+import oslo1 from '../assets/products/OSLO 7mm/7mm (1).jpg';
+import oslo2 from '../assets/products/OSLO 7mm/7mm (2).jpg';
+import oslo3 from '../assets/products/OSLO 7mm/7mm (3).jpg';
+import osloTech from '../assets/products/OSLO 7mm/DATOS TÉCNICOS.png';
+import osloMain from '../assets/products/OSLO 7mm/OSLO 7MM.png';
+
+// Galería Praga
+import praga1 from '../assets/products/PRAGA 40 mm/40mm (1).jpg';
+import praga2 from '../assets/products/PRAGA 40 mm/40mm (2).jpg';
+import praga3 from '../assets/products/PRAGA 40 mm/40mm (3).jpg';
+import pragaTech from '../assets/products/PRAGA 40 mm/DATOS TÉCNICOS.png';
+import pragaMain from '../assets/products/PRAGA 40 mm/PRAGA 40MM.png';
+
+// Galería Viena
+import viena1 from '../assets/products/VIENA COLORES 8mm/8mm (1).jpg';
+import viena2 from '../assets/products/VIENA COLORES 8mm/8mm (2).jpg';
+import vienaTech from '../assets/products/VIENA COLORES 8mm/DATOS TÉCNICOS.png';
+import vienaMain from '../assets/products/VIENA COLORES 8mm/VIENA COLORES 8MM.png';
+
 const imgURLs = {
   ankara: imgAnkara,
   praga: imgPraga,
@@ -96,8 +169,8 @@ export const products: Product[] = [
     slug: "ankara-45mm-corte",
     price: 21.75,
     category: "al-corte",
-    image: prodAnkaraCorte,
-    images: [prodAnkaraCorte],
+    image: ankaraMain,
+    images: [ankaraMain, ankara1, ankara2, ankara3, ankara4, ankara5, ankaraTech],
     height: 45,
     description: "El modelo Ankara 45mm destaca por su densidad premium y su altura, ofreciendo un realismo visual insuperable. Es la elección perfecta para jardines de alto standing.",
     features: ["Alta densidad", "Máxima gama", "Drenaje superior"],
@@ -111,8 +184,8 @@ export const products: Product[] = [
     slug: "praga-40mm-corte",
     price: 18.10,
     category: "al-corte",
-    image: prodPragaCorte,
-    images: [prodPragaCorte],
+    image: pragaMain,
+    images: [pragaMain, praga1, praga2, praga3, pragaTech],
     height: 40,
     description: "El césped Praga de 40mm ofrece un equilibrio perfecto entre confort y resistencia. Ideal para renovar terrazas y zonas ajardinadas.",
     features: ["Suave", "Gran confort", "Recuperación vertical"],
@@ -126,8 +199,8 @@ export const products: Product[] = [
     slug: "helsinki-30mm-corte",
     price: 13.75,
     category: "al-corte",
-    image: prodHelsinkiCorte,
-    images: [prodHelsinkiCorte],
+    image: helsinkiMain,
+    images: [helsinkiMain, helsinki1, helsinki2, helsinki3, helsinki4, helsinkiTech],
     height: 30,
     description: "El modelo Helsinki de 30mm es una solución versátil y muy realista. Su acabado mate elimina brillos artificiales.",
     features: ["Suavidad", "Realismo", "Uso decorativo"],
@@ -141,8 +214,8 @@ export const products: Product[] = [
     slug: "kiev-20mm-corte",
     price: 11.60,
     category: "al-corte",
-    image: prodKievCorte,
-    images: [prodKievCorte],
+    image: kievMain,
+    images: [kievMain, kiev1, kiev2, kiev3, kiev4, kievTech],
     height: 20,
     description: "El césped artificial Kiev 20mm es sinónimo de elegancia y funcionalidad. Ideal para áreas comerciales y zonas de mucho paso.",
     features: ["Elegante", "Duradero", "Fácil mantenimiento"],
@@ -156,8 +229,8 @@ export const products: Product[] = [
     slug: "oporto-33mm-corte",
     price: 11.20,
     category: "al-corte",
-    image: prodOportoCorte,
-    images: [prodOportoCorte],
+    image: oportoMain,
+    images: [oportoMain, oporto1, oporto2, oporto3, oportoTech],
     height: 33,
     description: "Oporto 33mm es un modelo todoterreno que combina un aspecto natural con una gran resistencia.",
     features: ["Calidad", "Natural", "Versátil"],
@@ -171,8 +244,8 @@ export const products: Product[] = [
     slug: "berlin-24mm-corte",
     price: 10.48,
     category: "al-corte",
-    image: prodBerlinCorte,
-    images: [prodBerlinCorte],
+    image: berlinMain,
+    images: [berlinMain, berlin1, berlin2, berlin3, berlinTech],
     height: 24,
     description: "El césped Berlín de 24mm es la opción ideal para quienes buscan un acabado limpio y compacto.",
     features: ["Resistente", "Natural", "Económico"],
@@ -186,8 +259,8 @@ export const products: Product[] = [
     slug: "budapest-18mm-corte",
     price: 8.78,
     category: "al-corte",
-    image: prodBudapestCorte,
-    images: [prodBudapestCorte],
+    image: budapestMain,
+    images: [budapestMain, budapest1, budapest2, budapest3, budapestTech],
     height: 18,
     description: "Budapest 18mm es un césped altamente funcional pensado para embellecer balcones y terrazas.",
     features: ["Funcional", "Realista", "Ligero"],
@@ -201,8 +274,8 @@ export const products: Product[] = [
     slug: "danubio-15mm-corte",
     price: 8.20,
     category: "al-corte",
-    image: prodDanubioCorte,
-    images: [prodDanubioCorte],
+    image: danubioMain,
+    images: [danubioMain, danubio1, danubio2, danubio3, danubioTech],
     height: 15,
     description: "El modelo Danubio 15mm es la alternativa más versátil y económica para proyectos de decoración.",
     features: ["Económico", "Versátil", "Multiuso"],
@@ -216,8 +289,8 @@ export const products: Product[] = [
     slug: "viena-colores-corte",
     price: 7.45,
     category: "al-corte",
-    image: prodVienaCorte,
-    images: [prodVienaCorte],
+    image: vienaMain,
+    images: [vienaMain, viena1, viena2, vienaTech],
     height: 8,
     description: "Viena Colores 8mm es la opción más creativa. Disponible en varios colores vibrantes.",
     features: ["Colores", "Creativo", "Diseño"],
@@ -246,8 +319,8 @@ export const products: Product[] = [
     slug: "oslo-7mm-corte",
     price: 5.79,
     category: "al-corte",
-    image: prodOsloCorte,
-    images: [prodOsloCorte],
+    image: osloMain,
+    images: [osloMain, oslo1, oslo2, oslo3, osloTech],
     height: 7,
     description: "Oslo 7mm representa la simplicidad y el ahorro. Altura básica perfecta para eventos.",
     features: ["Mínimo coste", "Efectivo", "Funcional"],
@@ -266,7 +339,7 @@ export const products: Product[] = [
     rollDimensions: "2x30m / 1x30m",
     category: "en-rollo",
     image: prodAnkaraRollo,
-    images: [prodAnkaraRollo],
+    images: [prodAnkaraRollo, ankaraMain, ankara1, ankara2, ankara3, ankara4, ankara5, ankaraTech],
     height: 45,
     description: "Rollo completo premium Ankara 45mm. Máxima densidad para proyectos extensos. Disponible en anchos de 1m y 2m.",
     features: ["Formato ahorro", "Máxima densidad", "Calidad Pro"],
@@ -283,7 +356,7 @@ export const products: Product[] = [
     rollDimensions: "2x30m / 1x30m",
     category: "en-rollo",
     image: prodPragaRollo,
-    images: [prodPragaRollo],
+    images: [prodPragaRollo, pragaMain, praga1, praga2, praga3, pragaTech],
     height: 40,
     description: "Rollo industrial de Praga 40mm. Suavidad y resistencia profesional. Disponible en anchos de 1m y 2m.",
     features: ["Confort", "Pisada suave", "Alta m²"],
@@ -299,8 +372,8 @@ export const products: Product[] = [
     m2Price: 12.75,
     rollDimensions: "2x20m / 1x20m / 2x40m / 1x40m",
     category: "en-rollo",
-    image: prodHelsinkiCorte,
-    images: [prodHelsinkiCorte],
+    image: helsinkiMain,
+    images: [helsinkiMain, helsinki1, helsinki2, helsinki3, helsinki4, helsinkiTech],
     height: 30,
     description: "Rollo completo Helsinki 30mm. Realismo y versatilidad en gran formato. Múltiples medidas disponibles.",
     features: ["Realismo", "Económico", "Versátil"],
@@ -317,7 +390,7 @@ export const products: Product[] = [
     rollDimensions: "2x20m / 1x20m / 2x40m / 1x40m",
     category: "en-rollo",
     image: prodKievRollo,
-    images: [prodKievRollo],
+    images: [prodKievRollo, kievMain, kiev1, kiev2, kiev3, kiev4, kievTech],
     height: 20,
     description: "Formato en rollo de Kiev 20mm. Extremadamente resistente para alto tránsito. Múltiples medidas disponibles.",
     features: ["Industrial", "Resistente", "Duradero"],
@@ -334,7 +407,7 @@ export const products: Product[] = [
     rollDimensions: "2x20m / 1x20m / 2x40m / 1x40m",
     category: "en-rollo",
     image: prodOportoRollo,
-    images: [prodOportoRollo],
+    images: [prodOportoRollo, oportoMain, oporto1, oporto2, oporto3, oportoTech],
     height: 33,
     description: "Rollo del modelo Oporto 33mm. Excelente relación calidad-precio para jardines extensos.",
     features: ["Calidad", "Garantía", "Ahorro m²"],
@@ -351,7 +424,7 @@ export const products: Product[] = [
     rollDimensions: "2x20m / 1x20m / 2x40m / 1x40m",
     category: "en-rollo",
     image: prodBerlinRollo,
-    images: [prodBerlinRollo],
+    images: [prodBerlinRollo, berlinMain, berlin1, berlin2, berlin3, berlinTech],
     height: 24,
     description: "Rollo de césped Berlín 24mm. Cobertura firme y compacta. Múltiples medidas disponibles.",
     features: ["Resistente", "Natural", "Económico"],
@@ -368,7 +441,7 @@ export const products: Product[] = [
     rollDimensions: "2x20m / 1x20m / 2x40m / 1x40m",
     category: "en-rollo",
     image: prodBudapestRollo,
-    images: [prodBudapestRollo],
+    images: [prodBudapestRollo, budapestMain, budapest1, budapest2, budapest3, budapestTech],
     height: 18,
     description: "Rollo de Budapest 18mm. Ideal para eventos y hostelería. Múltiples medidas disponibles.",
     features: ["Compacto", "Práctico", "Envío masivo"],
@@ -385,7 +458,7 @@ export const products: Product[] = [
     rollDimensions: "2x40m / 1x40m",
     category: "en-rollo",
     image: prodDanubioRollo,
-    images: [prodDanubioRollo],
+    images: [prodDanubioRollo, danubioMain, danubio1, danubio2, danubio3, danubioTech],
     height: 15,
     description: "Rollo completo Danubio 15mm. Máxima versatilidad para recubrimientos extensos.",
     features: ["Patios", "Balcones", "Ahorro total"],
@@ -402,7 +475,7 @@ export const products: Product[] = [
     rollDimensions: "2x30m / 1x30m",
     category: "en-rollo",
     image: prodVienaRollo,
-    images: [prodVienaRollo],
+    images: [prodVienaRollo, vienaMain, viena1, viena2, vienaTech],
     height: 8,
     description: "Rollos de césped Viena 8mm en colores. Perfecto para parques infantiles y stands.",
     features: ["Decoración pro", "Diseño", "Colores"],
@@ -419,7 +492,7 @@ export const products: Product[] = [
     rollDimensions: "2x40m / 1x40m",
     category: "en-rollo",
     image: prodSueciaRollo,
-    images: [prodSueciaRollo],
+    images: [prodSueciaRollo, prodSueciaCorte],
     height: 7,
     description: "Rollo de césped Suecia 7mm. Solución económica a gran escala.",
     features: ["Decoración", "Mínimo peso", "Económico"],
@@ -436,7 +509,7 @@ export const products: Product[] = [
     rollDimensions: "2x30m / 1x30m",
     category: "en-rollo",
     image: prodOsloRollo,
-    images: [prodOsloRollo],
+    images: [prodOsloRollo, osloMain, oslo1, oslo2, oslo3, osloTech],
     height: 7,
     description: "Rollo Oslo 7mm. El formato más rentable para eventos masivos.",
     features: ["Mínimo coste", "Efectivo", "Funcional"],
