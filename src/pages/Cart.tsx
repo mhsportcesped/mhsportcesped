@@ -61,7 +61,7 @@ const Cart = () => {
                 <div className="flex-1 flex flex-col justify-between">
                   <div className="space-y-1">
                     <div className="flex justify-between items-start gap-4">
-                      <Link to={`/producto/${item.product.slug}`} className="text-2xl font-black italic tracking-tight hover:text-primary transition-colors line-clamp-1">{item.product.name}</Link>
+                      <Link to={`/producto/${item.product.slug}`} className="text-2xl font-black italic tracking-tight hover:text-primary transition-colors">{item.product.name}</Link>
                       <button className="h-10 w-10 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-destructive rounded-xl transition-all shadow-sm" onClick={() => removeItem(item.product.id)}>
                         <Trash2 className="h-5 w-5" />
                       </button>

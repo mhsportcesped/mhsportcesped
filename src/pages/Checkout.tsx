@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { sendEmail } from "@/lib/email";
+import { formatPrice } from "@/lib/utils";
 
 // Initialize Stripe (Using env variable or placeholder)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_tu_clave_aqui");
@@ -70,7 +71,7 @@ const CheckoutForm = ({ onPrev, onComplete, amount }: any) => {
           size="lg" 
           className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30"
         >
-          {loading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Procesando...</> : `Pagar ${amount.toFixed(2)} €`}
+          {loading ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Procesando...</> : `Pagar ${formatPrice(amount)} €`}
         </Button>
         <Button variant="ghost" type="button" onClick={onPrev} disabled={loading} className="w-full font-bold text-muted-foreground italic underline-offset-4 hover:underline">
           Volver a datos de envío
@@ -176,7 +177,7 @@ const Checkout = () => {
   const finalizeOrder = async () => {
     setLoading(true);
     
-    const cartSummary = items.map(item => `- ${item.product.name} (x${item.quantity}): ${(item.product.price * item.quantity).toFixed(2)} €`).join("\n");
+    const cartSummary = items.map(item => `- ${item.product.name} (x${item.quantity}): ${formatPrice(item.product.price * item.quantity)} €`).join("\n");
     
     const templateParams = {
       from_name: formData.get("nombre"),
@@ -185,7 +186,7 @@ const Checkout = () => {
       address: `${formData.get("calle")}, ${formData.get("direccion")}`,
       notes: formData.get("notes") || "Sin notas",
       order_summary: cartSummary,
-      total_price: `${totalPrice.toFixed(2)} €`,
+      total_price: `${formatPrice(totalPrice)} €`,
       payment_method: "Tarjeta Bancaria (Stripe)",
       subject: "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
       source: "Checkout con Pago - Página Oficial"
@@ -403,11 +404,11 @@ const Checkout = () => {
                             <div className="flex gap-4 items-center">
                                 <span className="h-10 w-10 flex items-center justify-center bg-primary text-white font-black italic text-sm rounded-xl shadow-lg">{item.quantity}x</span>
                                 <div className="space-y-0.5">
-                                    <p className="font-black italic text-xs line-clamp-1">{item.product.name}</p>
+                                    <p className="font-black italic text-xs">{item.product.name}</p>
                                     <p className="text-[10px] font-bold opacity-50">{item.product.category.replace('-', ' ')}</p>
                                 </div>
                             </div>
-                            <span className="font-black italic text-primary">{(item.product.price * item.quantity).toFixed(2)} €</span>
+                            <span className="font-black italic text-primary shrink-0 ml-2">{formatPrice(item.product.price * item.quantity)} €</span>
                         </div>
                     ))}
                 </div>
@@ -416,11 +417,11 @@ const Checkout = () => {
                     <div className="space-y-2">
                         <div className="flex justify-between text-sm font-bold italic opacity-60">
                             <span>Base imponible</span>
-                            <span>{subtotal.toFixed(2)} €</span>
+                            <span>{formatPrice(subtotal)} €</span>
                         </div>
                         <div className="flex justify-between text-sm font-bold italic opacity-60">
                             <span>IVA (21%)</span>
-                            <span>{ivaAmount.toFixed(2)} €</span>
+                            <span>{formatPrice(ivaAmount)} €</span>
                         </div>
                         <div className="flex justify-between text-sm font-bold italic">
                             <span>Envío</span>
@@ -434,7 +435,7 @@ const Checkout = () => {
                         <div className="flex justify-between items-baseline">
                             <span className="text-xl font-black italic">Total a pagar</span>
                             <div className="text-right">
-                                <span className="text-5xl font-black italic text-primary">{totalPrice.toFixed(2)} €</span>
+                                <span className="text-5xl font-black italic text-primary">{formatPrice(totalPrice)} €</span>
                                 <p className="text-[10px] font-bold opacity-40 italic mt-1">IVA incluido</p>
                             </div>
                         </div>
