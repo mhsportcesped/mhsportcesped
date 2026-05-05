@@ -34,11 +34,11 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center gap-1 pr-2 border-r border-border mr-1">
-            <a href="https://www.instagram.com/mhsport.cesped.artificial/" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-primary transition-colors" aria-label="Instagram">
+          <div className="flex items-center gap-0.5 sm:gap-1 pr-1 sm:pr-2 border-r border-border mr-1">
+            <a href="https://www.instagram.com/mhsport.cesped.artificial/" target="_blank" rel="noopener noreferrer" className="p-1.5 sm:p-2 hover:text-primary transition-colors" aria-label="Instagram">
               <Instagram className="h-5 w-5" />
             </a>
-            <a href="https://www.facebook.com/share/1DyHGTDUJ2/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="p-2 hover:text-primary transition-colors" aria-label="Facebook">
+            <a href="https://www.facebook.com/share/1DyHGTDUJ2/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="p-1.5 sm:p-2 hover:text-primary transition-colors" aria-label="Facebook">
               <Facebook className="h-5 w-5" />
             </a>
           </div>

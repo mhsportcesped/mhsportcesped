@@ -47,9 +47,9 @@ const ProductDetail = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Gallery */}
-          <div className="space-y-6 sticky top-24">
-            <div className="aspect-square rounded-[3rem] overflow-hidden border-4 border-white shadow-2xl bg-white relative group">
-              <img src={product.image} alt={product.name} className={`w-full h-full ${product.category === 'complementos' ? 'object-contain p-12' : 'object-cover'} group-hover:scale-110 transition-transform duration-1000`} />
+          <div className="space-y-6 lg:sticky lg:top-24">
+            <div className="aspect-square rounded-[3rem] overflow-hidden border-4 border-white shadow-2xl bg-white relative group flex items-center justify-center p-4">
+              <img src={product.image} alt={product.name} loading="eager" fetchPriority="high" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000" />
               <div className="absolute top-6 left-6">
                 <span className="bg-primary text-white text-[10px] font-black tracking-widest px-3 py-1.5 rounded-full shadow-lg gap-2">Oficial</span>
               </div>
@@ -57,8 +57,8 @@ const ProductDetail = () => {
             {product.gallery && product.gallery.length > 1 && (
               <div className="grid grid-cols-4 sm:grid-cols-5 gap-3">
                 {product.gallery.map((img, i) => (
-                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-105 transition-transform hover:border-primary/50 relative">
-                    <img src={img} alt={`${product.name} galería ${i + 1}`} className={`w-full h-full ${product.category === 'complementos' ? 'object-contain p-2' : 'object-cover'}`} />
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md cursor-pointer hover:scale-105 transition-transform hover:border-primary/50 relative flex items-center justify-center p-1 bg-white">
+                    <img src={img} alt={`${product.name} galería ${i + 1}`} loading="lazy" className="w-full h-full object-contain" />
                   </div>
                 ))}
               </div>
@@ -213,11 +213,11 @@ const ProductDetail = () => {
               )}
 
               <div className="flex flex-col gap-4 pt-4 relative z-10">
-                <div className="flex gap-4">
+                <div className="flex gap-3 sm:gap-4">
                   <div className="flex items-center bg-white rounded-xl overflow-hidden p-1 border-2 border-border shadow-sm">
-                    <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-4 w-4" /></button>
-                    <span className="w-10 text-center font-black italic text-xl">{qty}</span>
-                    <button className="h-12 w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-4 w-4" /></button>
+                    <button className="h-14 w-14 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-6 w-6 sm:h-4 sm:w-4" /></button>
+                    <span className="w-12 sm:w-10 text-center font-black italic text-2xl sm:text-xl">{qty}</span>
+                    <button className="h-14 w-14 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-6 w-6 sm:h-4 sm:w-4" /></button>
                   </div>
                   <Button 
                     size="lg" 
