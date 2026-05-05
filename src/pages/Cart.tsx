@@ -53,8 +53,8 @@ const Cart = () => {
           {/* List */}
           <div className="lg:col-span-2 space-y-6">
             {items.map((item) => (
-              <div key={item.product.id} className="flex flex-col sm:flex-row gap-8 bg-card border-2 border-primary/5 rounded-[2.5rem] p-8 shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
-                <div className="w-full sm:w-40 h-40 rounded-2xl overflow-hidden border-2 border-primary/5 shrink-0 bg-muted/20">
+              <div key={item.product.id} className="flex flex-col sm:flex-row gap-6 sm:gap-8 bg-card border-2 border-primary/5 rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
+                <div className="w-full sm:w-40 h-40 sm:h-auto aspect-square sm:aspect-auto rounded-2xl overflow-hidden border-2 border-primary/5 shrink-0 bg-muted/20">
                   <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
                 </div>
                 
@@ -89,7 +89,7 @@ const Cart = () => {
 
           {/* Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-card border-2 border-primary/20 p-8 md:p-10 rounded-[3rem] sticky top-24 shadow-2xl space-y-8 overflow-hidden relative">
+            <div className="bg-card border-2 border-primary/20 p-6 sm:p-8 md:p-10 rounded-3xl sm:rounded-[3rem] sticky top-24 shadow-2xl space-y-8 overflow-hidden relative">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               
               <h2 className="text-2xl font-black italic tracking-tighter">Resumen compra</h2>

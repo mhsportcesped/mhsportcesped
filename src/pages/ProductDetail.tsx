@@ -18,6 +18,7 @@ const ProductDetail = () => {
   const [width, setWidth] = useState("");
   const [length, setLength] = useState("");
   const [variant, setVariant] = useState(product?.variants?.[0] || "");
+  const [rollSelection, setRollSelection] = useState("");
 
   if (!product) {
     return (
@@ -75,12 +76,15 @@ const ProductDetail = () => {
 
               <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter leading-none">{product.name}</h1>
               <div className="flex flex-col gap-2">
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-2 flex-wrap">
                   <span className="text-4xl font-black italic text-primary">
-                    {product.category === 'al-corte' && estimated > 0 ? formatPrice(estimated) : formatPrice(product.price)} €
+                    {product.category === 'al-corte' && estimated > 0 ? formatPrice(estimated) : 
+                     (product.category === 'en-rollo' && rollSelection && product.m2Price ? 
+                        formatPrice(product.m2Price * rollSelection.replace('m','').split('x').reduce((a,b) => parseFloat(a)*parseFloat(b), 1)) : 
+                        formatPrice(product.price))} €
                   </span>
                   <span className="text-lg text-muted-foreground font-black italic">
-                    / {product.category === 'al-corte' ? (estimated > 0 ? `${sqm.toFixed(2).replace('.', ',')} m²` : 'm²') : (product.category === 'en-rollo' ? 'rollo completo' : 'unidad')}
+                    / {product.category === 'al-corte' ? (estimated > 0 ? `${sqm.toFixed(2).replace('.', ',')} m²` : 'm²') : (product.category === 'en-rollo' ? (rollSelection ? rollSelection : 'rollo') : 'unidad')}
                   </span>
                 </div>
                 {product.category === 'en-rollo' && product.m2Price && (
@@ -106,7 +110,7 @@ const ProductDetail = () => {
             )}
 
             {/* Configurator */}
-            <div className="p-8 bg-card border-2 border-primary/10 rounded-[2.5rem] shadow-xl space-y-8 relative overflow-hidden">
+            <div className="p-6 sm:p-8 bg-card border-2 border-primary/10 rounded-3xl sm:rounded-[2.5rem] shadow-xl space-y-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               
               {product.variants && product.variants.length > 0 && (
@@ -126,7 +130,7 @@ const ProductDetail = () => {
               )}
 
               {product.category === "al-corte" && (
-                <div className="space-y-5 relative z-10 bg-white p-6 rounded-2xl border border-border shadow-sm">
+                <div className="space-y-5 relative z-10 bg-white p-5 sm:p-6 rounded-2xl border border-border shadow-sm">
                   <div className="space-y-2">
                     <label className="text-xs font-black tracking-widest text-muted-foreground italic">Formato de corte (metros)</label>
                     <Select 
@@ -177,6 +181,37 @@ const ProductDetail = () => {
                 </div>
               )}
 
+              {product.category === "en-rollo" && product.rollDimensions && (
+                <div className="space-y-5 relative z-10 bg-white p-5 sm:p-6 rounded-2xl border border-border shadow-sm mt-8">
+                  <div className="space-y-2">
+                    <label className="text-xs font-black tracking-widest text-muted-foreground italic">Seleccionar Medida del Rollo</label>
+                    <Select value={rollSelection} onValueChange={setRollSelection}>
+                      <SelectTrigger className="h-12 rounded-xl bg-background border-border font-bold shadow-sm">
+                        <SelectValue placeholder="Elige una medida" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {product.rollDimensions.split('/').map(dim => {
+                          const d = dim.trim();
+                          return <SelectItem key={d} value={d} className="font-bold">{d}</SelectItem>
+                        })}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {rollSelection && product.m2Price && (
+                      <div className="pt-4 space-y-4">
+                        <div className="animate-in fade-in zoom-in-95 duration-300">
+                          <div className="flex justify-between items-end mb-2">
+                              <span className="text-sm font-bold text-muted-foreground">Medida: <span className="text-foreground">{rollSelection}</span></span>
+                              <span className="text-3xl font-black italic text-primary">
+                                {formatPrice(product.m2Price * rollSelection.replace('m','').split('x').reduce((a,b) => parseFloat(a)*parseFloat(b), 1))} €
+                              </span>
+                          </div>
+                        </div>
+                      </div>
+                  )}
+                </div>
+              )}
+
               <div className="flex flex-col gap-4 pt-4 relative z-10">
                 <div className="flex gap-4">
                   <div className="flex items-center bg-white rounded-xl overflow-hidden p-1 border-2 border-border shadow-sm">
@@ -186,14 +221,29 @@ const ProductDetail = () => {
                   </div>
                   <Button 
                     size="lg" 
-                    disabled={product.category === 'al-corte' && (!width || !length)}
+                    disabled={(product.category === 'al-corte' && (!width || !length)) || (product.category === 'en-rollo' && !rollSelection)}
                     className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
                     onClick={() => {
+                      let finalPrice = product.price;
+                      let finalName = product.name;
+                      let finalId = product.id;
+
+                      if (product.category === 'al-corte') {
+                        finalName = `${product.name} (${width}x${length}m)`;
+                        finalPrice = product.price * sqm;
+                        finalId = `${product.id}-${width}x${length}`;
+                      } else if (product.category === 'en-rollo' && rollSelection) {
+                        finalName = `${product.name} (${rollSelection})`;
+                        const area = rollSelection.replace('m','').split('x').reduce((a,b) => parseFloat(a)*parseFloat(b), 1);
+                        finalPrice = (product.m2Price || 0) * area;
+                        finalId = `${product.id}-${rollSelection}`;
+                      }
+
                       const finalProduct = { 
                         ...product, 
-                        name: product.category === 'al-corte' ? `${product.name} (${width}x${length}m)` : product.name,
-                        price: product.category === 'al-corte' ? product.price * sqm : product.price,
-                        id: product.category === 'al-corte' ? `${product.id}-${width}x${length}` : product.id
+                        name: finalName,
+                        price: finalPrice,
+                        id: finalId
                       };
                       addItem(finalProduct, qty);
                     }}
@@ -211,13 +261,13 @@ const ProductDetail = () => {
         </div>
 
         {/* Details Tabs */}
-        <div className="mt-24">
-          <Tabs defaultValue="specs" className="w-full">
-            <TabsList className="w-full justify-start border-b-2 border-primary/10 rounded-none bg-transparent h-auto p-0 gap-12">
-              <TabsTrigger value="specs" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Ficha Técnica</TabsTrigger>
-              <TabsTrigger value="description" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Descripción</TabsTrigger>
-              <TabsTrigger value="installation" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Instalación</TabsTrigger>
-              <TabsTrigger value="shipping" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-6 font-black tracking-widest text-xs italic">Envíos</TabsTrigger>
+        <div className="mt-16 sm:mt-24 w-full">
+          <Tabs defaultValue="specs" className="w-full max-w-full">
+            <TabsList className="w-full flex justify-start border-b-2 border-primary/10 rounded-none bg-transparent h-auto p-0 gap-6 sm:gap-12 overflow-x-auto whitespace-nowrap scrollbar-none">
+              <TabsTrigger value="specs" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-4 sm:py-6 font-black tracking-widest text-xs sm:text-sm italic">Ficha Técnica</TabsTrigger>
+              <TabsTrigger value="description" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-4 sm:py-6 font-black tracking-widest text-xs sm:text-sm italic">Descripción</TabsTrigger>
+              <TabsTrigger value="installation" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-4 sm:py-6 font-black tracking-widest text-xs sm:text-sm italic">Instalación</TabsTrigger>
+              <TabsTrigger value="shipping" className="rounded-none border-b-4 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-0 py-4 sm:py-6 font-black tracking-widest text-xs sm:text-sm italic">Envíos</TabsTrigger>
             </TabsList>
             
             <TabsContent value="specs" className="py-12 animate-in fade-in duration-500">
@@ -258,9 +308,9 @@ const ProductDetail = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="description" className="py-12 animate-in fade-in duration-500">
-              <div className="max-w-4xl space-y-8 bg-white p-12 rounded-[3rem] border border-border/50 shadow-sm">
-                <p className="text-2xl font-black italic text-primary underline decoration-primary/20 underline-offset-8 mb-8">A fondo</p>
+            <TabsContent value="description" className="py-8 sm:py-12 animate-in fade-in duration-500">
+              <div className="max-w-4xl space-y-6 sm:space-y-8 bg-white p-6 sm:p-12 rounded-3xl sm:rounded-[3rem] border border-border/50 shadow-sm">
+                <p className="text-xl sm:text-2xl font-black italic text-primary underline decoration-primary/20 underline-offset-8 mb-6 sm:mb-8">A fondo</p>
                 <div className="text-lg text-muted-foreground leading-relaxed font-medium space-y-6">
                   {product.description.split(/\n\s*\n/).filter(Boolean).map((block, i) => {
                      const paragraph = block.replace(/\n/g, ' ').trim();
@@ -276,17 +326,17 @@ const ProductDetail = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="installation" className="py-12 animate-in fade-in duration-500">
-                <div className="bg-primary/5 p-8 md:p-12 rounded-[3rem] border-2 border-primary/10 max-w-4xl">
-                    <h3 className="text-2xl font-black italic mb-6 text-primary">Consejos de instalación</h3>
-                    <p className="text-xl text-muted-foreground font-medium leading-relaxed">{product.installation}</p>
+            <TabsContent value="installation" className="py-8 sm:py-12 animate-in fade-in duration-500">
+                <div className="bg-primary/5 p-6 sm:p-8 md:p-12 rounded-3xl sm:rounded-[3rem] border-2 border-primary/10 max-w-4xl">
+                    <h3 className="text-xl sm:text-2xl font-black italic mb-4 sm:mb-6 text-primary">Consejos de instalación</h3>
+                    <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed">{product.installation}</p>
                 </div>
             </TabsContent>
 
-            <TabsContent value="shipping" className="py-12 animate-in fade-in duration-500">
-                <div className="bg-muted/50 p-8 md:p-12 rounded-[3rem] border border-border max-w-4xl">
-                    <h3 className="text-2xl font-black italic mb-6">Información de envío</h3>
-                    <p className="text-xl text-muted-foreground font-medium leading-relaxed">{product.shipping}</p>
+            <TabsContent value="shipping" className="py-8 sm:py-12 animate-in fade-in duration-500">
+                <div className="bg-muted/50 p-6 sm:p-8 md:p-12 rounded-3xl sm:rounded-[3rem] border border-border max-w-4xl">
+                    <h3 className="text-xl sm:text-2xl font-black italic mb-4 sm:mb-6">Información de envío</h3>
+                    <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed">{product.shipping}</p>
                 </div>
             </TabsContent>
           </Tabs>
@@ -294,9 +344,9 @@ const ProductDetail = () => {
 
         {/* Recommended */}
         {recommended.length > 0 && (
-          <div className="mt-32 pt-20 border-t-2 border-primary/10">
-            <h2 className="text-4xl font-black italic mb-16 text-center">Te puede interesar</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+          <div className="mt-20 sm:mt-32 pt-16 sm:pt-20 border-t-2 border-primary/10 w-full overflow-hidden">
+            <h2 className="text-3xl sm:text-4xl font-black italic mb-10 sm:mb-16 text-center">Te puede interesar</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-x-8 sm:gap-y-16">
               {recommended.map((p) => <ProductCard key={p.id} product={p} />)}
             </div>
           </div>

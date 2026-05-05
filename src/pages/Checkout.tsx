@@ -252,9 +252,9 @@ const Checkout = () => {
             </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-start">
           {/* Main Column */}
-          <div className="bg-card border-2 border-primary/5 p-8 md:p-12 rounded-[3.5rem] shadow-xl relative overflow-hidden">
+          <div className="bg-card border-2 border-primary/5 p-6 sm:p-8 md:p-12 rounded-3xl sm:rounded-[3.5rem] shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
             
             {step === 1 ? (
@@ -368,8 +368,8 @@ const Checkout = () => {
           </div>
 
           {/* Summary Column */}
-          <div className="space-y-8 sticky top-8">
-            <div className="bg-card border-2 border-primary/20 p-8 md:p-10 rounded-[3rem] shadow-2xl space-y-8 relative overflow-hidden">
+          <div className="space-y-6 sm:space-y-8 sticky top-8">
+            <div className="bg-card border-2 border-primary/20 p-6 sm:p-8 md:p-10 rounded-3xl sm:rounded-[3rem] shadow-2xl space-y-6 sm:space-y-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 
                 <div className="flex items-center gap-3">
@@ -427,7 +427,7 @@ const Checkout = () => {
                 </div>
             </div>
 
-            <div className="p-8 bg-white/50 backdrop-blur-sm border border-border rounded-[2.5rem] flex items-start gap-4 shadow-sm">
+            <div className="p-6 sm:p-8 bg-white/50 backdrop-blur-sm border border-border rounded-3xl sm:rounded-[2.5rem] flex items-start gap-4 shadow-sm">
                 <ShieldCheck className="h-6 w-6 text-primary shrink-0" />
                 <div className="space-y-1">
                   <p className="text-xs font-black italic tracking-wider">Pago 100% seguro</p>
