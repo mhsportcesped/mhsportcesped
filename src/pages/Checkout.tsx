@@ -119,8 +119,19 @@ const Checkout = () => {
         }),
       });
 
-      if (response.status === 404 || !response.ok) {
-        throw new Error("API not found");
+      if (response.status === 404) {
+        throw new Error("API no encontrada (404). Comprueba que Vercel está sirviendo la carpeta /api correctamente.");
+      }
+      
+      if (!response.ok) {
+        let errorText = "Error del servidor";
+        try {
+            const errData = await response.json();
+            errorText = errData.error || errData.message || JSON.stringify(errData);
+        } catch(e) {
+            errorText = await response.text();
+        }
+        throw new Error(`Fallo en el servidor (HTTP ${response.status}): ${errorText}`);
       }
 
       const data = await response.json();
