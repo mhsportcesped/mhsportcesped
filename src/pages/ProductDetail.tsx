@@ -213,16 +213,16 @@ const ProductDetail = () => {
               )}
 
               <div className="flex flex-col gap-4 pt-4 relative z-10">
-                <div className="flex gap-3 sm:gap-4">
-                  <div className="flex items-center bg-white rounded-xl overflow-hidden p-1 border-2 border-border shadow-sm">
-                    <button className="h-14 w-14 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-6 w-6 sm:h-4 sm:w-4" /></button>
-                    <span className="w-12 sm:w-10 text-center font-black italic text-2xl sm:text-xl">{qty}</span>
-                    <button className="h-14 w-14 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-6 w-6 sm:h-4 sm:w-4" /></button>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex items-center justify-between bg-white rounded-xl p-2 border-2 border-border shadow-sm w-full sm:w-auto">
+                    <button className="h-14 w-14 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-muted bg-muted/30 sm:bg-transparent text-foreground rounded-lg transition-all" onClick={() => setQty(Math.max(1, qty - 1))}><Minus className="h-6 w-6 sm:h-4 sm:w-4" /></button>
+                    <span className="flex-1 sm:w-10 text-center font-black italic text-3xl sm:text-xl">{qty}</span>
+                    <button className="h-14 w-14 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-muted bg-muted/30 sm:bg-transparent text-foreground rounded-lg transition-all" onClick={() => setQty(qty + 1)}><Plus className="h-6 w-6 sm:h-4 sm:w-4" /></button>
                   </div>
                   <Button 
                     size="lg" 
                     disabled={(product.category === 'al-corte' && (!width || !length)) || (product.category === 'en-rollo' && !rollSelection)}
-                    className="flex-1 rounded-xl h-14 font-black italic text-[15px] sm:text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
+                    className="w-full sm:flex-1 rounded-xl h-16 sm:h-14 font-black italic text-lg gap-3 shadow-xl shadow-primary/30 tracking-tight hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100" 
                     onClick={() => {
                       let finalPrice = product.price;
                       let finalName = product.name;
