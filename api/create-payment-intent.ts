@@ -1,13 +1,18 @@
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
-
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey) {
+      return res.status(500).json({ error: 'Falta la variable de entorno STRIPE_SECRET_KEY en Vercel. Por favor, añádela en los ajustes del proyecto.' });
+    }
+
+    const stripe = new Stripe(secretKey);
+
     const { amount, items, customerInfo } = req.body;
 
     if (!amount || amount <= 0) {
