@@ -126,10 +126,15 @@ const Checkout = () => {
       if (!response.ok) {
         let errorText = "Error del servidor";
         try {
-            const errData = await response.json();
-            errorText = errData.error || errData.message || JSON.stringify(errData);
+            const rawText = await response.text();
+            try {
+                const errData = JSON.parse(rawText);
+                errorText = errData.error || errData.message || JSON.stringify(errData);
+            } catch {
+                errorText = rawText || response.statusText;
+            }
         } catch(e) {
-            errorText = await response.text();
+            errorText = "No se pudo leer la respuesta del servidor.";
         }
         throw new Error(`Fallo en el servidor (HTTP ${response.status}): ${errorText}`);
       }
