@@ -130,15 +130,19 @@ const Checkout = () => {
       } else {
         throw new Error(data.error || "No se pudo iniciar la pasarela de pago");
       }
-    } catch (error) {
-      console.warn("Backend no disponible, activando simulador local para pruebas.");
-      // If we are in local development and API fails, we enable simulation
-      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    } catch (error: any) {
+      console.warn("Backend no disponible o error:", error.message);
+      // Habilitar simulador para IPs locales (192.168.x.x) y localhost
+      const isLocal = window.location.hostname === "localhost" || 
+                      window.location.hostname === "127.0.0.1" || 
+                      window.location.hostname.startsWith("192.168.");
+      
+      if (isLocal) {
         setIsSimulated(true);
         // We set a fake secret just to pass the check
         setClientSecret("simulated_secret");
       } else {
-        toast.error("Error de conexión con el servidor de pagos");
+        toast.error(`Error de conexión: ${error.message}`);
       }
     } finally {
       setIsFetchingSecret(false);
