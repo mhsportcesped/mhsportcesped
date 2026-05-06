@@ -64,6 +64,13 @@ import prodSueciaRollo from '../assets/products/Suecia rollo.jpg';
 import prodOsloCorte from '../assets/products/oslo.png';
 import prodOsloRollo from '../assets/products/oslo rollo.jpg';
 
+// Nuevas imágenes de cintas de unión
+import imgCinta30x5 from '../assets/products/Cinta de Unión para Césped Artificial 30cmx5m.jpg';
+import imgCinta30x10 from '../assets/products/Cinta de Unión para Césped Artificial 30cmx10m.jpg';
+import imgCinta30x30 from '../assets/products/Cinta de Unión para Césped Artificial 30cmx30m.jpg';
+import imgCintaAdh15x5 from '../assets/products/Cinta de Unión Adhesiva para Césped Artificial 15cmx5m.jpg';
+import imgCintaAdh15x10 from '../assets/products/Cinta de Unión Adhesiva para Césped Artificial 15cmx10m.jpg';
+
 // Galería Ankara
 import ankara1 from '../assets/products/ANKARA 45mm/45mm (1).jpg';
 import ankara2 from '../assets/products/ANKARA 45mm/45mm (2).jpg';
@@ -521,8 +528,8 @@ export const products: Product[] = [
     slug: "cinta-union-estandar-5m",
     price: 8.98,
     category: "complementos",
-    image: imgURLs.cintaNormal,
-    images: [imgURLs.cintaNormal],
+    image: imgCinta30x5,
+    images: [imgCinta30x5],
     description: "Cinta de unión estándar no adhesiva de 30cm x 5m, fabricada en geotextil de alta resistencia. Diseñada para ser utilizada con cola bicomponente en juntas profesionales e invisibles.",
     features: ["30cm x 5m", "Resistente", "Profesional"],
     installation: "Uso con cola.",
@@ -534,8 +541,8 @@ export const products: Product[] = [
     slug: "cinta-union-estandar-10m",
     price: 14.98,
     category: "complementos",
-    image: imgURLs.cintaNormal,
-    images: [imgURLs.cintaNormal],
+    image: imgCinta30x10,
+    images: [imgCinta30x10],
     description: "Cinta de unión estándar no adhesiva de 30cm x 10m. Ideal para instalaciones medianas que requieren una fijación permanente y duradera con adhesivo bicomponente.",
     features: ["30cm x 10m", "Larga duración", "Calidad"],
     installation: "Uso con cola.",
@@ -547,8 +554,8 @@ export const products: Product[] = [
     slug: "cinta-union-estandar-30m",
     price: 35.90,
     category: "complementos",
-    image: imgURLs.cintaNormal,
-    images: [imgURLs.cintaNormal],
+    image: imgCinta30x30,
+    images: [imgCinta30x30],
     description: "Formato profesional de 30 metros. Cinta de unión de alta resistencia para grandes superficies. Asegura la estabilidad total en instalaciones extensas.",
     features: ["30cm x 30m", "Formato ahorro", "Profesional"],
     installation: "Uso con cola.",
@@ -560,8 +567,8 @@ export const products: Product[] = [
     slug: "cinta-union-adhesiva-5m",
     price: 10.90,
     category: "complementos",
-    image: imgURLs.cintaAdhesiva,
-    images: [imgURLs.cintaAdhesiva],
+    image: imgCintaAdh15x5,
+    images: [imgCintaAdh15x5],
     description: "Cinta autoadhesiva de 5 metros para una instalación rápida y limpia sin necesidad de cola líquida. Perfecta para bricolaje y pequeñas reparaciones.",
     features: ["15cm x 5m", "Autoadhesiva", "Fácil"],
     installation: "Directa.",
@@ -573,8 +580,8 @@ export const products: Product[] = [
     slug: "cinta-union-adhesiva-10m",
     price: 21.90,
     category: "complementos",
-    image: imgURLs.cintaAdhesiva,
-    images: [imgURLs.cintaAdhesiva],
+    image: imgCintaAdh15x10,
+    images: [imgCintaAdh15x10],
     description: "Cinta autoadhesiva de 10 metros de alta tracción. Proporciona una sujeción inmediata y duradera entre paños de césped en terrazas y balcones.",
     features: ["15cm x 10m", "Alta adherencia", "Limpio"],
     installation: "Directa.",
