@@ -82,7 +82,7 @@ const CheckoutForm = ({ onPrev, onComplete, amount }: any) => {
 };
 
 const Checkout = () => {
-  const { items, totalItems, totalPrice, clearCart } = useCart();
+  const { items, totalItems, totalPrice, shippingPrice, clearCart } = useCart();
   const [step, setStep] = useState(1); // 1: Details, 2: Payment
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -93,8 +93,9 @@ const Checkout = () => {
 
   // Calculations for detailed summary
   const ivaRate = 0.21;
-  const subtotal = totalPrice / (1 + ivaRate);
-  const ivaAmount = totalPrice - subtotal;
+  const finalTotal = totalPrice + shippingPrice;
+  const subtotal = finalTotal / (1 + ivaRate);
+  const ivaAmount = finalTotal - subtotal;
 
   // Effect to fetch client secret when moving to payment step
   useEffect(() => {
@@ -110,7 +111,7 @@ const Checkout = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          amount: totalPrice,
+          amount: finalTotal,
           items: items,
           customerInfo: {
             name: formData?.get("nombre"),
@@ -186,7 +187,7 @@ const Checkout = () => {
       address: `${formData.get("calle")}, ${formData.get("direccion")}`,
       notes: formData.get("notes") || "Sin notas",
       order_summary: cartSummary,
-      total_price: `${formatPrice(totalPrice)} €`,
+      total_price: `${formatPrice(finalTotal)} €`,
       payment_method: "Tarjeta Bancaria (Stripe)",
       subject: "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
       source: "Checkout con Pago - Página Oficial"
@@ -375,7 +376,7 @@ const Checkout = () => {
                     </div>
                   ) : (
                     <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-                      <CheckoutForm amount={totalPrice} onPrev={() => setStep(1)} onComplete={finalizeOrder} />
+                      <CheckoutForm amount={finalTotal} onPrev={() => setStep(1)} onComplete={finalizeOrder} />
                     </Elements>
                   )
                 ) : (
@@ -425,8 +426,8 @@ const Checkout = () => {
                         </div>
                         <div className="flex justify-between text-sm font-bold italic">
                             <span>Envío</span>
-                            <span className={totalPrice >= 300 ? "text-primary" : "text-muted-foreground"}>
-                                {totalPrice >= 300 ? "Gratis" : "A consultar"}
+                            <span className={shippingPrice === 0 ? "text-primary" : "text-muted-foreground"}>
+                                {shippingPrice === 0 ? "Gratis" : `${formatPrice(shippingPrice)} €`}
                             </span>
                         </div>
                     </div>
@@ -435,13 +436,13 @@ const Checkout = () => {
                         <div className="flex justify-between items-baseline">
                             <span className="text-xl font-black italic">Total a pagar</span>
                             <div className="text-right">
-                                <span className="text-5xl font-black italic text-primary">{formatPrice(totalPrice)} €</span>
+                                <span className="text-5xl font-black italic text-primary">{formatPrice(finalTotal)} €</span>
                                 <p className="text-[10px] font-bold opacity-40 italic mt-1">IVA incluido</p>
                             </div>
                         </div>
-                        {totalPrice < 300 && (
+                        {totalPrice < 250 && (
                             <p className="text-[10px] font-black italic text-primary animate-pulse text-right mt-2">
-                                ¡Envío gratis a partir de 300€!
+                                ¡Envío gratis a partir de 250€!
                             </p>
                         )}
                     </div>

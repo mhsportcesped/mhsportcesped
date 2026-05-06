@@ -253,7 +253,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="bg-primary/5 p-4 rounded-2xl border border-primary/20 flex items-center gap-3">
                   <Sun className="h-5 w-5 text-primary animate-pulse" />
-                  <p className="text-xs font-black italic text-primary">¡Portes GRATIS en pedidos superiores a 300€!</p>
+                  <p className="text-xs font-black italic text-primary">¡Portes GRATIS en pedidos superiores a 250€!</p>
                 </div>
               </div>
             </div>
@@ -336,7 +336,17 @@ const ProductDetail = () => {
             <TabsContent value="shipping" className="py-8 sm:py-12 animate-in fade-in duration-500">
                 <div className="bg-muted/50 p-6 sm:p-8 md:p-12 rounded-3xl sm:rounded-[3rem] border border-border max-w-4xl">
                     <h3 className="text-xl sm:text-2xl font-black italic mb-4 sm:mb-6">Información de envío</h3>
-                    <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed">{product.shipping}</p>
+                    <div className="space-y-4">
+                      <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed">{product.shipping}</p>
+                      <div className="p-6 bg-white rounded-2xl border border-primary/10 shadow-sm inline-block">
+                        <p className="text-2xl font-black italic text-primary">
+                          Gastos de envío: {product.category === 'complementos' ? '14,99 €' : '24,50 €'}
+                        </p>
+                        <p className="text-xs font-bold text-muted-foreground mt-1 uppercase tracking-widest">
+                          ¡GRATIS EN PEDIDOS SUPERIORES A 250 €!
+                        </p>
+                      </div>
+                    </div>
                 </div>
             </TabsContent>
           </Tabs>

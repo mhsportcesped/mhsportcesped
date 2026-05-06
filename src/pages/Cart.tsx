@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 
 const Cart = () => {
-  const { items, removeItem, updateQuantity, totalPrice, totalItems } = useCart();
+  const { items, removeItem, updateQuantity, totalPrice, totalItems, shippingPrice } = useCart();
 
   if (items.length === 0) {
     return (
@@ -101,12 +101,14 @@ const Cart = () => {
                 </div>
                 <div className="flex justify-between text-sm font-bold italic opacity-60">
                   <span>Envío</span>
-                  <span className="text-primary">Gratis</span>
+                  <span className={shippingPrice === 0 ? "text-primary" : ""}>
+                    {shippingPrice === 0 ? "Gratis" : `${formatPrice(shippingPrice)} €`}
+                  </span>
                 </div>
                 <div className="h-px bg-border my-6" />
                 <div className="flex justify-between items-baseline">
                   <span className="text-lg font-black italic">Total</span>
-                  <span className="text-4xl font-black italic text-primary">{formatPrice(totalPrice)} €</span>
+                  <span className="text-4xl font-black italic text-primary">{formatPrice(totalPrice + shippingPrice)} €</span>
                 </div>
               </div>
 
