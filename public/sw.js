@@ -2,15 +2,25 @@
 // Fuerza recarga automática cuando hay una nueva versión disponible
 
 const CACHE_NAME = 'mhsport-v1';
+const ASSETS_TO_CACHE = [
+  '/',
+  '/index.html',
+];
+
+// Extensiones de archivos que queremos cachear (imágenes y fuentes)
+const IMAGE_TYPES = /\.(png|jpg|jpeg|gif|webp|avif|svg|ico|woff|woff2)$/i;
 
 self.addEventListener('install', (event) => {
-  // Toma el control inmediatamente sin esperar a que se cierre la pestaña
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
+    })
+  );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    // Elimina caches antiguas
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
@@ -18,19 +28,43 @@ self.addEventListener('activate', (event) => {
           .map((name) => caches.delete(name))
       );
     }).then(() => {
-      // Toma control de todas las pestañas abiertas
       return self.clients.claim();
     })
   );
 });
 
-// Cuando el SW se activa, notifica a todos los clientes para que recarguen
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    self.clients.matchAll({ type: 'window' }).then((clients) => {
-      clients.forEach((client) => {
-        client.postMessage({ type: 'SW_UPDATED' });
-      });
-    })
-  );
+// Estrategia Cache First para imágenes y activos estáticos
+self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+
+  if (IMAGE_TYPES.test(url.pathname)) {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return fetch(event.request).then((networkResponse) => {
+          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+            return networkResponse;
+          }
+
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+
+          return networkResponse;
+        });
+      })
+    );
+  }
 });
+
+// Notificar a los clientes para recarga
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+

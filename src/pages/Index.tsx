@@ -5,8 +5,9 @@ import heroImg from "@/assets/hero-cesped.jpg";
 import durabilidadImg from "@/assets/test-durabilidad.png";
 import imgEmpresa from "@/assets/empresa-exterior.jpg";
 import { useEffect, useState } from "react";
-import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
+import SEO from "@/components/SEO";
+
 
 const trustBadges = [
   { icon: Heart, title: "Ideal para familias", desc: "Único fabricante con modelos certificados para niños y mascotas." },
@@ -33,9 +34,23 @@ const Index = () => {
 
   return (
     <main className="relative">
+      <SEO 
+        title="Inicio" 
+        description="Especialistas en venta e instalación de césped artificial profesional. Compra al mejor precio en nuestra tienda online con envío rápido a toda España."
+        keywords="césped artificial, instalación césped artificial, comprar césped artificial barato, jardín césped artificial"
+        canonical="https://mhsportcesped.es/"
+      />
       {/* Hero */}
       <section className="relative min-h-[80vh] flex items-center">
-        <img src={heroImg} alt="Césped artificial instalado" className="absolute inset-0 w-full h-full object-cover" width={1920} height={1080} />
+        <img 
+          src={heroImg} 
+          alt="Césped artificial instalado" 
+          className="absolute inset-0 w-full h-full object-cover" 
+          width={1920} 
+          height={1080}
+          loading="eager"
+          fetchpriority="high"
+        />
         <div className="absolute inset-0 bg-black/60" />
         <div className="container relative z-10 py-20">
           <div className="max-w-2xl">
@@ -145,6 +160,7 @@ const Index = () => {
                 src={imgEmpresa} 
                 alt="Sede Central MH Sport" 
                 className="relative rounded-[2.5rem] shadow-2xl border-4 border-white transition-all duration-700 group-hover:scale-[1.02]" 
+                loading="lazy"
               />
             </div>
           </div>
@@ -157,7 +173,12 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative group">
               <div className="absolute -inset-4 bg-primary/15 rounded-[2.5rem] -rotate-2 group-hover:rotate-0 transition-transform duration-700" />
-              <img src={durabilidadImg} alt="Test de durabilidad" className="relative rounded-[2rem] shadow-2xl border border-white/20 transition-transform duration-700 group-hover:scale-[1.02]" />
+              <img 
+                src={durabilidadImg} 
+                alt="Test de durabilidad" 
+                className="relative rounded-[2rem] shadow-2xl border border-white/20 transition-transform duration-700 group-hover:scale-[1.02]" 
+                loading="lazy"
+              />
             </div>
             <div className="space-y-10">
               <div className="space-y-6">

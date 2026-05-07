@@ -2,6 +2,8 @@ import { Instagram, Facebook, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import SEO from "@/components/SEO";
+
 
 const galleryImages = import.meta.glob("@/assets/gallery/**/*.{png,jpg,jpeg,webp,JPG,PNG,JPEG,WEBP}", { eager: true });
 const photosRaw = Object.entries(galleryImages)
@@ -34,6 +36,12 @@ const Gallery = () => {
 
   return (
     <main className="py-12 md:py-20 animate-in fade-in duration-700 bg-muted/20 min-h-screen">
+      <SEO 
+        title="Galería de Proyectos" 
+        description="Mira fotos reales de nuestras instalaciones de césped artificial en jardines, terrazas, áticos y zonas deportivas. Inspírate para tu propio proyecto."
+        keywords="fotos césped artificial, ejemplos instalaciones césped, galería jardines, antes y después césped"
+        canonical="https://mhsportcesped.es/galeria"
+      />
       <div className="container">
         {/* Top Social Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-16 bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-border/50">
@@ -59,6 +67,7 @@ const Gallery = () => {
                 src={photo.url} 
                 alt={photo.title} 
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                loading="lazy"
               />
               
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6">

@@ -1,6 +1,8 @@
 import { Shield, Award, Users, Heart, Factory, Building2, LayoutGrid, Eye, SearchCheck, ArrowLeft, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
+
 import imgEmpresa from "@/assets/empresa-exterior.jpg";
 import imgAlmacen from "@/assets/almacen.jpg";
 import imgTrabajo from "@/assets/area-trabajo.jpg";
@@ -16,12 +18,18 @@ const values = [
 
 const About = () => (
   <main className="py-12 md:py-20">
+    <SEO 
+      title="Sobre Nosotros" 
+      description="Conoce MH Sport Césped, especialistas en césped artificial con más de 20 años de experiencia. Nuestra sede en Hellín y nuestra pasión por la calidad."
+      keywords="empresa césped artificial, sobre mh sport, césped artificial Hellín, expertos jardinería"
+      canonical="https://mhsportcesped.es/sobre-nosotros"
+    />
     <div className="container max-w-5xl">
       <div className="text-center mb-16 space-y-4">
         <h1 className="text-4xl sm:text-7xl font-black italic tracking-tighter text-primary">Nuestra Empresa</h1>
         <p className="text-lg sm:text-xl text-muted-foreground tracking-widest font-bold px-4">MH Sport Césped Artificial y Jardines S.L.</p>
         <div className="mt-8 sm:mt-12 relative group overflow-hidden rounded-[2rem] sm:rounded-[3rem] aspect-[4/3] sm:aspect-[21/9] shadow-2xl border-4 sm:border-8 border-white">
-          <img src={imgEmpresa} alt="Nuestra Empresa - MH Sport" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+          <img src={imgEmpresa} alt="Nuestra Empresa - MH Sport" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" loading="eager" fetchpriority="high" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-bottom p-6 sm:p-12">
             <p className="text-white text-xl sm:text-3xl font-black italic mt-auto">Sede Central en Hellín, Albacete</p>
           </div>
@@ -57,7 +65,7 @@ const About = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 px-4 sm:px-0">
         <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
           <div className="aspect-video overflow-hidden">
-            <img src={imgAlmacen} alt="Nuestro Almacén" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            <img src={imgAlmacen} alt="Nuestro Almacén" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
           </div>
           <div className="p-6 sm:p-8">
             <Factory className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
@@ -70,7 +78,7 @@ const About = () => (
 
         <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
           <div className="aspect-video overflow-hidden">
-            <img src={imgTrabajo} alt="Nuestra Área de Trabajo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            <img src={imgTrabajo} alt="Nuestra Área de Trabajo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
           </div>
           <div className="p-6 sm:p-8">
             <LayoutGrid className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
@@ -83,7 +91,7 @@ const About = () => (
 
         <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
           <div className="aspect-video overflow-hidden">
-            <img src={imgOficinas} alt="Nuestras Oficinas" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            <img src={imgOficinas} alt="Nuestras Oficinas" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
           </div>
           <div className="p-6 sm:p-8">
             <Building2 className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />
@@ -96,7 +104,7 @@ const About = () => (
 
         <div className="bg-card border border-border rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
           <div className="aspect-video overflow-hidden">
-            <img src={imgExposicion} alt="Nuestra Exposición" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            <img src={imgExposicion} alt="Nuestra Exposición" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
           </div>
           <div className="p-6 sm:p-8">
             <Eye className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-4" />

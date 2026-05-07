@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import SEO from "@/components/SEO";
+
 import { formatPrice } from "@/lib/utils";
 
 import { sendEmail } from "@/lib/email";
@@ -54,6 +56,12 @@ const Calculator = () => {
 
   return (
     <main className="py-20 animate-in fade-in duration-700">
+      <SEO 
+        title="Calculadora de Césped" 
+        description="Calcula fácilmente los metros cuadrados que necesitas para tu proyecto. Herramienta gratuita para planificar tu compra de césped artificial."
+        keywords="calculadora césped artificial, calcular metros jardín, medidas césped, planificador jardín"
+        canonical="https://mhsportcesped.es/calculadora"
+      />
       <div className="container max-w-xl">
         <h1 className="text-4xl font-black italic text-center mb-2 text-primary">Calculadora m²</h1>
         <p className="text-center text-muted-foreground mb-10 font-bold">Planifica tu instalación de forma precisa.</p>

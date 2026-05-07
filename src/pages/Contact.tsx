@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Phone, Mail, MapPin, CheckCircle, Clock, Facebook, Instagram, MessageSquare, ArrowLeft } from "lucide-react";
+import SEO from "@/components/SEO";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -45,6 +47,12 @@ const Contact = () => {
 
   return (
     <main className="py-12 md:py-20 animate-in fade-in duration-700">
+      <SEO 
+        title="Contacto y Ubicación" 
+        description="Contacta con MH Sport Césped en Hellín, Albacete. Estamos aquí para ayudarte con tu proyecto de césped artificial. ¡Llámanos o visítanos!"
+        keywords="contacto césped artificial, tienda césped Hellín, teléfono MH Sport, dirección césped artificial"
+        canonical="https://mhsportcesped.es/contacto"
+      />
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-black italic tracking-tight text-primary">¡Contacta con nosotros!</h1>

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ProductCard from "@/components/ProductCard";
 import { products, categories } from "@/data/products";
+import SEO from "@/components/SEO";
+
 
 const Shop = () => {
   const [searchParams] = useSearchParams();
@@ -42,6 +44,12 @@ const Shop = () => {
 
   return (
     <main className="py-12 md:py-20 animate-in fade-in duration-700 bg-muted/20">
+      <SEO 
+        title="Tienda de Césped Artificial" 
+        description="Explora nuestro catálogo de césped artificial: modelos al corte, rollos completos y todos los complementos necesarios. Calidad profesional al mejor precio."
+        keywords="tienda césped artificial, comprar césped artificial, césped artificial al corte, rollos de césped artificial, accesorios césped"
+        canonical="https://mhsportcesped.es/tienda"
+      />
       <div className="container">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
           <div className="space-y-2">

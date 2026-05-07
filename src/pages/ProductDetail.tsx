@@ -9,6 +9,8 @@ import { useCart } from "@/context/CartContext";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
 import { formatPrice } from "@/lib/utils";
+import SEO from "@/components/SEO";
+
 
 const ProductDetail = () => {
   const { slug } = useParams();
@@ -35,6 +37,35 @@ const ProductDetail = () => {
 
   return (
     <main className="py-8 md:py-20 animate-in fade-in duration-700 bg-muted/10">
+      <SEO 
+        title={product.name} 
+        description={`${product.name}. ${product.description.slice(0, 150)}...`}
+        keywords={`${product.name}, césped artificial ${product.height}mm, comprar césped ${product.category}`}
+        ogTitle={product.name}
+        ogDescription={product.description.slice(0, 150)}
+        canonical={`https://mhsportcesped.es/producto/${product.slug}`}
+      />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          "name": product.name,
+          "image": product.image,
+          "description": product.description,
+          "brand": {
+            "@type": "Brand",
+            "name": "MH Sport"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": `https://mhsportcesped.es/producto/${product.slug}`,
+            "priceCurrency": "EUR",
+            "price": product.price,
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition"
+          }
+        })}
+      </script>
       <div className="container">
         <div className="mb-12 flex items-center justify-between">
             <Button variant="ghost" asChild className="gap-2 font-bold rounded-xl h-11 text-muted-foreground hover:text-primary">
@@ -274,7 +305,7 @@ const ProductDetail = () => {
               <div className="max-w-5xl mx-auto border-t-2 border-primary/20 pt-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <img src={product.image} alt={`Ficha técnica ${product.name}`} className="w-full max-w-sm mx-auto rounded-3xl shadow-xl border border-border" />
+                        <img src={product.image} alt={`Ficha técnica ${product.name}`} loading="lazy" className="w-full max-w-sm mx-auto rounded-3xl shadow-xl border border-border" />
                     </div>
                     <div>
                         {product.specs && Object.keys(product.specs).length > 0 ? (

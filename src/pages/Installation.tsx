@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { CheckCircle, ArrowLeft, Wrench, Shield, Home, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
+
 
 const steps = [
   { icon: Home, title: "Consulta", desc: "Nos cuentas tu proyecto y tomamos medidas exactas." },
@@ -51,6 +53,12 @@ const Installation = () => {
 
   return (
     <main className="py-12 md:py-20 animate-in fade-in duration-700 bg-muted/10">
+      <SEO 
+        title="Instalación Profesional" 
+        description="Servicio de instalación de césped artificial en Hellín, Albacete y alrededores. Presupuesto sin compromiso. Garantía de acabado premium y drenaje óptimo."
+        keywords="instalación césped artificial, montar césped artificial, presupuesto césped artificial, instaladores de césped Albacete"
+        canonical="https://mhsportcesped.es/instalacion"
+      />
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-black italic tracking-tight text-primary">Instalación Profesional</h1>
