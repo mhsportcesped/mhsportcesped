@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const ManualInvoice = () => {
   const handleGenerate = () => {
     const orderData = {
-      orderId: "MH-20260511-RUBEN",
+      orderId: "MH-RUBEN-001",
       customerInfo: {
         name: "Rubén Alfaro Díaz",
         email: "crubenalfarodiaz@gmail.com",
