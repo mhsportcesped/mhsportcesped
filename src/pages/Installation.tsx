@@ -32,12 +32,10 @@ const Installation = () => {
       "Nombre": formData.get("nombre"),
       "Correo": formData.get("email"),
       "Teléfono": formData.get("telefono"),
-      "Ciudad/Población": formData.get("ciudad"),
-      "Calle y Número": formData.get("calle"),
+      "Ubicación": `${formData.get("ciudad")}, ${formData.get("calle")}`,
       "Metros Cuadrados": formData.get("metros"),
-      "Mensaje/Detalles": formData.get("detalles"),
-      "Asunto": "PRESUPUESTO INSTALACIÓN - WEB OFICIAL MH SPORT CÉSPED",
-      "Origen": "Página de Instalación - Oficial"
+      "Detalles": formData.get("detalles"),
+      "Asunto": "SOLICITUD PRESUPUESTO INSTALACIÓN",
     };
 
     try {

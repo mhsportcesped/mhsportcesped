@@ -205,7 +205,7 @@ const Checkout = () => {
       }
     };
 
-    // Parámetros en español para Formspree
+    // Parámetros descriptivos para Formspree (Administrador)
     const templateParams = {
       "Nombre del Cliente": formData.get("nombre"),
       "Correo Electrónico": formData.get("email"),
@@ -217,28 +217,25 @@ const Checkout = () => {
       "IVA (21%)": `${formatPrice(ivaAmount)} €`,
       "Gastos de Envío": shippingPrice === 0 ? "Gratis" : `${formatPrice(shippingPrice)} €`,
       "TOTAL PAGADO": `${formatPrice(finalTotal)} €`,
-      "Método de Pago": "Tarjeta Bancaria (Stripe)",
-      "Asunto": "NUEVA FACTURA Y PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
-      "Origen": "Checkout con Pago - Página Oficial"
+      "Asunto": "NUEVO PEDIDO RECIBIDO - MH SPORT CÉSPED",
     };
 
     try {
-      // Intentar enviar email
+      // 1. Enviar email de notificación (Formspree)
       await sendEmail(templateParams);
       
-      // Generar y descargar PDF automáticamente con logo
+      // 2. Generar y descargar PDF automáticamente
       generateInvoicePDF(orderData, logo);
       
-      // Enviar SMS de confirmación real (Simulado)
-      const smsMessage = `MH Sport: Gracias por tu compra, ${formData.get("nombre")}. Tu pedido #${Math.floor(Math.random() * 1000000)} ha sido confirmado.`;
+      // 3. Enviar SMS de confirmación (Simulado)
+      const smsMessage = `MH Sport: Gracias por tu compra, ${formData.get("nombre")}. Tu pedido ha sido confirmado.`;
       await sendSMS(formData.get("telefono"), smsMessage);
       
       setSubmitted(true);
       clearCart();
       
-      // Mensaje detallado sobre el envío de emails
       toast.success("¡Pedido finalizado con éxito!", {
-        description: `Se ha descargado tu albarán de compra. Se ha enviado la factura a info@mhsportcesped.es y una copia a ${formData.get("email")}.`,
+        description: "Se ha descargado tu albarán. Recibirás un correo de confirmación pronto.",
         duration: 8000,
       });
     } catch (error) {
@@ -259,10 +256,25 @@ const Checkout = () => {
             <div className="space-y-3">
                 <h1 className="text-4xl font-black italic text-primary tracking-tight">¡Pedido confirmado!</h1>
                 <p className="text-muted-foreground font-medium">
-                Hemos recibido tu pedido y se ha procesado correctamente. Se ha descargado tu factura en PDF y pronto recibirás un correo de confirmación.
+                  Hemos recibido tu pedido correctamente. Se ha descargado tu albarán en PDF automáticamente.
                 </p>
             </div>
-            <div className="pt-6">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+                <Button onClick={() => {
+                  const orderData = {
+                    items,
+                    customerInfo: {
+                      name: formData?.get("nombre"),
+                      email: formData?.get("email"),
+                      phone: formData?.get("telefono"),
+                      address: `${formData?.get("calle")}, ${formData?.get("direccion")}`
+                    },
+                    totals: { subtotal, ivaAmount, shippingPrice, finalTotal }
+                  };
+                  generateInvoicePDF(orderData, logo);
+                }} variant="outline" className="rounded-xl h-14 px-8 font-black italic border-2">
+                    Descargar Albarán de nuevo
+                </Button>
                 <Button asChild size="lg" className="rounded-xl h-14 px-10 font-black italic shadow-xl shadow-primary/20">
                     <Link to="/">Volver al inicio</Link>
                 </Button>

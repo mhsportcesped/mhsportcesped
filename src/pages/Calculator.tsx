@@ -33,14 +33,13 @@ const Calculator = () => {
     const formData = new FormData(form);
     
     const templateParams = {
-      from_name: formData.get("nombre"),
-      phone: formData.get("telefono"),
-      area_width: width,
-      area_length: length,
-      total_sqm: sqm.toFixed(2),
-      estimated_price: `${(sqm * cheapest.price).toFixed(2)} € - ${(sqm * priciest.price).toFixed(2)} €`,
-      subject: "CONSULTA CALCULADORA - WEB OFICIAL MH SPORT CÉSPED",
-      source: "Calculadora de m2 - Página Oficial"
+      "Nombre": formData.get("nombre"),
+      "Teléfono": formData.get("telefono"),
+      "Ancho (m)": width,
+      "Largo (m)": length,
+      "Superficie (m2)": sqm.toFixed(2),
+      "Precio Estimado": `${(sqm * cheapest.price).toFixed(2)} € - ${(sqm * priciest.price).toFixed(2)} €`,
+      "Asunto": "CONSULTA CALCULADORA M2",
     };
 
     try {

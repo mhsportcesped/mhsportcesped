@@ -29,8 +29,7 @@ const Contact = () => {
       "Teléfono": formData.get("telefono"),
       "Dirección": `${formData.get("calle")}, ${formData.get("poblacion")}, ${formData.get("provincia")}`,
       "Mensaje": formData.get("mensaje"),
-      "Asunto": "NUEVO MENSAJE - WEB OFICIAL MH SPORT CÉSPED",
-      "Origen": "Formulario de Contacto - Página Oficial"
+      "Asunto": "NUEVO MENSAJE DE CONTACTO - WEB",
     };
 
     try {

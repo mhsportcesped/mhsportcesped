@@ -7,15 +7,17 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   const { items, customerInfo, totals, orderId = `MH-${Math.floor(Math.random() * 1000000)}`, date } = orderData;
 
   // Background for the header
-  doc.setFillColor(26, 74, 48); // Brand green
-  doc.rect(0, 0, 210, 40, 'F');
+  doc.setFillColor(136, 192, 67); // Exact green from the new logo (#88C043)
+  doc.rect(0, 0, 210, 45, 'F');
 
-  // Header with Logo
+  // Header with Logo - Adjusted for the new horizontal logo
   if (logoSrc) {
     try {
       doc.setFillColor(255, 255, 255);
-      doc.roundedRect(14, 8, 45, 24, 3, 3, 'F');
-      doc.addImage(logoSrc, 'WEBP', 16, 11, 41, 18);
+      doc.roundedRect(12, 10, 65, 25, 3, 3, 'F');
+      
+      // New proportions for the horizontal logo
+      doc.addImage(logoSrc, 'WEBP', 15, 13, 59, 19);
     } catch (e) {
       console.warn("Could not add logo to PDF:", e);
     }
@@ -23,19 +25,23 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
 
   // Company Name and Info in the green header
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(26);
+  doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
-  doc.text("MH SPORT CÉSPED", 65, 20);
+  doc.text("MH SPORT CÉSPED", 82, 22);
   
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text("Especialistas en Césped Artificial de Alta Gama", 65, 28);
-  doc.text("CIF: B12345678 | Polígono San Rafael, Hellín", 65, 34);
+  doc.setTextColor(240, 255, 240);
+  doc.text("CÉSPED ARTIFICIAL Y JARDINERÍA PREMIUM", 82, 29);
+  
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.text("CIF: B12345678 | Polígono San Rafael, Hellín (Albacete)", 82, 36);
 
   // Separator line
-  doc.setDrawColor(230);
+  doc.setDrawColor(136, 192, 67);
   doc.setLineWidth(0.5);
-  doc.line(14, 48, 196, 48);
+  doc.line(14, 52, 196, 52);
 
   // --- Document Details Box (Upper Right) ---
   doc.setFillColor(248, 250, 248);
@@ -62,7 +68,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   // --- Seller and Customer Sections ---
   // Seller
   doc.setFontSize(10);
-  doc.setTextColor(26, 74, 48);
+  doc.setTextColor(136, 192, 67);
   doc.setFont("helvetica", "bold");
   doc.text("VENDEDOR:", 14, 58);
   
@@ -75,7 +81,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.text("info@mhsportcesped.es", 14, 78);
 
   // Customer
-  doc.setTextColor(26, 74, 48);
+  doc.setTextColor(136, 192, 67);
   doc.setFont("helvetica", "bold");
   doc.text("CLIENTE:", 80, 58);
   
@@ -109,7 +115,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
     body: tableData,
     theme: 'striped',
     headStyles: { 
-        fillColor: [26, 74, 48], 
+        fillColor: [136, 192, 67], 
         textColor: [255, 255, 255],
         fontSize: 10,
         fontStyle: 'bold',
@@ -146,11 +152,11 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.text(`Gastos de Envío:`, 135, finalY + 16);
   doc.text(`${totals.shippingPrice === 0 ? "GRATIS" : formatPrice(totals.shippingPrice) + " €"}`, 191, finalY + 16, { align: 'right' });
   
-  doc.setDrawColor(26, 74, 48);
+  doc.setDrawColor(136, 192, 67);
   doc.line(135, finalY + 21, 191, finalY + 21);
   
   doc.setFontSize(12);
-  doc.setTextColor(26, 74, 48);
+  doc.setTextColor(136, 192, 67);
   doc.setFont("helvetica", "bold");
   doc.text(`TOTAL ALBARÁN:`, 135, finalY + 28);
   doc.text(`${formatPrice(totals.finalTotal)} €`, 191, finalY + 28, { align: 'right' });
@@ -164,7 +170,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   
   doc.setFontSize(9);
   doc.setFont("helvetica", "bolditalic");
-  doc.setTextColor(26, 74, 48);
+  doc.setTextColor(136, 192, 67);
   doc.text("www.mhsportcesped.es", 105, 290, { align: 'center' });
 
   // Save the PDF
