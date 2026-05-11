@@ -56,7 +56,8 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setFont("helvetica", "normal");
   doc.text(`Fecha:`, 139, 73);
   doc.setFont("helvetica", "bold");
-  doc.text(`${new Date().toLocaleDateString('es-ES')}`, 192, 73, { align: 'right' });
+  const displayDate = orderData.date || new Date().toLocaleDateString('es-ES');
+  doc.text(`${displayDate}`, 192, 73, { align: 'right' });
 
   // --- Seller and Customer Sections ---
   // Seller

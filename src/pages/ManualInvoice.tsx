@@ -7,6 +7,7 @@ const ManualInvoice = () => {
   const handleGenerate = () => {
     const orderData = {
       orderId: "MH-RUBEN-001",
+      date: "09/05/2026",
       customerInfo: {
         name: "Rubén Alfaro Díaz",
         email: "crubenalfarodiaz@gmail.com",
