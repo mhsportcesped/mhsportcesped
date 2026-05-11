@@ -21,6 +21,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiesPolicy from "./pages/CookiesPolicy";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import ManualInvoice from "./pages/ManualInvoice";
 
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -57,7 +58,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <RedirectToHome />
+          {/* <RedirectToHome /> */}
           <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Header />
@@ -76,6 +77,7 @@ const App = () => (
                 <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
                 <Route path="/politica-cookies" element={<CookiesPolicy />} />
                 <Route path="/terminos-condiciones" element={<Terms />} />
+                <Route path="/manual-albaran" element={<ManualInvoice />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
