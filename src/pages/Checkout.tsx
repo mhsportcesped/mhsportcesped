@@ -12,6 +12,8 @@ import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-
 import { sendEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/utils";
 import { generateInvoicePDF } from "@/lib/invoice";
+import { sendSMS } from "@/lib/sms";
+import logo from "@/assets/logo_mh_sport_cesped.webp";
 
 // Initialize Stripe (Using env variable or placeholder)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_tu_clave_aqui");
@@ -218,15 +220,16 @@ const Checkout = () => {
       // Intentar enviar email
       await sendEmail(templateParams);
       
-      // Generar y descargar PDF automáticamente
-      generateInvoicePDF(orderData);
+      // Generar y descargar PDF automáticamente con logo
+      generateInvoicePDF(orderData, logo);
       
-      // Simular envío de SMS (Notificación en consola o aviso al cliente)
-      console.log(`Enviando SMS de confirmación al: ${formData.get("telefono")}...`);
+      // Enviar SMS de confirmación real (Simulado)
+      const smsMessage = `MH Sport: Gracias por tu compra. Tu pedido #${Math.floor(Math.random() * 1000000)} ha sido confirmado. Pronto recibiras tu factura por correo.`;
+      await sendSMS(formData.get("telefono"), smsMessage);
       
       setSubmitted(true);
       clearCart();
-      toast.success("¡Pedido finalizado con éxito! Tu factura se ha descargado.");
+      toast.success("¡Pedido finalizado con éxito! Tu factura se ha descargado y enviado.");
     } catch (error) {
       console.error("Error al procesar el pedido:", error);
       toast.error("Error al registrar el pedido. Contacta con nosotros por teléfono.");

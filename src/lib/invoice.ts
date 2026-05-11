@@ -2,19 +2,27 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { formatPrice } from "./utils";
 
-export const generateInvoicePDF = (orderData: any) => {
+export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   const doc = new jsPDF();
   const { items, customerInfo, totals, orderId = `MH-${Math.floor(Math.random() * 1000000)}` } = orderData;
 
-  // Header
+  // Header with Logo
+  if (logoSrc) {
+    try {
+      doc.addImage(logoSrc, 'WEBP', 14, 10, 30, 15);
+    } catch (e) {
+      console.warn("Could not add logo to PDF:", e);
+    }
+  }
+
   doc.setFontSize(22);
   doc.setTextColor(26, 74, 48); // Brand green
-  doc.text("MH SPORT CÉSPED", 14, 22);
+  doc.text("MH SPORT CÉSPED", 50, 22);
   
   doc.setFontSize(10);
   doc.setTextColor(100);
-  doc.text("Polígono San Rafael, C/ Malta N°12-13", 14, 30);
-  doc.text("02400 Hellín, Albacete", 14, 35);
+  doc.text("Polígono San Rafael, C/ Malta N°12-13", 50, 30);
+  doc.text("02400 Hellín, Albacete", 50, 35);
   doc.text("Tel: 967 179 172 | 655 075 988", 14, 40);
   doc.text("Email: info@mhsportcesped.es", 14, 45);
 
