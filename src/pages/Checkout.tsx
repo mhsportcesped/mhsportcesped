@@ -181,7 +181,13 @@ const Checkout = () => {
   const finalizeOrder = async () => {
     setLoading(true);
     
-    const cartSummary = items.map(item => `- ${item.product.name} (x${item.quantity}): ${formatPrice(item.product.price * item.quantity)} €`).join("\n");
+    const cartSummary = items.map(item => {
+      const subtotalItem = item.product.price * item.quantity;
+      return `${item.product.name.toUpperCase()}
+   - Cantidad: ${item.quantity} ud.
+   - Precio Unit: ${formatPrice(item.product.price)} €
+   - Subtotal: ${formatPrice(subtotalItem)} €`;
+    }).join("\n\n-------------------\n\n");
     
     const orderData = {
       items: items,

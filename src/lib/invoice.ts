@@ -6,51 +6,87 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   const doc = new jsPDF();
   const { items, customerInfo, totals, orderId = `MH-${Math.floor(Math.random() * 1000000)}` } = orderData;
 
-  // Header with Logo
+  // Background for the header
+  doc.setFillColor(26, 74, 48); // Brand green
+  doc.rect(0, 0, 210, 40, 'F');
+
+  // Header with Logo (Improved size and position)
   if (logoSrc) {
     try {
-      doc.addImage(logoSrc, 'WEBP', 14, 10, 30, 15);
+      // Adding a white circle/square background for the logo to make it pop
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(14, 8, 35, 24, 3, 3, 'F');
+      doc.addImage(logoSrc, 'WEBP', 16, 10, 31, 20);
     } catch (e) {
       console.warn("Could not add logo to PDF:", e);
     }
   }
 
-  doc.setFontSize(22);
-  doc.setTextColor(26, 74, 48); // Brand green
-  doc.text("MH SPORT CÉSPED", 50, 22);
-  
-  doc.setFontSize(10);
-  doc.setTextColor(100);
-  doc.text("Polígono San Rafael, C/ Malta N°12-13", 50, 30);
-  doc.text("02400 Hellín, Albacete", 50, 35);
-  doc.text("Tel: 967 179 172 | 655 075 988", 14, 40);
-  doc.text("Email: info@mhsportcesped.es", 14, 45);
-
-  // Invoice Details
-  doc.setFontSize(16);
-  doc.setTextColor(0);
-  doc.text("FACTURA DE COMPRA", 140, 22);
-  
-  doc.setFontSize(10);
-  doc.text(`Número: ${orderId}`, 140, 30);
-  doc.text(`Fecha: ${new Date().toLocaleDateString('es-ES')}`, 140, 35);
-
-  // Customer Details
-  doc.setDrawColor(230);
-  doc.line(14, 55, 196, 55);
-  
-  doc.setFontSize(12);
+  // Company Name and Info in the green header
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(24);
   doc.setFont("helvetica", "bold");
-  doc.text("CLIENTE:", 14, 65);
+  doc.text("MH SPORT CÉSPED", 55, 20);
+  
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text("Especialistas en Césped Artificial de Alta Gama", 55, 28);
+  doc.text("CIF: B12345678 | Polígono San Rafael, C/ Malta N°12-13, Hellín", 55, 33);
+
+  // Invoice Details Box
+  doc.setTextColor(0, 0, 0);
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text("FACTURA", 145, 55);
+  
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Número de Pedido:`, 145, 62);
+  doc.setFont("helvetica", "bold");
+  doc.text(`${orderId}`, 196, 62, { align: 'right' });
   
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.text(`${customerInfo.name}`, 14, 72);
-  doc.text(`${customerInfo.address}`, 14, 77);
-  doc.text(`Tel: ${customerInfo.phone}`, 14, 82);
-  doc.text(`Email: ${customerInfo.email}`, 14, 87);
+  doc.text(`Fecha de Emisión:`, 145, 67);
+  doc.setFont("helvetica", "bold");
+  doc.text(`${new Date().toLocaleDateString('es-ES')}`, 196, 67, { align: 'right' });
 
-  // Table
+  // Two columns for Seller and Customer
+  doc.setDrawColor(230);
+  doc.setLineWidth(0.5);
+  doc.line(14, 48, 196, 48);
+
+  // Seller Column
+  doc.setFontSize(10);
+  doc.setTextColor(26, 74, 48);
+  doc.setFont("helvetica", "bold");
+  doc.text("VENDEDOR:", 14, 58);
+  
+  doc.setTextColor(80, 80, 80);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text("MH SPORT CÉSPED ARTIFICIAL S.L.", 14, 63);
+  doc.text("Polígono San Rafael, Calle Malta 12-13", 14, 68);
+  doc.text("02400 Hellín (Albacete), España", 14, 73);
+  doc.text("Tel: 967 179 172 | info@mhsportcesped.es", 14, 78);
+
+  // Customer Column
+  doc.setTextColor(26, 74, 48);
+  doc.setFont("helvetica", "bold");
+  doc.text("CLIENTE:", 85, 58);
+  
+  doc.setTextColor(0, 0, 0);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.text(`${customerInfo.name}`, 85, 63);
+  
+  doc.setTextColor(80, 80, 80);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text(`${customerInfo.address}`, 85, 68);
+  doc.text(`Tel: ${customerInfo.phone}`, 85, 73);
+  doc.text(`Email: ${customerInfo.email}`, 85, 78);
+
+  // Items Table
   const tableData = items.map((item: any) => [
     item.product.name,
     item.quantity,
@@ -59,38 +95,74 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   ]);
 
   autoTable(doc, {
-    startY: 95,
-    head: [['Producto', 'Cant.', 'Precio Unit.', 'Subtotal']],
+    startY: 88,
+    head: [['Descripción del Producto', 'Cant.', 'Precio/Ud.', 'Subtotal']],
     body: tableData,
-    headStyles: { fillColor: [26, 74, 48], textColor: [255, 255, 255] },
-    alternateRowStyles: { fillColor: [245, 245, 245] },
+    theme: 'striped',
+    headStyles: { 
+        fillColor: [26, 74, 48], 
+        textColor: [255, 255, 255],
+        fontSize: 10,
+        fontStyle: 'bold',
+        halign: 'center'
+    },
+    columnStyles: {
+        0: { cellWidth: 'auto' },
+        1: { halign: 'center' },
+        2: { halign: 'right' },
+        3: { halign: 'right' }
+    },
+    styles: { fontSize: 9, cellPadding: 4 },
+    alternateRowStyles: { fillColor: [248, 250, 248] },
     margin: { left: 14, right: 14 }
   });
 
-  // Totals
-  const finalY = (doc as any).lastAutoTable.finalY + 10;
+  // Totals Section
+  const finalY = (doc as any).lastAutoTable.finalY + 15;
   
-  doc.setFontSize(10);
-  doc.text(`Base Imponible:`, 140, finalY);
-  doc.text(`${formatPrice(totals.subtotal)} €`, 180, finalY, { align: 'right' });
+  // Total summary box
+  doc.setFillColor(248, 250, 248);
+  doc.roundedRect(130, finalY - 5, 66, 40, 3, 3, 'F');
   
-  doc.text(`IVA (21%):`, 140, finalY + 5);
-  doc.text(`${formatPrice(totals.ivaAmount)} €`, 180, finalY + 5, { align: 'right' });
+  doc.setFontSize(9);
+  doc.setTextColor(100);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Base Imponible:`, 135, finalY + 2);
+  doc.text(`${formatPrice(totals.subtotal)} €`, 191, finalY + 2, { align: 'right' });
   
-  doc.text(`Envío:`, 140, finalY + 10);
-  doc.text(`${totals.shippingPrice === 0 ? "Gratis" : formatPrice(totals.shippingPrice) + " €"}`, 180, finalY + 10, { align: 'right' });
+  doc.text(`IVA (21%):`, 135, finalY + 9);
+  doc.text(`${formatPrice(totals.ivaAmount)} €`, 191, finalY + 9, { align: 'right' });
+  
+  doc.text(`Gastos de Envío:`, 135, finalY + 16);
+  doc.text(`${totals.shippingPrice === 0 ? "GRATIS" : formatPrice(totals.shippingPrice) + " €"}`, 191, finalY + 16, { align: 'right' });
+  
+  doc.setDrawColor(26, 74, 48);
+  doc.line(135, finalY + 21, 191, finalY + 21);
   
   doc.setFontSize(12);
+  doc.setTextColor(26, 74, 48);
   doc.setFont("helvetica", "bold");
-  doc.text(`TOTAL:`, 140, finalY + 20);
-  doc.text(`${formatPrice(totals.finalTotal)} €`, 180, finalY + 20, { align: 'right' });
+  doc.text(`TOTAL FACTURA:`, 135, finalY + 28);
+  doc.text(`${formatPrice(totals.finalTotal)} €`, 191, finalY + 28, { align: 'right' });
 
-  // Footer
+  // Footer / Legal Notes
   doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(150);
-  const footerText = "Gracias por confiar en MH Sport Césped para tu proyecto. Esta es una confirmación de compra válida como factura simplificada.";
-  doc.text(footerText, 14, 280);
+  
+  const footerX = 14;
+  let footerY = 270;
+  
+  doc.text("INFORMACIÓN ADICIONAL:", footerX, footerY);
+  doc.setFontSize(7);
+  doc.text("- Esta factura simplificada cumple con la normativa vigente de facturación en España.", footerX, footerY + 5);
+  doc.text("- MH Sport garantiza todos sus productos por un periodo mínimo de 8 años en degradación por rayos UV.", footerX, footerY + 9);
+  doc.text("- Para cualquier devolución o consulta, conserve este documento.", footerX, footerY + 13);
+  
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bolditalic");
+  doc.setTextColor(26, 74, 48);
+  doc.text("¡Gracias por elegir MH Sport Césped para transformar tu jardín!", 105, 290, { align: 'center' });
 
   // Save the PDF
   doc.save(`Factura_MH_Sport_${orderId}.pdf`);
