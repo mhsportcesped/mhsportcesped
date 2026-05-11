@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
-import logo from "@/assets/logo_mh_sport_cesped.webp";
+import logo from "@/assets/logo_mh_sport.png";
 
 const Footer = () => (
   <footer className="bg-foreground text-background">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Menu, X, Instagram, Facebook } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import logo from "@/assets/logo_mh_sport_cesped.webp";
+import logo from "@/assets/logo_mh_sport.png";
 
 const navLinks = [
   { to: "/", label: "Inicio" },

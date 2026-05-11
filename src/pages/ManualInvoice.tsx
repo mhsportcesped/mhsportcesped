@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { generateInvoicePDF } from "@/lib/invoice";
-import logo from "@/assets/logo_mh_sport_cesped.webp";
+import logo from "@/assets/logo_mh_sport.png";
 import { Button } from "@/components/ui/button";
 
 const ManualInvoice = () => {

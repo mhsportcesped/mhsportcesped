@@ -20,7 +20,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string, type: 'alba
       doc.roundedRect(12, 10, 65, 25, 3, 3, 'F');
       
       // New proportions for the horizontal logo
-      doc.addImage(logoSrc, 'WEBP', 15, 13, 59, 19);
+      doc.addImage(logoSrc, 'PNG', 15, 13, 59, 19);
     } catch (e) {
       console.warn("Could not add logo to PDF:", e);
     }

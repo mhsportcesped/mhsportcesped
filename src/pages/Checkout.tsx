@@ -13,7 +13,7 @@ import { sendEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/utils";
 import { generateInvoicePDF } from "@/lib/invoice";
 import { sendSMS } from "@/lib/sms";
-import logo from "@/assets/logo_mh_sport_cesped.webp";
+import logo from "@/assets/logo_mh_sport.png";
 
 // Initialize Stripe (Using env variable or placeholder)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_tu_clave_aqui");
