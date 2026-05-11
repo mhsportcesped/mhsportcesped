@@ -11,6 +11,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { sendEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/utils";
+import { generateInvoicePDF } from "@/lib/invoice";
 
 // Initialize Stripe (Using env variable or placeholder)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_tu_clave_aqui");
@@ -180,26 +181,54 @@ const Checkout = () => {
     
     const cartSummary = items.map(item => `- ${item.product.name} (x${item.quantity}): ${formatPrice(item.product.price * item.quantity)} €`).join("\n");
     
+    const orderData = {
+      items: items,
+      customerInfo: {
+        name: formData.get("nombre"),
+        email: formData.get("email"),
+        phone: formData.get("telefono"),
+        address: `${formData.get("calle")}, ${formData.get("direccion")}`
+      },
+      totals: {
+        subtotal,
+        ivaAmount,
+        shippingPrice,
+        finalTotal
+      }
+    };
+
+    // Parámetros en español para Formspree
     const templateParams = {
-      from_name: formData.get("nombre"),
-      from_email: formData.get("email"),
-      phone: formData.get("telefono"),
-      address: `${formData.get("calle")}, ${formData.get("direccion")}`,
-      notes: formData.get("notes") || "Sin notas",
-      order_summary: cartSummary,
-      total_price: `${formatPrice(finalTotal)} €`,
-      payment_method: "Tarjeta Bancaria (Stripe)",
-      subject: "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
-      source: "Checkout con Pago - Página Oficial"
+      "Nombre del Cliente": formData.get("nombre"),
+      "Correo Electrónico": formData.get("email"),
+      "Teléfono de Contacto": formData.get("telefono"),
+      "Dirección de Envío": `${formData.get("calle")}, ${formData.get("direccion")}`,
+      "Notas Adicionales": formData.get("notes") || "Sin notas",
+      "Resumen del Pedido": cartSummary,
+      "Base Imponible": `${formatPrice(subtotal)} €`,
+      "IVA (21%)": `${formatPrice(ivaAmount)} €`,
+      "Gastos de Envío": shippingPrice === 0 ? "Gratis" : `${formatPrice(shippingPrice)} €`,
+      "TOTAL PAGADO": `${formatPrice(finalTotal)} €`,
+      "Método de Pago": "Tarjeta Bancaria (Stripe)",
+      "Asunto": "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
+      "Origen": "Checkout con Pago - Página Oficial"
     };
 
     try {
+      // Intentar enviar email
       await sendEmail(templateParams);
+      
+      // Generar y descargar PDF automáticamente
+      generateInvoicePDF(orderData);
+      
+      // Simular envío de SMS (Notificación en consola o aviso al cliente)
+      console.log(`Enviando SMS de confirmación al: ${formData.get("telefono")}...`);
+      
       setSubmitted(true);
       clearCart();
-      toast.success("¡Pedido finalizado con éxito!");
+      toast.success("¡Pedido finalizado con éxito! Tu factura se ha descargado.");
     } catch (error) {
-      console.error("Email Error:", error);
+      console.error("Error al procesar el pedido:", error);
       toast.error("Error al registrar el pedido. Contacta con nosotros por teléfono.");
     } finally {
       setLoading(false);
@@ -216,7 +245,7 @@ const Checkout = () => {
             <div className="space-y-3">
                 <h1 className="text-4xl font-black italic text-primary tracking-tight">¡Pedido confirmado!</h1>
                 <p className="text-muted-foreground font-medium">
-                Hemos recibido tu pedido y se ha procesado correctamente. En breve recibirás un correo con la confirmación.
+                Hemos recibido tu pedido y se ha procesado correctamente. Se ha descargado tu factura en PDF y pronto recibirás un correo de confirmación.
                 </p>
             </div>
             <div className="pt-6">
@@ -284,32 +313,32 @@ const Checkout = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <Label htmlFor="name" className="text-xs font-black italic ml-1 opacity-60">Nombre completo</Label>
-                    <Input id="name" name="nombre" required placeholder="Juan Pérez" defaultValue={formData?.get("nombre")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Input id="name" name="nombre" required placeholder="" defaultValue={formData?.get("nombre")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                   <div className="space-y-3">
                     <Label htmlFor="email" className="text-xs font-black italic ml-1 opacity-60">Email</Label>
-                    <Input id="email" name="email" type="email" required placeholder="juan@ejemplo.com" defaultValue={formData?.get("email")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Input id="email" name="email" type="email" required placeholder="" defaultValue={formData?.get("email")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <Label htmlFor="phone" className="text-xs font-black italic ml-1 opacity-60">Teléfono</Label>
-                    <Input id="phone" name="telefono" type="tel" required placeholder="600 000 000" defaultValue={formData?.get("telefono")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Input id="phone" name="telefono" type="tel" required placeholder="" defaultValue={formData?.get("telefono")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                   <div className="space-y-3">
                     <Label htmlFor="calle" className="text-xs font-black italic ml-1 opacity-60">Calle y Número</Label>
-                    <Input id="calle" name="calle" required placeholder="C/ Ejemplo, 123" defaultValue={formData?.get("calle")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Input id="calle" name="calle" required placeholder="" defaultValue={formData?.get("calle")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                   <div className="space-y-3">
                     <Label htmlFor="address" className="text-xs font-black italic ml-1 opacity-60">Población / Ciudad</Label>
-                    <Input id="address" name="direccion" required placeholder="Tu ciudad..." defaultValue={formData?.get("direccion")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
+                    <Input id="address" name="direccion" required placeholder="" defaultValue={formData?.get("direccion")} className="h-14 rounded-2xl bg-muted/30 border-none font-bold text-lg" />
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <Label htmlFor="notes" className="text-xs font-black italic ml-1 opacity-60">Notas del pedido (Opcional)</Label>
-                  <Textarea id="notes" name="notes" placeholder="Instrucciones para la entrega..." defaultValue={formData?.get("notes")} className="rounded-2xl bg-muted/30 border-none font-bold text-lg min-h-[140px] resize-none" />
+                  <Textarea id="notes" name="notes" placeholder="" defaultValue={formData?.get("notes")} className="rounded-2xl bg-muted/30 border-none font-bold text-lg min-h-[140px] resize-none" />
                 </div>
 
                 <Button type="submit" size="lg" className="w-full text-xl font-black italic h-16 rounded-2xl shadow-xl shadow-primary/30">

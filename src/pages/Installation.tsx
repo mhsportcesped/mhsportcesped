@@ -29,14 +29,15 @@ const Installation = () => {
     const formData = new FormData(form);
     
     const templateParams = {
-      from_name: formData.get("nombre"),
-      from_email: formData.get("email"),
-      phone: formData.get("telefono"),
-      address: `${formData.get("calle")}, ${formData.get("ciudad")}`,
-      sqm: formData.get("metros"),
-      message: formData.get("detalles"),
-      subject: "PRESUPUESTO INSTALACIÓN - WEB OFICIAL MH SPORT CÉSPED",
-      source: "Página de Instalación - Oficial"
+      "Nombre": formData.get("nombre"),
+      "Correo": formData.get("email"),
+      "Teléfono": formData.get("telefono"),
+      "Ciudad/Población": formData.get("ciudad"),
+      "Calle y Número": formData.get("calle"),
+      "Metros Cuadrados": formData.get("metros"),
+      "Mensaje/Detalles": formData.get("detalles"),
+      "Asunto": "PRESUPUESTO INSTALACIÓN - WEB OFICIAL MH SPORT CÉSPED",
+      "Origen": "Página de Instalación - Oficial"
     };
 
     try {
@@ -102,38 +103,38 @@ const Installation = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-black italic ml-1">Nombre completo</label>
-                  <Input name="nombre" required placeholder="Tu nombre..." className="h-12 rounded-xl bg-background" />
+                  <Input name="nombre" required placeholder="" className="h-12 rounded-xl bg-background" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-black italic ml-1">Teléfono</label>
-                  <Input name="telefono" required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
+                   <Input name="telefono" required type="tel" placeholder="" className="h-12 rounded-xl bg-background" />
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-black italic ml-1">Email</label>
-                  <Input name="email" required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
+                   <Input name="email" required type="email" placeholder="" className="h-12 rounded-xl bg-background" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-black italic ml-1">Ciudad / Población</label>
-                  <Input name="ciudad" required placeholder="¿Dónde vives?" className="h-12 rounded-xl bg-background" />
+                   <Input name="ciudad" required placeholder="" className="h-12 rounded-xl bg-background" />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-black italic ml-1">Calle y Número</label>
-                <Input name="calle" required placeholder="Dirección exacta de la instalación..." className="h-12 rounded-xl bg-background" />
+                 <Input name="calle" required placeholder="" className="h-12 rounded-xl bg-background" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-black italic ml-1">Metros cuadrados aprox.</label>
-                <Input name="metros" required type="number" min="1" placeholder="Ej: 50" className="h-12 rounded-xl bg-background" />
+                 <Input name="metros" required type="number" min="1" placeholder="" className="h-12 rounded-xl bg-background" />
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-black italic ml-1">Mensaje o detalles</label>
-                <Textarea name="detalles" placeholder="Cuéntanos más sobre el terreno o tus necesidades..." rows={4} className="rounded-xl bg-background resize-none" />
+                 <Textarea name="detalles" placeholder="" rows={4} className="rounded-xl bg-background resize-none" />
               </div>
 
               <Button type="submit" disabled={loading} size="lg" className="w-full text-lg font-black italic h-14 rounded-xl shadow-xl shadow-primary/20">

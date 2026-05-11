@@ -24,13 +24,13 @@ const Contact = () => {
     const formData = new FormData(form);
     
     const templateParams = {
-      from_name: formData.get("nombre"),
-      from_email: formData.get("email"),
-      phone: formData.get("telefono"),
-      address: `${formData.get("calle")}, ${formData.get("poblacion")}, ${formData.get("provincia")}`,
-      message: formData.get("mensaje"),
-      subject: "NUEVO MENSAJE - WEB OFICIAL MH SPORT CÉSPED",
-      source: "Formulario de Contacto - Página Oficial"
+      "Nombre": formData.get("nombre"),
+      "Correo": formData.get("email"),
+      "Teléfono": formData.get("telefono"),
+      "Dirección": `${formData.get("calle")}, ${formData.get("poblacion")}, ${formData.get("provincia")}`,
+      "Mensaje": formData.get("mensaje"),
+      "Asunto": "NUEVO MENSAJE - WEB OFICIAL MH SPORT CÉSPED",
+      "Origen": "Formulario de Contacto - Página Oficial"
     };
 
     try {
@@ -158,39 +158,39 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="fullname">Nombre y Apellidos</Label>
-                  <Input id="fullname" name="nombre" required placeholder="Tu nombre real..." className="h-12 rounded-xl bg-background" />
+                  <Input id="fullname" name="nombre" required placeholder="" className="h-12 rounded-xl bg-background" />
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="email">Correo electrónico</Label>
-                    <Input id="email" name="email" required type="email" placeholder="ejemplo@correo.com" className="h-12 rounded-xl bg-background" />
+                    <Input id="email" name="email" required type="email" placeholder="" className="h-12 rounded-xl bg-background" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Número de Teléfono</Label>
-                    <Input id="phone" name="telefono" required type="tel" placeholder="000 000 000" className="h-12 rounded-xl bg-background" />
+                    <Input id="phone" name="telefono" required type="tel" placeholder="" className="h-12 rounded-xl bg-background" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="calle">Calle y Número</Label>
-                  <Input id="calle" name="calle" required placeholder="C/ Ejemplo, 123..." className="h-12 rounded-xl bg-background" />
+                  <Input id="calle" name="calle" required placeholder="" className="h-12 rounded-xl bg-background" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="provincia">Provincia</Label>
-                    <Input id="provincia" name="provincia" placeholder="Madrid, Albacete..." className="h-12 rounded-xl bg-background" />
+                    <Input id="provincia" name="provincia" placeholder="" className="h-12 rounded-xl bg-background" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="poblacion">Población</Label>
-                    <Input id="poblacion" name="poblacion" placeholder="Tu ciudad..." className="h-12 rounded-xl bg-background" />
+                    <Input id="poblacion" name="poblacion" placeholder="" className="h-12 rounded-xl bg-background" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="message">Mensaje o comentario</Label>
-                  <Textarea id="message" name="mensaje" required placeholder="Cuéntanos tu proyecto..." rows={4} className="rounded-xl bg-background" />
+                  <Textarea id="message" name="mensaje" required placeholder="" rows={4} className="rounded-xl bg-background" />
                 </div>
 
                 <div className="flex items-start space-x-3 pt-2">
