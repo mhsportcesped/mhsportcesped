@@ -19,10 +19,10 @@ const Header = () => {
   const { totalItems } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
-      <div className="container flex items-center justify-between h-16 md:h-20">
+    <header className="sticky top-0 z-50 bg-white backdrop-blur border-b border-border">
+      <div className="container flex items-center justify-between h-20 md:h-24">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="MH Sport Césped" className="h-10 md:h-14 w-auto" />
+          <img src={logo} alt="MH Sport Césped" className="h-14 md:h-20 w-auto" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6">
