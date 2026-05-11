@@ -4,7 +4,7 @@ import { formatPrice } from "./utils";
 
 export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   const doc = new jsPDF();
-  const { items, customerInfo, totals, orderId = `MH-${Math.floor(Math.random() * 1000000)}` } = orderData;
+  const { items, customerInfo, totals, orderId = `MH-${Math.floor(Math.random() * 1000000)}`, date } = orderData;
 
   // Background for the header
   doc.setFillColor(26, 74, 48); // Brand green
@@ -56,7 +56,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setFont("helvetica", "normal");
   doc.text(`Fecha:`, 139, 73);
   doc.setFont("helvetica", "bold");
-  const displayDate = orderData.date || new Date().toLocaleDateString('es-ES');
+  const displayDate = date || new Date().toLocaleDateString('es-ES');
   doc.text(`${displayDate}`, 192, 73, { align: 'right' });
 
   // --- Seller and Customer Sections ---
