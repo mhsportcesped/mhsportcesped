@@ -230,12 +230,17 @@ const Checkout = () => {
       generateInvoicePDF(orderData, logo);
       
       // Enviar SMS de confirmación real (Simulado)
-      const smsMessage = `MH Sport: Gracias por tu compra. Tu pedido #${Math.floor(Math.random() * 1000000)} ha sido confirmado. Pronto recibiras tu factura por correo.`;
+      const smsMessage = `MH Sport: Gracias por tu compra, ${formData.get("nombre")}. Tu pedido #${Math.floor(Math.random() * 1000000)} ha sido confirmado.`;
       await sendSMS(formData.get("telefono"), smsMessage);
       
       setSubmitted(true);
       clearCart();
-      toast.success("¡Pedido finalizado con éxito! Tu factura se ha descargado y enviado.");
+      
+      // Mensaje detallado sobre el envío de emails
+      toast.success("¡Pedido finalizado con éxito!", {
+        description: `La factura se ha descargado. Se ha enviado un correo de confirmación a info@mhsportcesped.es y una copia a ${formData.get("email")}.`,
+        duration: 8000,
+      });
     } catch (error) {
       console.error("Error al procesar el pedido:", error);
       toast.error("Error al registrar el pedido. Contacta con nosotros por teléfono.");

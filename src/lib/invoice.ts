@@ -10,13 +10,16 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setFillColor(26, 74, 48); // Brand green
   doc.rect(0, 0, 210, 40, 'F');
 
-  // Header with Logo (Improved size and position)
+  // Header with Logo (Improved size and position - No distortion)
   if (logoSrc) {
     try {
-      // Adding a white circle/square background for the logo to make it pop
+      // White container for the logo
       doc.setFillColor(255, 255, 255);
-      doc.roundedRect(14, 8, 35, 24, 3, 3, 'F');
-      doc.addImage(logoSrc, 'WEBP', 16, 10, 31, 20);
+      doc.roundedRect(14, 8, 45, 24, 3, 3, 'F');
+      
+      // We assume a wide aspect ratio for the logo (approx 2:1 or 3:1)
+      // width: 41, height: 18 keeps it centered and large without touching edges
+      doc.addImage(logoSrc, 'WEBP', 16, 11, 41, 18);
     } catch (e) {
       console.warn("Could not add logo to PDF:", e);
     }
@@ -24,14 +27,14 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
 
   // Company Name and Info in the green header
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(24);
+  doc.setFontSize(26);
   doc.setFont("helvetica", "bold");
-  doc.text("MH SPORT CÉSPED", 55, 20);
+  doc.text("MH SPORT CÉSPED", 65, 20);
   
-  doc.setFontSize(9);
+  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.text("Especialistas en Césped Artificial de Alta Gama", 55, 28);
-  doc.text("CIF: B12345678 | Polígono San Rafael, C/ Malta N°12-13, Hellín", 55, 33);
+  doc.text("Especialistas en Césped Artificial de Alta Gama", 65, 28);
+  doc.text("CIF: B12345678 | Polígono San Rafael, C/ Malta N°12-13, Hellín", 65, 34);
 
   // Invoice Details Box
   doc.setTextColor(0, 0, 0);
