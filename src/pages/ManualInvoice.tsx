@@ -11,7 +11,7 @@ const ManualInvoice = () => {
         name: "Rubén Alfaro Díaz",
         email: "crubenalfarodiaz@gmail.com",
         phone: "620344920",
-        address: "Dirección Proporcionada (Consultar pedido)"
+        address: "Calle Torcaz 2, Toledo"
       },
       items: [
         {
