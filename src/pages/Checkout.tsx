@@ -218,7 +218,7 @@ const Checkout = () => {
       "Gastos de Envío": shippingPrice === 0 ? "Gratis" : `${formatPrice(shippingPrice)} €`,
       "TOTAL PAGADO": `${formatPrice(finalTotal)} €`,
       "Método de Pago": "Tarjeta Bancaria (Stripe)",
-      "Asunto": "NUEVO PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
+      "Asunto": "NUEVA FACTURA Y PEDIDO - WEB OFICIAL MH SPORT CÉSPED",
       "Origen": "Checkout con Pago - Página Oficial"
     };
 
@@ -238,7 +238,7 @@ const Checkout = () => {
       
       // Mensaje detallado sobre el envío de emails
       toast.success("¡Pedido finalizado con éxito!", {
-        description: `La factura se ha descargado. Se ha enviado un correo de confirmación a info@mhsportcesped.es y una copia a ${formData.get("email")}.`,
+        description: `Se ha descargado tu albarán de compra. Se ha enviado la factura a info@mhsportcesped.es y una copia a ${formData.get("email")}.`,
         duration: 8000,
       });
     } catch (error) {

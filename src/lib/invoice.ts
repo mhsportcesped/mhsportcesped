@@ -40,7 +40,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text("FACTURA", 145, 55);
+  doc.text("ALBARÁN DE COMPRA", 145, 55);
   
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
@@ -145,7 +145,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setFontSize(12);
   doc.setTextColor(26, 74, 48);
   doc.setFont("helvetica", "bold");
-  doc.text(`TOTAL FACTURA:`, 135, finalY + 28);
+  doc.text(`TOTAL ALBARÁN:`, 135, finalY + 28);
   doc.text(`${formatPrice(totals.finalTotal)} €`, 191, finalY + 28, { align: 'right' });
 
   // Footer / Legal Notes
@@ -158,7 +158,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   
   doc.text("INFORMACIÓN ADICIONAL:", footerX, footerY);
   doc.setFontSize(7);
-  doc.text("- Esta factura simplificada cumple con la normativa vigente de facturación en España.", footerX, footerY + 5);
+  doc.text("- Este albarán de compra confirma la recepción del pedido y el pago realizado.", footerX, footerY + 5);
   doc.text("- MH Sport garantiza todos sus productos por un periodo mínimo de 8 años en degradación por rayos UV.", footerX, footerY + 9);
   doc.text("- Para cualquier devolución o consulta, conserve este documento.", footerX, footerY + 13);
   
@@ -168,6 +168,6 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.text("¡Gracias por elegir MH Sport Césped para transformar tu jardín!", 105, 290, { align: 'center' });
 
   // Save the PDF
-  doc.save(`Factura_MH_Sport_${orderId}.pdf`);
+  doc.save(`Albaran_MH_Sport_${orderId}.pdf`);
   return doc;
 };
