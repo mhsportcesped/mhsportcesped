@@ -2,9 +2,12 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { formatPrice } from "./utils";
 
-export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
+export const generateInvoicePDF = (orderData: any, logoSrc?: string, type: 'albaran' | 'factura' = 'albaran') => {
   const doc = new jsPDF();
   const { items, customerInfo, totals, orderId = `MH-${Math.floor(Math.random() * 1000000)}`, date } = orderData;
+
+  const isFactura = type === 'factura';
+  const docTitle = isFactura ? "FACTURA OFICIAL" : "ALBARÁN DE COMPRA";
 
   // Background for the header
   doc.setFillColor(136, 192, 67); // Exact green from the new logo (#88C043)
@@ -47,15 +50,15 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setFillColor(248, 250, 248);
   doc.roundedRect(135, 52, 61, 28, 2, 2, 'F');
   
-  doc.setTextColor(26, 74, 48);
-  doc.setFontSize(12);
+  doc.setTextColor(136, 192, 67);
+  doc.setFontSize(11);
   doc.setFont("helvetica", "bold");
-  doc.text("ALBARÁN DE COMPRA", 139, 60);
+  doc.text(docTitle, 139, 60);
   
   doc.setTextColor(0, 0, 0);
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text(`Nº Pedido:`, 139, 68);
+  doc.text(`${isFactura ? 'Nº Factura:' : 'Nº Pedido:'}`, 139, 68);
   doc.setFont("helvetica", "bold");
   doc.text(`${orderId}`, 192, 68, { align: 'right' });
   
@@ -158,14 +161,14 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.setFontSize(12);
   doc.setTextColor(136, 192, 67);
   doc.setFont("helvetica", "bold");
-  doc.text(`TOTAL ALBARÁN:`, 135, finalY + 28);
+  doc.text(`TOTAL ${isFactura ? 'FACTURA' : 'ALBARÁN'}:`, 135, finalY + 28);
   doc.text(`${formatPrice(totals.finalTotal)} €`, 191, finalY + 28, { align: 'right' });
 
   // Footer
   doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(150);
-  doc.text("- Este documento confirma el pago y la recepción del pedido.", 14, 275);
+  doc.text(`- Este documento confirma la transacción y ${isFactura ? 'sirve como justificante legal' : 'la recepción del pedido'}.`, 14, 275);
   doc.text("- Gracias por confiar en MH Sport Césped.", 14, 280);
   
   doc.setFontSize(9);
@@ -174,6 +177,7 @@ export const generateInvoicePDF = (orderData: any, logoSrc?: string) => {
   doc.text("www.mhsportcesped.es", 105, 290, { align: 'center' });
 
   // Save the PDF
-  doc.save(`Albaran_MH_Sport_${orderId}.pdf`);
+  const fileName = isFactura ? `Factura_MH_Sport_${orderId}.pdf` : `Albaran_MH_Sport_${orderId}.pdf`;
+  doc.save(fileName);
   return doc;
 };
